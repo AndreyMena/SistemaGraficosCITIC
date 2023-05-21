@@ -3,17 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGraficosCITIC", "SistemaGraficosCITIC.csproj", "{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGraficosCITIC", "SistemaGraficosCITIC.csproj", "{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Layers", "Layers", "{AE1205E4-8D45-4DFF-86F7-5A76043083C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "..\Application\Application.csproj", "{CB30A767-2649-416A-B276-F663409782CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "..\Application\Application.csproj", "{CB30A767-2649-416A-B276-F663409782CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{D0F07828-0FBE-41C5-B8B6-9437E5B8696F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{D0F07828-0FBE-41C5-B8B6-9437E5B8696F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "..\Presentation\Presentation.csproj", "{4B512039-2661-4634-A06A-AF7E2E57B8BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "..\Presentation\Presentation.csproj", "{4B512039-2661-4634-A06A-AF7E2E57B8BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{AA340F24-0D91-4999-97A4-3DADBAD0FF6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{AA340F24-0D91-4999-97A4-3DADBAD0FF6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{E4CEA1A5-D5B2-46ED-9D33-8BDFB96838A2}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatabaseSistemaGraficosCITIC", "..\DatabaseSistemaGraficosCITIC\DataBaseSistemaGraficosCITIC.sqlproj", "{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,12 @@ Global
 		{AA340F24-0D91-4999-97A4-3DADBAD0FF6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA340F24-0D91-4999-97A4-3DADBAD0FF6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA340F24-0D91-4999-97A4-3DADBAD0FF6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +60,7 @@ Global
 		{D0F07828-0FBE-41C5-B8B6-9437E5B8696F} = {AE1205E4-8D45-4DFF-86F7-5A76043083C4}
 		{4B512039-2661-4634-A06A-AF7E2E57B8BC} = {AE1205E4-8D45-4DFF-86F7-5A76043083C4}
 		{AA340F24-0D91-4999-97A4-3DADBAD0FF6F} = {AE1205E4-8D45-4DFF-86F7-5A76043083C4}
+		{C10BA959-5A4E-4B8D-AF54-C39CDD8B3A6C} = {E4CEA1A5-D5B2-46ED-9D33-8BDFB96838A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE6EF9C4-AF89-4BFD-998B-C660D661A987}
