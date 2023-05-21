@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGraficosCITIC", "SistemaGraficosCITIC.csproj", "{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1574FAC0-EF18-44B9-9754-7AC45E69C1DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE6EF9C4-AF89-4BFD-998B-C660D661A987}
+	EndGlobalSection
+EndGlobal
