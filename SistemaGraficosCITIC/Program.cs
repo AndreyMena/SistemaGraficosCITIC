@@ -2,8 +2,18 @@
 //using Infrastructure;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SistemaGraficosCITIC.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("SistemaGraficosCITICContextConnection") ?? throw new InvalidOperationException("Connection string 'SistemaGraficosCITICContextConnection' not found.");
+
+builder.Services.AddDbContext<SistemaGraficosCITICContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<SistemaGraficosCITICContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -29,5 +39,6 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+app.UseAuthentication();;
 
 app.Run();
