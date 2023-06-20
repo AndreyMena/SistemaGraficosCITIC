@@ -1,18 +1,19 @@
 ﻿using Domain.Entities;
+using Infrastructure.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
 {
-    public class GraphicGeneratorDBContext : DbContext
+    public class GraphicGeneratorDBContext : ApplicationDbContext
     {
-        public GraphicGeneratorDBContext(DbContextOptions options) : base(options)
+        public GraphicGeneratorDBContext(DbContextOptions<GraphicGeneratorDBContext> options) : base(options)
         {
         }
 
-        public DbSet<Admin> Admin { get; set; }
-        public DbSet<Researcher> Researcher { get; set; }
-        public DbSet<Question> Question { get; set; }
-        public DbSet<Answer> Answer { get; set; }
+        public DbSet<Admin> Admin { get; set; } = null!;
+        public DbSet<Researcher> Researcher { get; set; } = null!;
+        public DbSet<Question> Question { get; set; } = null!;
+        public DbSet<Answer> Answer { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

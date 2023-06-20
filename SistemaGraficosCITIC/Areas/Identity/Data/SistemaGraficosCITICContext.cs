@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,10 @@ public class SistemaGraficosCITICContext : IdentityDbContext<IdentityUser>
         : base(options)
     {
     }
-
+    public DbSet<Admin> Admin { get; set; } = null!;
+    public DbSet<Researcher> Researcher { get; set; } = null!;
+    public DbSet<Question> Question { get; set; } = null!;
+    public DbSet<Answer> Answer { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

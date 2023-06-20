@@ -24,7 +24,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
-//builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("DefaultConnection"));
 //builder.Services.AddApplicationLayer();
 
 var app = builder.Build();
