@@ -1,5 +1,6 @@
 //using Application;
 //using Infrastructure;
+using Infrastructure;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<SistemaGraficosCITICContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<GraphicGeneratorDBContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
