@@ -26,6 +26,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -47,5 +48,6 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages();
 app.Run();
