@@ -6,22 +6,26 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using SistemaGraficosCITIC.Data;
+using SistemaGraficosCITIC.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<SistemaGraficosCITICContext>(options =>
+builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<SistemaGraficosCITICContext>();
+    .AddEntityFrameworkStores<AuthDbContext>();
+
+builder.Services.AddDbContext<SistemaGraficosCITICContext>(options =>
+    options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
-//builder.Services.AddInfrastructureLayer(builder.Configuration.GetConnectionString("DefaultConnection"));
-//builder.Services.AddApplicationLayer();
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();
 

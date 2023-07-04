@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
     <Folder Include="Shared\" />
   </ItemGroup>
 
