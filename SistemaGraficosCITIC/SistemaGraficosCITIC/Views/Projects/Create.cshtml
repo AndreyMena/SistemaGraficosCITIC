@@ -1,4 +1,4 @@
-﻿@model SistemaGraficosCITIC.Models.Domain.Project
+﻿@model SistemaGraficosCITIC.Views.ViewModels.ProjectModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,6 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <br />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -22,16 +23,25 @@
                 <input asp-for="Type" class="form-control" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
+                <label asp-for="isActive" class="control-label">Is the project active?</label>
+                <input id="CheckBoxActive" type="checkbox" asp-for="isActive" />
+                <span asp-validation-for="isActive" class="text-danger"></span>
+            </div>
+            <br />
+            <div id="EndDateDiv" class="form-group">
                 <label asp-for="EndDate" class="control-label"></label>
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -42,6 +52,19 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#CheckBoxActive").change(function () {
+            if ($(this).is(":checked")) {
+                $("#EndDateDiv").hide();
+            } else {
+                $("#EndDateDiv").show();
+            }
+        });
+    });
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

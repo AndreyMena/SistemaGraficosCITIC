@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
+using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
 {
@@ -57,16 +58,26 @@ namespace SistemaGraficosCITIC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Type,StartDate,EndDate")] Project project)
+        public async Task<IActionResult> Create(ProjectModel model)
         {
             if (ModelState.IsValid)
             {
-                project.Id = Guid.NewGuid();
-                _context.Add(project);
-                await _context.SaveChangesAsync();
+                if (model.isActive == true)
+                {
+                    var project = new Project(model.Name, model.Type, model.StartDate, null, model.isActive);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                }
+                else {
+                    var project = new Project(model.Name, model.Type, model.StartDate, model.EndDate, model.isActive);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
-            return View(project);
+            return RedirectToAction("index", "projects");
+            //return View(project);
         }
 
         // GET: Projects/Edit/5
