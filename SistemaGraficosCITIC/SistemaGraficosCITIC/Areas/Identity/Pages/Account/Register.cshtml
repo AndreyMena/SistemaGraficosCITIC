@@ -27,6 +27,16 @@
                         <label asp-for="Input.Email" class="form-label">Correo</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
+                    <div class="form-floating mt-3">
+                        <select class="form-select" aria-label="Default select example" >
+                            @foreach(var item in Model.typeList)
+                            {
+                                <option value="@item.Value">@item.Value</option>
+                            }
+                        </select>
+                        <label asp-for="Input.Type" class="form-label">Tipo de investigador</label>
+                        <span asp-validation-for="Input.Type" class="text-danger"></span>
+                    </div>
                     <div class="form-floating">
                         <input asp-for="Input.Password" id="Contrasena" class="form-control" autocomplete="contraseña" aria-required="true" />
                         <span id=ojo onmousedown="myFunction(this)" class="fa fa-fw fa-eye password-icon show-password"></span>
