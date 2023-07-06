@@ -12,8 +12,8 @@ using SistemaGraficosCITIC.Data;
 namespace SistemaGraficosCITIC.Migrations
 {
     [DbContext(typeof(SistemaGraficosCITICContext))]
-    [Migration("20230704041920_GraficosCITICContext")]
-    partial class GraficosCITICContext
+    [Migration("20230705234000_GraficosCITIC")]
+    partial class GraficosCITIC
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,6 +114,9 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
