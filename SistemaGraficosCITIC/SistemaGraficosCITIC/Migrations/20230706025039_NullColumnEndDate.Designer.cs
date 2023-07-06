@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaGraficosCITIC.Data;
 
@@ -11,9 +12,10 @@ using SistemaGraficosCITIC.Data;
 namespace SistemaGraficosCITIC.Migrations
 {
     [DbContext(typeof(SistemaGraficosCITICContext))]
-    partial class SistemaGraficosCITICContextModelSnapshot : ModelSnapshot
+    [Migration("20230706025039_NullColumnEndDate")]
+    partial class NullColumnEndDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,7 +122,7 @@ namespace SistemaGraficosCITIC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ResearcherId")
+                    b.Property<Guid>("ResearcherId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartDate")
@@ -202,7 +204,9 @@ namespace SistemaGraficosCITIC.Migrations
                 {
                     b.HasOne("SistemaGraficosCITIC.Models.Domain.Researcher", "Researcher")
                         .WithMany("Projects")
-                        .HasForeignKey("ResearcherId");
+                        .HasForeignKey("ResearcherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Researcher");
                 });
