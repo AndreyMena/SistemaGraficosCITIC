@@ -13,7 +13,11 @@
         public List<Exposition> Expositions { get; set; }
         public List<Product> Products { get; set; }
 
-        public Project(string name, string type, DateTime startDate, DateTime? endDate, bool isActive)
+        public Project()
+        {
+        }
+
+        public Project(string name, string type, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -21,7 +25,7 @@
             StartDate = startDate;
             EndDate = endDate;
             IsActive = isActive;
-            Researcher = null!; //Por ahora
+            Researcher = researcher; //Por ahora
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();

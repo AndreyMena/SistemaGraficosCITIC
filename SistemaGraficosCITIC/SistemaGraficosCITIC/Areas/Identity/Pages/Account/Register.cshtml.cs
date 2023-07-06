@@ -172,7 +172,7 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     Guid userGuid = new Guid(userId);
-                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type , Projects = new List<Project>()};
+                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type };
                     await _researcher.AddAsync(researcher);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

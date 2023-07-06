@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
+using SistemaGraficosCITIC.Repositories;
 using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
@@ -15,9 +17,19 @@ namespace SistemaGraficosCITIC.Controllers
     {
         private readonly SistemaGraficosCITICContext _context;
 
-        public ProjectsController(SistemaGraficosCITICContext context)
+        private readonly UserManager<IdentityUser> userManager;
+
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        private readonly IResearcherRepository researcherRepository;
+
+        public ProjectsController(SistemaGraficosCITICContext context, IResearcherRepository _researcherRepository,
+            UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager)
         {
             _context = context;
+            researcherRepository = _researcherRepository;
+            userManager = _userManager;
+            signInManager = _signInManager;
         }
 
         // GET: Projects
@@ -62,18 +74,21 @@ namespace SistemaGraficosCITIC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.isActive == true)
-                {
-                    var project = new Project(model.Name, model.Type, model.StartDate, null, model.isActive);
+                if (signInManager.IsSignedIn(User)) {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+                    var id = new Guid(currentUser.Id);
+                    var researcher = await researcherRepository.GetAsync(id);
+                    var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+
+                }else{
+                    var project = new Project(model.Name!, model.Type!, null!, model.StartDate, model.EndDate, model.isActive);
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                 }
-                else {
-                    var project = new Project(model.Name, model.Type, model.StartDate, model.EndDate, model.isActive);
-                    _context.Add(project);
-                    await _context.SaveChangesAsync();
-                }
-                
+
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction("index", "projects");
