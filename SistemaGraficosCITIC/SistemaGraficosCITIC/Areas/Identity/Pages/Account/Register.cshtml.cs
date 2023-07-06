@@ -16,7 +16,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using SistemaGraficosCITIC.Repositories;
+using SistemaGraficosCITIC.Models.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
@@ -29,20 +32,34 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IResearcherRepository _researcher;
+        public readonly List<SelectListItem> typeList;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IResearcherRepository researcherRepository)
         {
+            _researcher = researcherRepository;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+
+            typeList = new List<SelectListItem>();
+
+            typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) con propiedad", Text = "Profesor(a) con propiedad" });
+            typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) interino ECCI", Text = "Profesor(a) interino ECCI" });
+            typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) interino CITIC", Text = "Profesor(a) interino CITIC" });
+            typeList.Insert(0, new SelectListItem() { Value = "Otras unidades", Text = "Otras unidades" });
+            typeList.Insert(0, new SelectListItem() { Value = "Estudiante doctorado", Text = "Estudiante doctorado" });
+            typeList.Insert(0, new SelectListItem() { Value = "Estudiante maestría", Text = "Estudiante maestría" });
+            typeList.Insert(0, new SelectListItem() { Value = "Horas asistente", Text = "Horas asistente" });
         }
 
         /// <summary>
@@ -75,9 +92,39 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            [StringLength(100, ErrorMessage = "You must type your name.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "You must type your lastname.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Lastname")]
+            public string Lastname { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "You must select a researcher type.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Type")]
+            public string Type { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -114,8 +161,9 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -123,6 +171,9 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    Guid userGuid = new Guid(userId);
+                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type , Projects = new List<Project>()};
+                    await _researcher.AddAsync(researcher);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

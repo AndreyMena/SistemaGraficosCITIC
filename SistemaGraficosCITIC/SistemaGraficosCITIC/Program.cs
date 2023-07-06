@@ -18,6 +18,7 @@ builder.Services.AddDbContext<SistemaGraficosCITICContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IResearcherRepository, ResearcherRepository>();
 
 builder.Services.AddControllersWithViews();
 
