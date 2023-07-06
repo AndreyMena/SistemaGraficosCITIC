@@ -22,23 +22,23 @@ namespace SistemaGraficosCITIC.Repositories
 
         public async Task<Project> DeleteAsync(Guid id)
         {
-            var existingBlog = await _context.Project.FindAsync(id);
-            if (existingBlog != null)
+            var existingProject = await _context.Project.FindAsync(id);
+            if (existingProject != null)
             {
-                _context.Project.Remove(existingBlog);
+                _context.Project.Remove(existingProject);
                 await _context.SaveChangesAsync();
-                return existingBlog;
+                return existingProject;
             }
             return null;
         }
 
         public async Task<IEnumerable<Project>> GetAllAsync()
         {
-            var blogPosts = await _context.Project.Include(x => x.Researcher).ToListAsync();
+            var projectList = await _context.Project.Include(x => x.Researcher).ToListAsync();
 
-            blogPosts = blogPosts.OrderByDescending(x => x.StartDate).ToList();
+            projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
 
-            return blogPosts;
+            return projectList;
         }
 
         public async Task<Project> GetAsync(Guid id)

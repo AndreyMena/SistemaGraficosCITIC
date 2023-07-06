@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using SistemaGraficosCITIC.Repositories;
+using SistemaGraficosCITIC.Models.Domain;
 using Microsoft.Extensions.Logging;
 
 namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
@@ -30,6 +32,7 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IResearcherRepository _researcher;
         public readonly List<SelectListItem> typeList;
 
         public RegisterModel(
@@ -37,8 +40,10 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IResearcherRepository researcherRepository)
         {
+            _researcher = researcherRepository;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -82,6 +87,26 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "You must type your name.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            /// <summary>
+            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+            ///     directly from your code. This API may change or be removed in future releases.
+            /// </summary>
+            [Required]
+            [StringLength(100, ErrorMessage = "You must type your lastname.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Lastname")]
+            public string Lastname { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -136,8 +161,9 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -145,6 +171,9 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    Guid userGuid = new Guid(userId);
+                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type , Projects = new List<Project>()};
+                    await _researcher.AddAsync(researcher);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
