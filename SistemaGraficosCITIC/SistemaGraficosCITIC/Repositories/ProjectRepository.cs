@@ -46,6 +46,13 @@ namespace SistemaGraficosCITIC.Repositories
             return await _context.Project.Include(x => x.Researcher).FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id) 
+        {
+            var projectList = await _context.Project.Include(x => x.Researcher).Where(x => x.Researcher.Id == id).ToListAsync();
+            projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
+            return projectList;
+        }
+
         public async Task<Project> UpdateAsync(Project project)
         {
             var existingProj = await _context.Project.Include(x => x.Researcher).FirstOrDefaultAsync(x => x.Id == project.Id);

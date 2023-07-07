@@ -23,22 +23,33 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IResearcherRepository researcherRepository;
 
+        private readonly IProjectRepository projectRepository;
+
         public ProjectsController(SistemaGraficosCITICContext context, IResearcherRepository _researcherRepository,
-            UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager)
+            UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IProjectRepository _projectRepository)
         {
             _context = context;
             researcherRepository = _researcherRepository;
             userManager = _userManager;
             signInManager = _signInManager;
+            projectRepository = _projectRepository;
         }
 
         // GET: Projects
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-              return _context.Project != null ? 
-                          View(await _context.Project.ToListAsync()) :
-                          Problem("Entity set 'SistemaGraficosCITICContext.Project'  is null.");
+            if (signInManager.IsSignedIn(User))
+            {
+                var userName = User.Identity!.Name;
+                var currentUser = await userManager.FindByNameAsync(userName);
+                var id = new Guid(currentUser.Id);
+                return _context.Project != null ?
+                              View(await projectRepository.GetProjectsByResearcher(id)) :
+                              Problem("Entity set 'SistemaGraficosCITICContext.Project'  is null.");
+            }else{
+                return View();
+            }
         }
 
         // GET: Projects/Details/5
