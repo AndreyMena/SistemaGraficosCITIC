@@ -15,9 +15,13 @@ namespace SistemaGraficosCITIC.Controllers
     {
         private readonly SistemaGraficosCITICContext _context;
 
+        // TODO: Agregar acá un objeto ProjectModel y luego instanciarlo
+        ProjectModel _projectModel;
+
         public ProjectsController(SistemaGraficosCITICContext context)
         {
             _context = context;
+            _projectModel = new ProjectModel();
         }
 
         // GET: Projects
@@ -50,7 +54,7 @@ namespace SistemaGraficosCITIC.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            return View();
+            return View(_projectModel);
         }
 
         // POST: Projects/Create
