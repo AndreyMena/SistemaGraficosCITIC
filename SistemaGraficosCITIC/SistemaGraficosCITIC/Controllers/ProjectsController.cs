@@ -25,6 +25,8 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IProjectRepository projectRepository;
 
+        ProjectModel _projectModel;
+
         public ProjectsController(SistemaGraficosCITICContext context, IResearcherRepository _researcherRepository,
             UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IProjectRepository _projectRepository)
         {
@@ -33,6 +35,7 @@ namespace SistemaGraficosCITIC.Controllers
             userManager = _userManager;
             signInManager = _signInManager;
             projectRepository = _projectRepository;
+            _projectModel = new ProjectModel();
         }
 
         // GET: Projects
@@ -73,7 +76,7 @@ namespace SistemaGraficosCITIC.Controllers
         // GET: Projects/Create
         public IActionResult Create()
         {
-            return View();
+            return View(_projectModel);
         }
 
         // POST: Projects/Create
