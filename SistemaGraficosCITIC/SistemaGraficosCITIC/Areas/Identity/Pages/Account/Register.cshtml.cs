@@ -161,7 +161,7 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -172,7 +172,7 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     Guid userGuid = new Guid(userId);
-                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type , Projects = new List<Project>()};
+                    Researcher researcher = new Researcher { Id = userGuid, Name = Input.Name, LastName = Input.Lastname, Type = Input.Type };
                     await _researcher.AddAsync(researcher);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

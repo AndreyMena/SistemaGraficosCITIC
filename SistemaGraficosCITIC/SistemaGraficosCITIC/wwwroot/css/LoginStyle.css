@@ -8,7 +8,7 @@
   padding: 8% 0 0;
   margin: auto;
 }
-.form {
+.formLogin {
     position: absolute;
     z-index: 1;
     background: #FFFFFF;
@@ -18,6 +18,20 @@
     left: 35%;
     right: 35%;
     top: 20%;
+    text-align: right;
+    box-shadow: 0 0 20px 0 rgb(67 69 70 / 20%), 0 5px 5px 0 rgb(67 69 70 / 24%)
+}
+
+.form {
+    position: absolute;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 70%;
+    margin: 0 auto 100px;
+    padding: 30px;
+    left: 35%;
+    right: 35%;
+    top: 4%;
     text-align: right;
     box-shadow: 0 0 20px 0 rgb(67 69 70 / 20%), 0 5px 5px 0 rgb(67 69 70 / 24%)
 }
@@ -32,6 +46,18 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+.form inputL {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -47,6 +73,23 @@
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
+}
+
+.form buttonL {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #005DA4;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
 }
 
 .Confirm-email {
@@ -69,17 +112,34 @@
 .form button:hover,.form button:active,.form button:focus {
   background: #005DA4;
 }
+.formLogin buttonL:hover, .formLogin buttonL:active, .formLogin buttonL:focus {
+    background: #005DA4;
+}
+
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
   font-size: 12px;
 }
+.formLogin .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+
 .form .message a {
   color: #005DA4;
   text-decoration: none;
 }
+.formLogin .message a {
+    color: #005DA4;
+    text-decoration: none;
+}
 .form .register-form {
   display: none;
+}
+.formLogin .register-form {
+    display: none;
 }
 .container {
   position: relative;
