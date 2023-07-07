@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var publicationsCount = 0;
 }
 
 <div class="container">
@@ -216,9 +217,12 @@
         </script>
 
         <script>
+            var contador = @publicationsCount;
+
             function buttonAddPublications(x) {
                 var div = document.getElementById("publications");
                 
+
                 var formularioHTML = `
                                     <div class="card  mt-3" style="width: 18rem;">
                                         <div class="card-body">
@@ -228,19 +232,19 @@
                                                         </div>
 
                                             <div class="form-floating">
-                                                <input id="" class="form-control" autocomplete="" aria-required="true" />
+                                                <input id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
                                                 <label class="form-label">Título</label>
                                             </div>
                                             <div class="form-floating">
                                                 <label type="Date" class="control-label"></label>
-                                                <input type="Date" class="form-control" />
+                                                <input id="PublicationsDate${contador}" type="Date" class="form-control" />
                                             </div>
                                             <div class="form-floating">
-                                                <input id="" class="form-control" autocomplete="" aria-required="true" />
+                                                <input id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
                                                 <label class="form-label">Referencia</label>
                                             </div>
                                             <div class="form-floating mt-3">
-                                                <select class="form-select" aria-label="Default select example">
+                                                <select id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
                                                 </select>
                                                 <label class="form-label">Tipo</label>
                                                 <span class="text-danger"></span>
@@ -249,7 +253,8 @@
                                                                 
                                     </div>
                         `;
-                div.insertAdjacentHTML("beforeend", formularioHTML)
+                div.insertAdjacentHTML("beforeend", formularioHTML);
+                contador = contador + 1;
             }
 
 
@@ -258,12 +263,16 @@
                 var abuelo = padre.parentNode;
                 var abuelo = abuelo.parentNode;
                 abuelo.remove();
+                //this.deletePublication();
             }
+
         </script>
 
         <script>
 
             function addPublication() { @Model.CounterPublications++; }
+
+            function deletePublication() { @Model.CounterPublications--; }
 
             function addExposition() { @Model.CounterExpositions++; }
 

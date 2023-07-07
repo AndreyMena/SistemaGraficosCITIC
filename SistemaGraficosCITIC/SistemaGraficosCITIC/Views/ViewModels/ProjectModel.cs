@@ -18,6 +18,8 @@ namespace SistemaGraficosCITIC.Views.ViewModels
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
+        public List<string>? listaName { get; set; }    
+
         public int CounterPublications { get; set; } = 0;
         public int CounterExpositions { get; set; } = 0;
         public int CounterProducts { get; set; } = 0;
