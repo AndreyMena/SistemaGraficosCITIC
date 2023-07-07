@@ -66,8 +66,8 @@
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse collapse" data-bs-parent="#accordionExample" style="">
                               <div class="accordion-body">
-            
-                            <button id="addPubliButton" type="button" class="btn btn-primary" onclick="refreshPublications"><strong>+</strong></button>
+
+                                    <button id="addPubliButton" type="button" class="btn btn-primary" onclick="buttonAddPublications(this)"><strong>+</strong></button>
 
                                 <div id="publications">
                                     <!-- Muestre cards tantas veces como lo que tiene el contador -->
@@ -201,7 +201,7 @@
         <div>
             <a asp-action="Index">Back to List</a>
         </div>
-
+        
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -222,7 +222,10 @@
                 var formularioHTML = `
                                     <div class="card  mt-3" style="width: 18rem;">
                                         <div class="card-body">
-                                            <h5 class="card-title">Publicación</h5>
+                                                        <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">Publicación</h5>
+                                                <button type="button" onclick="deletePublicationCard(this)" class="btn-close" aria-label="Close"></button>
+                                                        </div>
 
                                             <div class="form-floating">
                                                 <input id="" class="form-control" autocomplete="" aria-required="true" />
@@ -243,9 +246,18 @@
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
+                                                                
                                     </div>
                         `;
                 div.insertAdjacentHTML("beforeend", formularioHTML)
+            }
+
+
+            function deletePublicationCard(x) {
+                var padre = x.parentNode;
+                var abuelo = padre.parentNode;
+                var abuelo = abuelo.parentNode;
+                abuelo.remove();
             }
         </script>
 
