@@ -11,6 +11,15 @@ a {
   color: #0077cc;
 }
 
+footer {
+    margin-top: auto;
+    background-color: #fff;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
