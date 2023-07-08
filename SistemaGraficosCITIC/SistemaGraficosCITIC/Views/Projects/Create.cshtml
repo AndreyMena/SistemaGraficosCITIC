@@ -53,77 +53,57 @@
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
                     <br />
-
-
-
-                    <hr />
-                        <div class="accordion mt-3" id="accordionExample">
-
-                          <div class="accordion-item">
-                            <h2 class="accordion-header">
-                              <button class="accordion-button collapsed mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                Publicaciones asociadas:  @Model.CounterPublications
-                              </button>
-                            </h2>
-
-                            <div id="collapseOne" class="accordion-collapse collapse collapse" data-bs-parent="#accordionExample" style="">
-                              <div class="accordion-body">
-
-                                    <button id="addPubliButton" type="button" class="btn btn-primary" onclick="buttonAddPublications(this)" data-bs-toggle="modal" data-bs-target="#popupPublicationsForm"><strong>+</strong></button>
-                                <div id="publications">
-                                    <!-- Muestre cards tantas veces como lo que tiene el contador -->
-                                </div>
-
-                                <!-- Modal -->
-                                <div class="modal fade" id="popupPublicationsForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content d-flex justify-content-center">
-                                            <div class="modal-body d-flex justify-content-center">
-                                                <div class="card mt-3 mx-auto" style="width: 18rem;">
-                                                    <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h5 class="card-title">Publicación</h5>
-                                                            <button type="button" onclick="deletePublicationCard(this)" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-
-                                                        <div class="form-floating">
-                                                            <input id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                            <label class="form-label">Título</label>
-                                                        </div>
-                                                        <div class="form-floating">
-                                                            <label type="Date" class="control-label"></label>
-                                                            <input id="PublicationsDate${contador}" type="Date" class="form-control" />
-                                                        </div>
-                                                        <div class="form-floating">
-                                                            <input id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                            <label class="form-label">Referencia</label>
-                                                        </div>
-                                                        <div class="form-floating mt-3">
-                                                            <select id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
-                                                            </select>
-                                                            <label class="form-label">Tipo</label>
-                                                            <span class="text-danger"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                    <div id="PublicationsDiv" class="form-group">
+                        <label class="control-label">Publications</label>
+                        <button id="addPubliButton" type="button" class="btn btn-primary" onclick="buttonAddPublications(this)" data-bs-toggle="modal" 
+                            data-bs-target="#popupPublicationsForm"><strong>+</strong> Add</button>
+                        <!-- MODAL DE PUBLICACIONES -->
+                        <div class="modal fade" id="popupPublicationsForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content d-flex">
+                                    <div class="modal-body d-flex justify-content-around">
+                                        <div class="mt-4">
+                                            <div class="d-flex justify-content-between">
+                                                <h5 class="card-title">Publicación</h5>
+                                                <button type="button" onclick="deletePublicationCard(this)" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save</button> @*Este boton guardaria la publicacion*@
+
+                                            <div class="form-floating mt-3">
+                                                <input id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
+                                                <label class="form-label">Title</label>
+                                            </div>
+                                            <div class="form-floating mt-3">
+                                                <label type="Date" class="control-label"></label>
+                                                <input id="PublicationsDate${contador}" type="Date" class="form-control" />
+                                            </div>
+                                            <div class="form-floating mt-3">
+                                                <input id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
+                                                <label class="form-label">Reference</label>
+                                            </div>
+                                            <div class="form-floating mt-3">
+                                                <select id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
+                                                    <option value="Conference">Conference</option>
+                                                    <option value="Journal">Journal</option>
+                                                    <option value="Magazine">Magazine</option>
+                                                </select>
+                                                <label class="form-label">Type</label>
+                                                <span class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save</button> @*Este boton guardaria la publicacion*@
                                     </div>
                                 </div>
-
-
-                              </div>
                             </div>
-
-                          </div>
                         </div>
-                    <hr />
+                        <!-- FIN MODAL -->
+                    </div>
+                    <br />
 
-
+                    <!-- TODO: Agregar aquí las otras 2 secciones cuando ya funcione Publicaciones -->
 
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />
