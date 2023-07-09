@@ -94,17 +94,20 @@ namespace SistemaGraficosCITIC.Controllers
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
                     if (model.isActive) {
-                        var project = new Project(model.Name!, model.Type!, null!, model.StartDate, model.EndDate, model.isActive);
-                        _context.Add(project);
-                        await _context.SaveChangesAsync();
-                        var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Publications", projectId);
-                    }else{ 
                         var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
                         _context.Add(project);
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Publications", projectId);
+                        View(projectId);
+                        return RedirectToAction("Create", "Publications", new { projectId = projectId });
+                    }
+                    else{ 
+                        var project = new Project(model.Name!, model.Type!, researcher!,/*Enviar null*/ model.StartDate, model.EndDate, model.isActive);
+                        _context.Add(project);
+                        await _context.SaveChangesAsync();
+                        var projectId = project.Id.ToString();
+                        //return RedirectToRoute(new { controller = "Publications", action = "Create", projectId = projectId });
+                        return RedirectToAction("Create", "Publications", new { projectId = projectId })
                     }
                 }else{
                     return RedirectToAction(nameof(Index));

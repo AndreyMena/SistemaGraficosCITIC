@@ -8,6 +8,8 @@
         public string Reference { get; set; }
         public string Type { get; set; }
 
+        public Project? Project { get; set; }
+
         public Publication(string title, DateTime date, string reference, string type)
         {
             Id = Guid.NewGuid();

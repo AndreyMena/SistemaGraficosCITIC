@@ -38,7 +38,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admin");
+                    b.ToTable("Admin", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Exposition", b =>
@@ -65,7 +65,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Exposition");
+                    b.ToTable("Exposition", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Product", b =>
@@ -101,7 +101,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Project", b =>
@@ -134,7 +134,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasIndex("ResearcherId");
 
-                    b.ToTable("Project");
+                    b.ToTable("Project", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Publication", b =>
@@ -165,7 +165,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Publication");
+                    b.ToTable("Publication", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Researcher", b =>
@@ -185,7 +185,7 @@ namespace SistemaGraficosCITIC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Researcher");
+                    b.ToTable("Researcher", (string)null);
                 });
 
             modelBuilder.Entity("SistemaGraficosCITIC.Models.Domain.Exposition", b =>
