@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaGraficosCITIC.Data;
 
@@ -11,9 +12,10 @@ using SistemaGraficosCITIC.Data;
 namespace SistemaGraficosCITIC.Migrations
 {
     [DbContext(typeof(SistemaGraficosCITICContext))]
-    partial class SistemaGraficosCITICContextModelSnapshot : ModelSnapshot
+    [Migration("20230709063930_TitlePublication")]
+    partial class TitlePublication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

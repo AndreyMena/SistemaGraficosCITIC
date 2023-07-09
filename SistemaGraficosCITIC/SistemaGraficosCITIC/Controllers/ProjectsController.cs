@@ -93,21 +93,24 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
-                    model.storedId = id; //TODO: Borrar esta linea si fuera necesario.
-                    _context.Add(project);
-                    await _context.SaveChangesAsync();
-
+                    if (model.isActive) {
+                        var project = new Project(model.Name!, model.Type!, null!, model.StartDate, model.EndDate, model.isActive);
+                        _context.Add(project);
+                        await _context.SaveChangesAsync();
+                        var projectId = project.Id.ToString();
+                        return RedirectToAction("Create", "Publications", projectId);
+                    }else{ 
+                        var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
+                        _context.Add(project);
+                        await _context.SaveChangesAsync();
+                        var projectId = project.Id.ToString();
+                        return RedirectToAction("Create", "Publications", projectId);
+                    }
                 }else{
-                    var project = new Project(model.Name!, model.Type!, null!, model.StartDate, model.EndDate, model.isActive);
-                    _context.Add(project);
-                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-
-                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction("index", "projects");
-            //return View(project);
         }
 
         // GET: Projects/Edit/5
@@ -209,11 +212,12 @@ namespace SistemaGraficosCITIC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterPublications(ProjectModel model)
         {
+            /*
             if (ModelState.IsValid && model.ProjectPublications.Count > 0)
             {
                 foreach (Publication p in model.ProjectPublications)
                 {
-                    p.Id = model.storedId;  // Apply the ID used to register Project in DB
+                    //p.Id = model.storedId;  // Apply the ID used to register Project in DB
                     _context.Add(p);
                 }
 
@@ -222,7 +226,8 @@ namespace SistemaGraficosCITIC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction("index", "projects");
-            //return View(project);
+            */
+            return View();
         }
 
     }

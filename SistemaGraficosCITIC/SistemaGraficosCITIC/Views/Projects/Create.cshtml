@@ -1,7 +1,6 @@
 ﻿@using SistemaGraficosCITIC.Controllers
 
-@model SistemaGraficosCITIC.Views.ViewModels.ProjectModel
-
+@model ProjectModel
 @{
     ViewData["Title"] = "Create";
     var publicationsCount = 0;
@@ -53,60 +52,6 @@
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
                     <br />
-                    <div id="PublicationsDiv" class="form-group">
-                        <label class="control-label">Publications</label>
-                        <!-- BOTÓN AGREGAR PUBLICACIÓN -->
-                        <button id="addPubliButton" type="button" class="btn btn-primary" onclick="buttonAddPublications(this)" data-bs-toggle="modal" 
-                            data-bs-target="#popupPublicationsForm"><strong>+</strong> Add</button>
-                        <!-- MODAL DE PUBLICACIONES -->
-                        <div class="modal fade" id="popupPublicationsForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content d-flex">
-                                    <div class="modal-body d-flex justify-content-around">
-                                        <div class="mt-4">
-                                            <div class="d-flex justify-content-between">
-                                                <h5 class="card-title">Publicación</h5>
-                                                <button type="button" onclick="deletePublicationCard(this)" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-
-                                            <div class="form-floating mt-3">
-                                                <input asp-for="PublicationTitle" id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Title</label>
-                                            </div>
-                                            <div class="form-floating mt-3">
-                                                <label type="Date" class="control-label"></label>
-                                                <input asp-for="PublicationDate" id="PublicationsDate${contador}" type="Date" class="form-control" />
-                                            </div>
-                                            <div class="form-floating mt-3">
-                                                <input asp-for="PublicationReference" id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Reference</label>
-                                            </div>
-                                            <div class="form-floating mt-3">
-                                                <select asp-for="PublicationType" id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
-                                                    <option value="Conference">Conference</option>
-                                                    <option value="Journal">Journal</option>
-                                                    <option value="Magazine">Magazine</option>
-                                                </select>
-                                                <label class="form-label">Type</label>
-                                                <span class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="@Model.addPublication" >
-                                            Save</button> @*Este boton guardaria la publicacion*@
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- FIN MODAL -->
-                    </div>
-                    <br />
-
-                    <!-- TODO: Agregar aquí las otras 2 secciones cuando ya funcione Publicaciones -->
-
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />
                     </div>

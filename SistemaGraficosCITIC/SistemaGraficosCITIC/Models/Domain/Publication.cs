@@ -8,9 +8,9 @@
         public string Reference { get; set; }
         public string Type { get; set; }
 
-        public Publication(Guid id, string title, DateTime date, string reference, string type)
+        public Publication(string title, DateTime date, string reference, string type)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             Title = title;
             Date = date;
             Reference = reference;
