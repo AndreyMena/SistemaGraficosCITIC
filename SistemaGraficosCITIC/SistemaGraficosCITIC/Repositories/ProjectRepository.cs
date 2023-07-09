@@ -43,7 +43,7 @@ namespace SistemaGraficosCITIC.Repositories
 
         public async Task<Project> GetAsync(Guid id)
         {
-            return await _context.Project.Include(x => x.Researcher).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Project.Include(x => x.Researcher).Include(x => x.Publications).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id) 

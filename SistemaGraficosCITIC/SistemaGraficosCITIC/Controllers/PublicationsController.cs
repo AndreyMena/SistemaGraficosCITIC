@@ -21,12 +21,15 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly SignInManager<IdentityUser> signInManager;
 
+        private readonly IProjectRepository projectRepository;
+
         public PublicationsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
-            UserManager<IdentityUser> _userManager)
+            UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
             _context = context;
             userManager = _userManager;
             signInManager = _signInManager;
+            projectRepository = _projectRepository;
         }
 
         // GET: Publications
@@ -57,8 +60,10 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         // GET: Publications/Create
-        public IActionResult Create()
+        public IActionResult Create(string projectId)
         {
+            //viewd
+            ViewData["projectId"] = projectId;
             return View();
         }
 
@@ -77,8 +82,11 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
 
                     var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
-                    _context.Add(publication);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    _context.Publication.Add(publication);
+                    project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
+                    
                 }
                 else
                 {

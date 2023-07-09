@@ -1,4 +1,6 @@
-﻿namespace SistemaGraficosCITIC.Models.Domain
+﻿using System.Xml.Linq;
+
+namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Project
     {
@@ -15,6 +17,13 @@
 
         public Project()
         {
+            Id = Guid.NewGuid();
+            Name = null!;
+            Type = null!;
+            EndDate = null;
+            Publications = new List<Publication>();
+            Expositions = new List<Exposition>();
+            Products = new List<Product>();
         }
 
         public Project(string name, string type, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive)
