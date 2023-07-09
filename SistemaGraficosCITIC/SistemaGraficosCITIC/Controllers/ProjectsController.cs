@@ -94,6 +94,7 @@ namespace SistemaGraficosCITIC.Controllers
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
                     var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
+                    model.storedId = id; //TODO: Borrar esta linea si fuera necesario.
                     _context.Add(project);
                     await _context.SaveChangesAsync();
 
@@ -201,5 +202,28 @@ namespace SistemaGraficosCITIC.Controllers
         {
           return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        
+        // Registers each Publication stored in the DB, after registering its parent Project
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterPublications(ProjectModel model)
+        {
+            if (ModelState.IsValid && model.ProjectPublications.Count > 0)
+            {
+                foreach (Publication p in model.ProjectPublications)
+                {
+                    p.Id = model.storedId;  // Apply the ID used to register Project in DB
+                    _context.Add(p);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("index", "projects");
+            //return View(project);
+        }
+
     }
 }
