@@ -1,4 +1,6 @@
-﻿namespace SistemaGraficosCITIC.Models.Domain
+﻿using System.Xml.Linq;
+
+namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Publication
     {
@@ -10,6 +12,14 @@
 
         public Project? Project { get; set; }
 
+        public Publication()
+        {
+            Id = Guid.NewGuid();
+            Title = "";
+            Date = DateTime.MinValue;
+            Reference = "";
+            Type = "";
+        }
         public Publication(string title, DateTime date, string reference, string type)
         {
             Id = Guid.NewGuid();
