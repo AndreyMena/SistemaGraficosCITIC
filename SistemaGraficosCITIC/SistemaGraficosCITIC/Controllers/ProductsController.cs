@@ -90,6 +90,8 @@ namespace SistemaGraficosCITIC.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
+                var projectId = model.ProjectId;
+                //, new { projectId = projectId });
                 return RedirectToAction("Index", "Projects");   // Redirigir a la página inicial de proyectos?
             }
             return View(model);
@@ -98,16 +100,35 @@ namespace SistemaGraficosCITIC.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,State,Marketable,License")] Product product)
+        public async Task<IActionResult> Create(ProductModel model, int? check)
         {
             if (ModelState.IsValid)
             {
-                product.Id = Guid.NewGuid();
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, model.ProductMarketable, model.ProductLicense);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    _context.Product.Add(product);
+                    project!.Products.Add(product);
+
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                ViewData["projectId"] = model.ProjectId!;
+                model.ProductName = "";
+                model.ProductDescription = "";
+                model.ProductState = "";
+                model.ProductMarketable = "";
+                model.ProductLicense = "";
+                return View("Create", new ProductModel());
             }
-            return View(product);
+            return View(model);
         }
 
         // GET: Products/Edit/5
