@@ -86,22 +86,6 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-
-<script>
-
-    function clearFields(x) {
-        //Comentado por ahora para probar el popup
-        /*
-        var padre = x.parentNode;
-        var abuelo = padre.parentNode;
-        var abuelo = abuelo.parentNode;
-        abuelo.remove();
-        */
-        contador = contador - 1;
-    }
-
-</script>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
