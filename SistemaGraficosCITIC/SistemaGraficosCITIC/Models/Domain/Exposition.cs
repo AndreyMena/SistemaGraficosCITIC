@@ -6,5 +6,16 @@
         public DateTime Date { get; set; }
         public string Location { get; set; }
         public string Context { get; set; }
+
+        public Project? Project { get; set; }
+
+        public Exposition(DateTime date, string location, string context)
+        {
+            Id = Guid.NewGuid();
+            Date = date;
+            Location = location;
+            Context = context;
+        }
+
     }
 }

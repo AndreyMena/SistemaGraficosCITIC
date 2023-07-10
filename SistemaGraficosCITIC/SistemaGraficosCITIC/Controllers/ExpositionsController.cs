@@ -15,7 +15,7 @@ using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
 {
-    public class PublicationsController : Controller
+    public class ExpositionsController : Controller
     {
         private readonly SistemaGraficosCITICContext _context;
 
@@ -25,7 +25,7 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IProjectRepository projectRepository;
 
-        public PublicationsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
+        public ExpositionsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
             UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
             _context = context;
@@ -34,47 +34,43 @@ namespace SistemaGraficosCITIC.Controllers
             projectRepository = _projectRepository;
         }
 
-        // GET: Publications
+        // GET: Expositions
         public async Task<IActionResult> Index()
         {
-
-              return _context.Publication != null ? 
-                          View(await _context.Publication.ToListAsync()) :
-                          Problem("Entity set 'SistemaGraficosCITICContext.Publication'  is null.");
+              return _context.Exposition != null ? 
+                          View(await _context.Exposition.ToListAsync()) :
+                          Problem("Entity set 'SistemaGraficosCITICContext.Exposition'  is null.");
         }
 
-        // GET: Publications/Details/5
+        // GET: Expositions/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Publication == null)
+            if (id == null || _context.Exposition == null)
             {
                 return NotFound();
             }
 
-            var publication = await _context.Publication
+            var exposition = await _context.Exposition
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (publication == null)
+            if (exposition == null)
             {
                 return NotFound();
             }
 
-            return View(publication);
+            return View(exposition);
         }
 
-        // GET: Publications/Create
+        // GET: Expositions/Create
         public IActionResult Create(string projectId)
         {
-            //viewd
             ViewData["projectId"] = projectId;
             return View();
         }
 
-        // POST: Publications/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Expositions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddContinue(PublicationModel model)
+        public async Task<IActionResult> AddContinue(ExpositionModel model)
         {
             if (ModelState.IsValid)
             {
@@ -83,83 +79,83 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
-                    _context.Publication.Add(publication);
-                    project!.Publications.Add(publication);
-                    await _context.SaveChangesAsync();
+                    var expo = new Exposition(model.ExpositionDate, model.ExpositionLocation, model.ExpositionContext);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    _context.Exposition.Add(expo);
+                    project!.Expositions.Add(expo);
 
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
                     return RedirectToAction(nameof(Index));
                 }
                 var projectId = model.ProjectId;
-                return RedirectToAction("Create", "Expositions", new { projectId = projectId });
+                return RedirectToAction("Create", "Products", new { projectId = projectId });
             }
             return View(model);
         }
 
-        // POST: Publications/Create
+        // POST: Expositions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PublicationModel model, int? check)
+        public async Task<IActionResult> Create(ExpositionModel model, int? check)
         {
             if (ModelState.IsValid)
             {
                 if (signInManager.IsSignedIn(User))
                 {
-                    var userName = User.Identity!.Name;
+                    /*var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
                     var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
-                    await _context.SaveChangesAsync();
-                    
+                    await _context.SaveChangesAsync();*/
+
                 }
                 else
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                ViewData["projectId"] = model.ProjectId!;
+                /*ViewData["projectId"] = model.ProjectId!;
                 model.PublicationDate = new DateTime();
                 model.PublicationTitle = "";
                 model.PublicationType = "";
                 model.PublicationReference = "";
                 return View("Create", new PublicationModel());
-                return RedirectToAction("Create", "Publications", new {projectId = model.ProjectId } );
+                return RedirectToAction("Create", "Publications", new { projectId = model.ProjectId });*/
             }
             return View(model);
         }
 
-        // GET: Publications/Edit/5
+        // GET: Expositions/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Publication == null)
+            if (id == null || _context.Exposition == null)
             {
                 return NotFound();
             }
 
-            var publication = await _context.Publication.FindAsync(id);
-            if (publication == null)
+            var exposition = await _context.Exposition.FindAsync(id);
+            if (exposition == null)
             {
                 return NotFound();
             }
-            return View(publication);
+            return View(exposition);
         }
 
-        // POST: Publications/Edit/5
+        // POST: Expositions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Date,Reference,Type")] Publication publication)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Location,Context")] Exposition exposition)
         {
-            if (id != publication.Id)
+            if (id != exposition.Id)
             {
                 return NotFound();
             }
@@ -168,12 +164,12 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 try
                 {
-                    _context.Update(publication);
+                    _context.Update(exposition);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PublicationExists(publication.Id))
+                    if (!ExpositionExists(exposition.Id))
                     {
                         return NotFound();
                     }
@@ -184,49 +180,49 @@ namespace SistemaGraficosCITIC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(publication);
+            return View(exposition);
         }
 
-        // GET: Publications/Delete/5
+        // GET: Expositions/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Publication == null)
+            if (id == null || _context.Exposition == null)
             {
                 return NotFound();
             }
 
-            var publication = await _context.Publication
+            var exposition = await _context.Exposition
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (publication == null)
+            if (exposition == null)
             {
                 return NotFound();
             }
 
-            return View(publication);
+            return View(exposition);
         }
 
-        // POST: Publications/Delete/5
+        // POST: Expositions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Publication == null)
+            if (_context.Exposition == null)
             {
-                return Problem("Entity set 'SistemaGraficosCITICContext.Publication'  is null.");
+                return Problem("Entity set 'SistemaGraficosCITICContext.Exposition'  is null.");
             }
-            var publication = await _context.Publication.FindAsync(id);
-            if (publication != null)
+            var exposition = await _context.Exposition.FindAsync(id);
+            if (exposition != null)
             {
-                _context.Publication.Remove(publication);
+                _context.Exposition.Remove(exposition);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PublicationExists(Guid id)
+        private bool ExpositionExists(Guid id)
         {
-          return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Exposition?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

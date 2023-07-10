@@ -4,45 +4,82 @@
     ViewData["Title"] = "Create";
     var projectId = ViewData["projectId"] as string;
 }
-<div>Project ID: @projectId</div>
-<h1>Create</h1>
+<div class="container">
 
-<h4>Publication</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="PublicationTitle" class="control-label"></label>
-                <input asp-for="PublicationTitle" class="form-control" />
-                <span asp-validation-for="PublicationTitle" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublicationDate" class="control-label"></label>
-                <input asp-for="PublicationDate" class="form-control" />
-                <span asp-validation-for="PublicationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublicationReference" class="control-label"></label>
-                <input asp-for="PublicationReference" class="form-control" />
-                <span asp-validation-for="PublicationReference" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublicationType" class="control-label"></label>
-                <input asp-for="PublicationType" class="form-control" />
-                <span asp-validation-for="PublicationType" class="text-danger"></span>
-            </div>
-            <div class="form-group" type="hidden">
-                <label type="hidden"  asp-for="ProjectId" class="control-label"></label>
-                <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
-                <span asp-validation-for="ProjectId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <h2>Create Project</h2>
+    <p>Step 2</p>
+
+    <div class="progress mt-3" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar" style="width: 50%"></div>
     </div>
+
+    <hr />
+
+    <h5>Publications</h5>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating mt-3">
+            <input value="" asp-for="PublicationTitle" class="form-control" />
+            <label asp-for="PublicationTitle" class="control-label">Title</label>
+            <span asp-validation-for="PublicationTitle" class="text-danger"></span>
+        </div>
+        <div class="form-floating mt-3">
+            <input value="" asp-for="PublicationDate" class="form-control" />
+            <label asp-for="PublicationDate" class="control-label">Date</label>
+            <span asp-validation-for="PublicationDate" class="text-danger"></span>
+        </div>
+        <div class="form-floating mt-3">
+            <input value="" asp-for="PublicationReference" class="form-control" />
+            <label asp-for="PublicationReference" class="control-label">Reference</label>
+            <span asp-validation-for="PublicationReference" class="text-danger"></span>
+        </div>
+        <div class="form-floating mt-3">
+            <select asp-for="PublicationType" id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
+                <option value="Conference">Conference</option>
+                <option value="Journal">Journal</option>
+                <option value="Magazine">Magazine</option>
+            </select>
+            <label class="form-label">Type</label>
+        </div>
+        <div class="form-floating mt-3" type="hidden">
+            <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
+        </div>
+
+        <div class="form-floating mt-3">
+            <button type="button" class="btn btn-warning" href="">Skip (No publications)</button> <!-- TODO: Poner la dirección en el href -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Save</button>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content d-flex justify-content-center">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Publication saved</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you wish to continue or add another Publication?</p>
+                    </div>
+                    <div class="modal-footer">
+                        @*<input type="submit" value="Create" class="btn btn-primary" />*@
+                        <button type="submit" value="Create" class="btn btn-warning" >Add another</button>
+                        <button asp-action="AddContinue" value="Create" asp-controller="Publications" type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>@*
+        <div class="form-floating mt-3">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>*@
+        <!-- Modal -->
+    </form>
 </div>
 
 <div>
