@@ -30,7 +30,7 @@ namespace UnitTesting.Domain
                 Researcher = new Researcher(), //Por ahora
                 Publications = new List<Publication>(),
                 Expositions = new List<Exposition>(),
-                Products = new List<Product>(),
+                Products = new List<Product>()
             };
             // act 
             var project = new Project("Project", "Accion social", researcher, date, date, true);
@@ -49,18 +49,15 @@ namespace UnitTesting.Domain
             var projectTest = new
             {
                 Id = id,
-                Name = "Project",
-                Type = "Accion social",
-                StartDate = date,
-                EndDate = date,
-                IsActive = true,
-                Researcher = new Researcher(), //Por ahora
+                Name = ""!,
+                Type = ""!,
+                EndDate = DateTime.MinValue,
                 Publications = new List<Publication>(),
                 Expositions = new List<Exposition>(),
-                Products = new List<Product>(),
+                Products = new List<Product>()
             };
             // act 
-            var project = new Project("Project", "Accion social", researcher, date, date, true);
+            var project = new Project();
             project.Id = id;
             // assert
             project.Should().BeEquivalentTo(projectTest);

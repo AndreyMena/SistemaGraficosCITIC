@@ -18,9 +18,9 @@ namespace SistemaGraficosCITIC.Models.Domain
         public Project()
         {
             Id = Guid.NewGuid();
-            Name = null!;
-            Type = null!;
-            EndDate = null;
+            Name = "";
+            Type = "";
+            EndDate = DateTime.MinValue;
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();
