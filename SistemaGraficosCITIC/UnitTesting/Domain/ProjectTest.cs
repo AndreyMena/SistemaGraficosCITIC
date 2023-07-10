@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using FluentAssertions;
 using SistemaGraficosCITIC.Models.Domain;
 
 namespace UnitTesting.Domain
@@ -12,28 +13,57 @@ namespace UnitTesting.Domain
     public class ProjectTest
     {
         [Fact]
-        public void PeopleTestInstancePerson()
+        public void ProjectTestInstanceProject()
         {
             // arrange
-            /*
+            var date = new DateTime();
+            var researcher = new Researcher();
+            var id = Guid.NewGuid();
             var projectTest = new
             {
-                Id = "Email1",
-                Name = RequiredString.TryCreate("Marcelo").Success(),
-                LastName1 = RequiredString.TryCreate("Jenkins").Success(),
-                LastName2 = RequiredString.TryCreate("Coronas").Success(),
-                HighestDegree = PersonHighestDegree.TryCreate("Dr.").Success(),
-                University = RequiredString.TryCreate("Universidad de Costa Rica").Success(),
-                ProfilePicture = profilePic,
-                CoordinatorGroups = coordinatorGroups,
-                ResearchGroup = researchGroup
-            };*/
-
+                Id = id,
+                Name = "Project",
+                Type = "Accion social",
+                StartDate = date,
+                EndDate = date,
+                IsActive = true,
+                Researcher = new Researcher(), //Por ahora
+                Publications = new List<Publication>(),
+                Expositions = new List<Exposition>(),
+                Products = new List<Product>(),
+            };
             // act 
-            var person = new Project("Project", "Accion social", null, new DateTime(), new DateTime(), true);
-
+            var project = new Project("Project", "Accion social", researcher, date, date, true);
+            project.Id = id;
             // assert
-            //person.Should().BeEquivalentTo(personTest);
+            project.Should().BeEquivalentTo(projectTest);
+        }
+
+        [Fact]
+        public void ProjectTestInstanceProjectEmpty()
+        {
+            // arrange
+            var date = new DateTime();
+            var researcher = new Researcher();
+            var id = Guid.NewGuid();
+            var projectTest = new
+            {
+                Id = id,
+                Name = "Project",
+                Type = "Accion social",
+                StartDate = date,
+                EndDate = date,
+                IsActive = true,
+                Researcher = new Researcher(), //Por ahora
+                Publications = new List<Publication>(),
+                Expositions = new List<Exposition>(),
+                Products = new List<Product>(),
+            };
+            // act 
+            var project = new Project("Project", "Accion social", researcher, date, date, true);
+            project.Id = id;
+            // assert
+            project.Should().BeEquivalentTo(projectTest);
         }
     }
 }
