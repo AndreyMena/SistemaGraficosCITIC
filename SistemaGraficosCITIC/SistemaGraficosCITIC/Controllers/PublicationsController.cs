@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
@@ -122,7 +123,13 @@ namespace SistemaGraficosCITIC.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction("Create", "Publications");
+                ViewData["projectId"] = model.ProjectId!;
+                model.PublicationDate = new DateTime();
+                model.PublicationTitle = "";
+                model.PublicationType = "";
+                model.PublicationReference = "";
+                return View("Create", new PublicationModel());
+                return RedirectToAction("Create", "Publications", new {projectId = model.ProjectId } );
             }
             return View(model);
         }

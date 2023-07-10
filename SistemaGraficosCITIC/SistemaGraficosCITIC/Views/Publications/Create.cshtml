@@ -24,17 +24,17 @@
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-floating mt-3">
-            <input asp-for="PublicationTitle" class="form-control" />
+            <input value="" asp-for="PublicationTitle" class="form-control" />
             <label asp-for="PublicationTitle" class="control-label">Title</label>
             <span asp-validation-for="PublicationTitle" class="text-danger"></span>
         </div>
         <div class="form-floating mt-3">
-            <input asp-for="PublicationDate" class="form-control" />
+            <input value="" asp-for="PublicationDate" class="form-control" />
             <label asp-for="PublicationDate" class="control-label">Date</label>
             <span asp-validation-for="PublicationDate" class="text-danger"></span>
         </div>
         <div class="form-floating mt-3">
-            <input asp-for="PublicationReference" class="form-control" />
+            <input value="" asp-for="PublicationReference" class="form-control" />
             <label asp-for="PublicationReference" class="control-label">Reference</label>
             <span asp-validation-for="PublicationReference" class="text-danger"></span>
         </div>
@@ -69,8 +69,8 @@
                     </div>
                     <div class="modal-footer">
                         @*<input type="submit" value="Create" class="btn btn-primary" />*@
-                        <button type="submit" value="Create" class="btn btn-warning">Add another</button>
-                        <button asp-action="AddContinue" asp-controller="Publications" type="button" class="btn btn-primary">Continue</button> <!-- TODO: Poner la dirección href-->
+                        <button type="submit" value="Create" class="btn btn-warning" >Add another</button>
+                        <button asp-action="AddContinue" value="Create" asp-controller="Publications" type="submit" class="btn btn-primary">Continue</button> <!-- TODO: Poner la dirección href-->
                     </div>
                 </div>
             </div>
@@ -87,7 +87,20 @@
 </div>
 
 
+<script>
 
+    function clearFields(x) {
+        //Comentado por ahora para probar el popup
+        /*
+        var padre = x.parentNode;
+        var abuelo = padre.parentNode;
+        var abuelo = abuelo.parentNode;
+        abuelo.remove();
+        */
+        contador = contador - 1;
+    }
+
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
