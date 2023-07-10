@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGraficosCITIC", "SistemaGraficosCITIC\SistemaGraficosCITIC.csproj", "{C4C19706-2032-489B-900A-D9A0279745D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGraficosCITIC", "SistemaGraficosCITIC\SistemaGraficosCITIC.csproj", "{C4C19706-2032-489B-900A-D9A0279745D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{AC54A632-D450-4DA2-B402-EA42FB95D360}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{0C5C2178-9129-4C6C-92F8-8B9F1208F039}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{C4C19706-2032-489B-900A-D9A0279745D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C19706-2032-489B-900A-D9A0279745D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C19706-2032-489B-900A-D9A0279745D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C5C2178-9129-4C6C-92F8-8B9F1208F039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5C2178-9129-4C6C-92F8-8B9F1208F039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5C2178-9129-4C6C-92F8-8B9F1208F039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5C2178-9129-4C6C-92F8-8B9F1208F039}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C5C2178-9129-4C6C-92F8-8B9F1208F039} = {AC54A632-D450-4DA2-B402-EA42FB95D360}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF99C59B-FEC7-4265-AC9C-573AA483058E}
