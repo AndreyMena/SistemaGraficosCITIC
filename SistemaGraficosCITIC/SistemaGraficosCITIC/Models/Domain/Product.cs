@@ -11,6 +11,15 @@
 
         public Project? Project { get; set; }
 
+        public Product()
+        {
+            Id = Guid.NewGuid();
+            Name = "";
+            Description = "";
+            State = "";
+            Marketable = "";
+            License = "";
+        }
         public Product(string name, string description, string state, string marketable, string license)
         {
             Id = Guid.NewGuid();
