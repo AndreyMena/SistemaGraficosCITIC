@@ -107,7 +107,7 @@ namespace SistemaGraficosCITIC.Controllers
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
                         //return RedirectToRoute(new { controller = "Publications", action = "Create", projectId = projectId });
-                        return RedirectToAction("Create", "Publications", new { projectId = projectId })
+                        return RedirectToAction("Create", "Publications", new { projectId = projectId });
                     }
                 }else{
                     return RedirectToAction(nameof(Index));
