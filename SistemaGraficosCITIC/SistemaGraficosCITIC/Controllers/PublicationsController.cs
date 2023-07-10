@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
@@ -93,7 +94,8 @@ namespace SistemaGraficosCITIC.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction("Index", "Expositions");
+                var projectId = model.ProjectId;
+                return RedirectToAction("Create", "Expositions", new { projectId = projectId });
             }
             return View(model);
         }

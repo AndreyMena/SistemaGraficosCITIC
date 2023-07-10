@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Evaluation;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
+using SistemaGraficosCITIC.Repositories;
+using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
 {
@@ -14,9 +19,19 @@ namespace SistemaGraficosCITIC.Controllers
     {
         private readonly SistemaGraficosCITICContext _context;
 
-        public ExpositionsController(SistemaGraficosCITICContext context)
+        private readonly UserManager<IdentityUser> userManager;
+
+        private readonly SignInManager<IdentityUser> signInManager;
+
+        private readonly IProjectRepository projectRepository;
+
+        public ExpositionsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
+            UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
             _context = context;
+            userManager = _userManager;
+            signInManager = _signInManager;
+            projectRepository = _projectRepository;
         }
 
         // GET: Expositions
@@ -46,9 +61,39 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         // GET: Expositions/Create
-        public IActionResult Create()
+        public IActionResult Create(string projectId)
         {
+            ViewData["projectId"] = projectId;
             return View();
+        }
+
+        // POST: Expositions/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddContinue(ExpositionModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var expo = new Exposition(model.ExpositionDate, model.ExpositionLocation, model.ExpositionContext);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    _context.Exposition.Add(expo);
+                    project!.Expositions.Add(expo);
+
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                var projectId = model.ProjectId;
+                return RedirectToAction("Create", "Products", new { projectId = projectId });
+            }
+            return View(model);
         }
 
         // POST: Expositions/Create
@@ -56,16 +101,35 @@ namespace SistemaGraficosCITIC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Location,Context")] Exposition exposition)
+        public async Task<IActionResult> Create(ExpositionModel model, int? check)
         {
             if (ModelState.IsValid)
             {
-                exposition.Id = Guid.NewGuid();
-                _context.Add(exposition);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (signInManager.IsSignedIn(User))
+                {
+                    /*var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    _context.Publication.Add(publication);
+                    project!.Publications.Add(publication);
+                    await _context.SaveChangesAsync();*/
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                /*ViewData["projectId"] = model.ProjectId!;
+                model.PublicationDate = new DateTime();
+                model.PublicationTitle = "";
+                model.PublicationType = "";
+                model.PublicationReference = "";
+                return View("Create", new PublicationModel());
+                return RedirectToAction("Create", "Publications", new { projectId = model.ProjectId });*/
             }
-            return View(exposition);
+            return View(model);
         }
 
         // GET: Expositions/Edit/5
