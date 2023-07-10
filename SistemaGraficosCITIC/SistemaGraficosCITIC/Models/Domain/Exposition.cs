@@ -9,6 +9,13 @@
 
         public Project? Project { get; set; }
 
+        public Exposition()
+        {
+            Id = Guid.NewGuid();
+            Date = DateTime.MinValue;
+            Location = "";
+            Context = "";
+        }
         public Exposition(DateTime date, string location, string context)
         {
             Id = Guid.NewGuid();
