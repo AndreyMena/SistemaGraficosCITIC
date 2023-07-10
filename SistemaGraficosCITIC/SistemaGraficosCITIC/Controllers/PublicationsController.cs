@@ -72,7 +72,37 @@ namespace SistemaGraficosCITIC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PublicationModel model)
+        public async Task<IActionResult> AddContinue(PublicationModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    _context.Publication.Add(publication);
+                    project!.Publications.Add(publication);
+                    await _context.SaveChangesAsync();
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction("Index", "Expositions");
+            }
+            return View(model);
+        }
+
+        // POST: Publications/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PublicationModel model, int? check)
         {
             if (ModelState.IsValid)
             {
