@@ -79,7 +79,8 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, model.ProductMarketable, model.ProductLicense);
+                    string isMarketable = (model.ProductMarketable.Equals("true") ? "Marketable" : "Not marketable");
+                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, isMarketable, model.ProductLicense);
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
                     _context.Product.Add(product);
                     project!.Products.Add(product);
@@ -109,7 +110,8 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, model.ProductMarketable, model.ProductLicense);
+                    string isMarketable = (model.ProductMarketable.Equals("true") ? "Marketable" : "Not marketable");
+                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, isMarketable, model.ProductLicense);
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
                     _context.Product.Add(product);
                     project!.Products.Add(product);
