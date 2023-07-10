@@ -224,6 +224,13 @@ namespace SistemaGraficosCITIC.Controllers
             return (_context.Product?.Any(p => p.Id == id)).GetValueOrDefault();
         }
 
+        // Skip this form (return to view Projects page)
+        public async Task<IActionResult> Skip(string projectId)
+        {
+            //var projectId = model.ProjectId;
+            return RedirectToAction("Index", "Projects", new { projectId = projectId });
+        }
+
 
     }
 }

@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-floating mt-3">
-            <button type="button" class="btn btn-warning" href="">Skip (No products)</button>
+            <input type="button" class="btn btn-warning" value="Skip (No products)" onclick="location.href='@Url.Action("Skip", "Products", new { projectId=@projectId })'" />
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Save</button>
         </div>
 

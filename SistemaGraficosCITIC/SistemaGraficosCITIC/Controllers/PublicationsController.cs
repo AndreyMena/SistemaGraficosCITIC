@@ -230,10 +230,10 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         // Skip to next form (Expositions)
-        public async Task<IActionResult> Skip(string parametro)
+        public async Task<IActionResult> Skip(string projectId)
         {
             //var projectId = model.ProjectId;
-            return RedirectToAction("Create", "Expositions", new { projectId = parametro });
+            return RedirectToAction("Create", "Expositions", new { projectId = projectId });
         }
 
     }
