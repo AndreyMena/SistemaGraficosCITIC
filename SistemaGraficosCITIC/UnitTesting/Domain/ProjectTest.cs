@@ -27,7 +27,7 @@ namespace UnitTesting.Domain
                 StartDate = date,
                 EndDate = date,
                 IsActive = true,
-                Researcher = new Researcher(), //Por ahora
+                Researcher = researcher, //Por ahora
                 Publications = new List<Publication>(),
                 Expositions = new List<Exposition>(),
                 Products = new List<Product>()
