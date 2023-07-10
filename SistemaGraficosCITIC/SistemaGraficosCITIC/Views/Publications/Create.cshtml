@@ -51,10 +51,15 @@
         </div>
 
         <div class="form-floating mt-3">
-            <button type="button" class="btn btn-warning" href="">Skip (No publications)</button> <!-- TODO: Poner la dirección en el href -->
+            <input type="button" class="btn btn-warning" value="Skip (No publications)" onclick="location.href='@Url.Action("Skip", "Publications", new { projectId=@projectId })'" />
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Save</button>
-
         </div>
+
+        <script>
+            function skipPublication(parametroString) {
+                window.location.href = '@Url.Action("Skip", "Publications")?parametro=' + encodeURIComponent(parametroString);
+            }
+        </script>
 
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

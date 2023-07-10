@@ -107,27 +107,25 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 if (signInManager.IsSignedIn(User))
                 {
-                    /*var userName = User.Identity!.Name;
+                    var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
-                    _context.Publication.Add(publication);
-                    project!.Publications.Add(publication);
-                    await _context.SaveChangesAsync();*/
+                    var expo = new Exposition(model.ExpositionDate, model.ExpositionLocation, model.ExpositionContext);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    _context.Exposition.Add(expo);
+                    project!.Expositions.Add(expo);
 
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                /*ViewData["projectId"] = model.ProjectId!;
-                model.PublicationDate = new DateTime();
-                model.PublicationTitle = "";
-                model.PublicationType = "";
-                model.PublicationReference = "";
-                return View("Create", new PublicationModel());
-                return RedirectToAction("Create", "Publications", new { projectId = model.ProjectId });*/
+                ViewData["projectId"] = model.ProjectId!;
+                model.ExpositionDate = new DateTime();
+                model.ExpositionLocation = "";
+                model.ExpositionContext = "";
+                return View("Create", new ExpositionModel());
             }
             return View(model);
         }
@@ -224,5 +222,13 @@ namespace SistemaGraficosCITIC.Controllers
         {
           return (_context.Exposition?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+        // Skip to next form (Products)
+        public async Task<IActionResult> Skip(string projectId)
+        {
+            //var projectId = model.ProjectId;
+            return RedirectToAction("Create", "Products", new { projectId = projectId });
+        }
+
     }
 }

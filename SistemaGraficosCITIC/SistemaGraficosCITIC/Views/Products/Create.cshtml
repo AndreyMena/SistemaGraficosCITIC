@@ -15,7 +15,7 @@
     <p>Step 4</p>
 
     <div class="progress mt-3" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: 100%"></div>
+        <div class="progress-bar" style="width: 99%"></div>
     </div>
 
     <hr />
@@ -39,22 +39,10 @@
             <label class="control-label">State</label>
         </div>
 
-        <div class="form-floating mt-3">
-            <input id="CheckBoxActive" type="checkbox" />
-            <label class="control-label">Is marketable?</label>
+        <div class="form-group mt-3">
+            <input asp-for="ProductMarketable" id="CheckBoxActive" type="checkbox" />
+            <label class="control-label">Is it marketable?</label>
             <span class="text-danger"></span>
-        </div>
-
-        <div class="form-floating mt-3">
-            <p>_ </p>
-        </div>
-
-        <div class="form-floating mt-3">
-            <select class="form-select" aria-label="Default select example">
-                <option value="Marketable">Marketable</option>
-                <option value="Not marketable">Not marketable</option>
-            </select>
-            <label class="form-label">Type</label>
         </div>
 
         <div class="form-floating mt-3">
@@ -62,17 +50,12 @@
             <label class="control-label">License</label>
         </div>
 
-        <div class="form-floating mt-3">
-            <input value="" asp-for="ProductMarketable" class="form-control" />
-            <label class="control-label">marketable (test)</label>
-        </div>
-
         <div class="form-floating mt-3" type="hidden">
             <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
         </div>
 
         <div class="form-floating mt-3">
-            <button type="button" class="btn btn-warning" href="">Skip (No products)</button>
+            <input type="button" class="btn btn-warning" value="Skip (No products)" onclick="location.href='@Url.Action("Skip", "Products", new { projectId=@projectId })'" />
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Save</button>
         </div>
 
