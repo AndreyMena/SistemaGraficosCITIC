@@ -47,8 +47,13 @@ namespace SistemaGraficosCITIC.Controllers
                 var userName = User.Identity!.Name;
                 var currentUser = await userManager.FindByNameAsync(userName);
                 var id = new Guid(currentUser.Id);
+                IndexProjectsViewModel model = new IndexProjectsViewModel();
+                model.projects = await projectRepository.GetProjectsByResearcher(id);
+                model.publications = await _context.Publication.Include(x => x.Project)
+                    .Include(c => c.Project!.Researcher)
+                    .Where(c => c.Project!.Researcher!.Id == id).ToListAsync();
                 return _context.Project != null ?
-                              View(await projectRepository.GetProjectsByResearcher(id)) :
+                              View(model) :
                               Problem("Entity set 'SistemaGraficosCITICContext.Project'  is null.");
             }else{
                 return View();

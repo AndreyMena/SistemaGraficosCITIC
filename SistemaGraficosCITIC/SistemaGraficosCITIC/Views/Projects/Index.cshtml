@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaGraficosCITIC.Models.Domain.Project>
+﻿@model IndexProjectsViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -79,7 +79,7 @@
 
         <div class="accordion" id="accordionProyectos">
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.projects!)
             {
                 projectIndex++;
                 var estado = item.IsActive ? "Activo" : "Inactivo";
@@ -205,6 +205,18 @@
     </div>
 
 
+    foreach (var item in Model.publications)
+    {
+        <div class="card mt-3" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+                <h8 class="card-subtitle mb-2 text-body-secondary">##/##/##</h8>
+                <p class="card-text mt-2">Tipo: <b>TIPO</b> </p>
+                <p class="card-text">Referencia: <b>REF</b> </p>
+            </div>
+        </div>
+
+    }
 }else{
     <h1>Please sign in to see your proyects</h1>
 }
