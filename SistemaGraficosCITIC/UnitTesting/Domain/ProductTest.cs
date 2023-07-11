@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using FluentAssertions;
 using SistemaGraficosCITIC.Models.Domain;
+using Xunit;
 
 namespace UnitTesting.Domain
 {
