@@ -59,7 +59,7 @@
 
                 <div class="form-floating mt-3">
                     <input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Products", new { projectId=@projectId })'" />
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+                    <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
                 </div>
 
                 <!-- Modal -->
@@ -87,4 +87,28 @@
     </div>
 
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+        // Listen to input events
+        $('form input').keyup(function () {
+            // Check that all TextFields have values
+            var allFieldsFilled = true;
+            $('form input').each(function () {
+                if ($(this).val() === '') {
+                    allFieldsFilled = false;
+                    return false;
+                }
+            });
+
+            $('#btnGuardar').prop('disabled', !allFieldsFilled); // Enable or disable
+        });
+    });
+</script>
 
