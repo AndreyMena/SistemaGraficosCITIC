@@ -11,74 +11,80 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <h2>Create Project</h2>
-    <p>Step 4</p>
+    <h2>Crear Proyecto</h2>
+    <p>Paso 4</p>
 
     <div class="progress mt-3" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-        <div class="progress-bar" style="width: 99%"></div>
+        <div class="progress-bar" style="width: 100%"></div>
     </div>
 
     <hr />
 
-    <h5>Products</h5>
+    <h3>Productos</h3>
 
-    <form asp-action="Create">
+    <div class="row">
+        <div class="col-md-4">
 
-        <div class="form-floating mt-3">
-            <input value="" asp-for="ProductName" class="form-control" />
-            <label class="control-label">Name</label>
-        </div>
+            <form asp-action="Create">
 
-        <div class="form-floating mt-3">
-            <input value="" asp-for="ProductDescription" class="form-control" />
-            <label class="control-label">Description</label>
-        </div>
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ProductName" class="form-control" />
+                    <label class="control-label">Nombre</label>
+                </div>
 
-        <div class="form-floating mt-3">
-            <input value="" asp-for="ProductState" class="form-control" />
-            <label class="control-label">State</label>
-        </div>
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ProductDescription" class="form-control" />
+                    <label class="control-label">Descripción</label>
+                </div>
 
-        <div class="form-group mt-3">
-            <input asp-for="ProductMarketable" id="CheckBoxActive" type="checkbox" />
-            <label class="control-label">Is it marketable?</label>
-            <span class="text-danger"></span>
-        </div>
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ProductState" class="form-control" />
+                    <label class="control-label">Estado</label>
+                </div>
 
-        <div class="form-floating mt-3">
-            <input value="" asp-for="ProductLicense" class="form-control" />
-            <label class="control-label">License</label>
-        </div>
+                <div class="form-group mt-3">
+                    <input asp-for="ProductMarketable" id="CheckBoxActive" type="checkbox" />
+                    <label class="control-label">¿Es comercializable?</label>
+                    <span class="text-danger"></span>
+                </div>
 
-        <div class="form-floating mt-3" type="hidden">
-            <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
-        </div>
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ProductLicense" class="form-control" />
+                    <label class="control-label">Licencia</label>
+                </div>
 
-        <div class="form-floating mt-3">
-            <input type="button" class="btn btn-warning" value="Skip (No products)" onclick="location.href='@Url.Action("Skip", "Products", new { projectId=@projectId })'" />
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Save</button>
-        </div>
+                <div class="form-floating mt-3" type="hidden">
+                    <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
+                </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content d-flex justify-content-center">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Product saved</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you wish to continue or add another Product?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" value="Create" class="btn btn-warning">Add another</button>
-                        <button asp-action="AddContinue" value="Create" asp-controller="Products" type="submit" class="btn btn-primary">Continue</button>
+                <div class="form-floating mt-3">
+                    <input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Products", new { projectId=@projectId })'" />
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content d-flex justify-content-center">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Producto guardado</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Desea finalizar o agregar otro producto?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" value="Create" class="btn btn-warning">Agregar otro</button>
+                                <button asp-action="AddContinue" value="Create" asp-controller="Products" type="submit" class="btn btn-primary">Finalizar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </form>
+            </form>
+
+        </div>
+    </div>
 
 </div>
 

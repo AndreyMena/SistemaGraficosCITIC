@@ -14,16 +14,16 @@
         <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        <h2>Create Project</h2>
-        <p>Step 1</p>
+        <h2>Crear Proyecto</h2>
+        <p>Paso 1</p>
 
         <div class="progress mt-3" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar" style="width: 25%"></div>
+            <div class="progress-bar" style="width: 15%"></div>
         </div>
 
         <hr />
 
-        <h5>Project</h5>
+        <h5>Proyecto</h5>
         
         <div class="row">
             <div class="col-md-4">
@@ -32,28 +32,28 @@
                     <br />
                     <div class="form-floating mt-3">
                         <input asp-for="Name" class="form-control" />
-                        <label asp-for="Name" class="control-label">Name</label>
+                        <label asp-for="Name" class="control-label">Nombre</label>
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-floating mt-3">
                         <input asp-for="Type" class="form-control" />
-                        <label asp-for="Type" class="control-label">Type</label>
+                        <label asp-for="Type" class="control-label">Tipo</label>
                         <span asp-validation-for="Type" class="text-danger"></span>
                     </div>
                     <div class="form-floating mt-3">
                         <input type="date" value="" asp-for="StartDate" class="form-control" />
-                        <label asp-for="StartDate" class="control-label">Start date</label>
+                        <label asp-for="StartDate" class="control-label">Fecha de inicio</label>
                         <span asp-validation-for="StartDate" class="text-danger"></span>
                     </div>
                     <br />
                     <div class="form-group">
-                        <label asp-for="isActive" class="control-label">Is the project active?</label>
+                        <label asp-for="isActive" class="control-label">¿Está activo?</label>
                         <input id="CheckBoxActive" type="checkbox" asp-for="isActive" />
                         <span asp-validation-for="isActive" class="text-danger"></span>
                     </div>
                     <div id="EndDateDiv" class="form-floating mt-3">
                         <input type="date" asp-for="EndDate" class="form-control" />
-                        <label asp-for="EndDate" class="control-label">End date</label>
+                        <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
                         <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
                     <br />
@@ -65,7 +65,7 @@
         </div>
         <br />
         <div>
-            <a asp-action="Index">Back to List</a>
+            <a asp-action="Index">Volver a la lista</a>
         </div>
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
