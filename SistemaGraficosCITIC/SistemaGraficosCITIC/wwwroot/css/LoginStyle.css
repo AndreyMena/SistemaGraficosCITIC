@@ -1,18 +1,24 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
-  padding: 8% 0 0;
-  margin: auto;
+    padding: 8% 0 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .register-page {
-  padding: 8% 0 0;
-  margin: auto;
+    padding: 8% 0 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .formLogin {
     position: absolute;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 70%;
+    max-width: 80%;
     margin: 0 auto 100px;
     padding: 45px;
     left: 35%;
@@ -26,11 +32,14 @@
     position: absolute;
     z-index: 1;
     background: #FFFFFF;
-    max-width: 70%;
+    max-width: 80%;
     margin: 0 auto 100px;
     padding: 30px;
-    left: 35%;
+/*    left: 35%;
     right: 35%;
+    top: 4%;*/
+    left: 25%;
+    right: 25%;
     top: 4%;
     text-align: right;
     box-shadow: 0 0 20px 0 rgb(67 69 70 / 20%), 0 5px 5px 0 rgb(67 69 70 / 24%)
