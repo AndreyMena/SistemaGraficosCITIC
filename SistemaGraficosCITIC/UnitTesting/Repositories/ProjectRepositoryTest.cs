@@ -151,11 +151,8 @@ namespace UnitTesting.Repositories
             var project1 = new Project("Project1", "Accion social", researcher, date, date, true);
             var id1 = project1.Id;
             var project2 = new Project("Project2", "Accion social", researcher, date, date, true);
-            var id2 = project2.Id;
             var project3 = new Project("Project3", "Accion social", researcher, date, date, true);
-            var id3 = project3.Id;
             var project4 = new Project("Project4", "Accion social", researcher, date, date, true);
-            var id4 = project4.Id;
             using (var context = new SistemaGraficosCITICContext(options))
             {
                 context.Project.Add(project1);
