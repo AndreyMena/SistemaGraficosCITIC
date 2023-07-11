@@ -7,7 +7,7 @@ namespace SistemaGraficosCITIC.Data;
 
 public class SistemaGraficosCITICContext : DbContext
 {
-    public SistemaGraficosCITICContext(DbContextOptions options)
+    public SistemaGraficosCITICContext(DbContextOptions<SistemaGraficosCITICContext> options)
         : base(options)
     {
     }
