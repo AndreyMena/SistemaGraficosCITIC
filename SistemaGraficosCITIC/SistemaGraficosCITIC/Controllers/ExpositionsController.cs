@@ -25,6 +25,13 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IProjectRepository projectRepository;
 
+        /// <summary>
+        /// Constructor of the ExpositionsController class
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_userManager"></param>
+        /// <param name="_projectRepository"></param>
         public ExpositionsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
             UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
@@ -34,7 +41,10 @@ namespace SistemaGraficosCITIC.Controllers
             projectRepository = _projectRepository;
         }
 
-        // GET: Expositions
+        /// <summary>
+        /// GET method for see the index of expositions
+        /// </summary>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Index()
         {
               return _context.Exposition != null ? 
@@ -42,7 +52,11 @@ namespace SistemaGraficosCITIC.Controllers
                           Problem("Entity set 'SistemaGraficosCITICContext.Exposition'  is null.");
         }
 
-        // GET: Expositions/Details/5
+        /// <summary>
+        /// GET method for see the details of expositions
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Exposition == null)
@@ -60,14 +74,22 @@ namespace SistemaGraficosCITIC.Controllers
             return View(exposition);
         }
 
-        // GET: Expositions/Create
+        /// <summary>
+        /// GET method for create a expositions
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>e
         public IActionResult Create(string projectId)
         {
             ViewData["projectId"] = projectId;
             return View();
         }
 
-        // POST: Expositions/Create
+        /// <summary>
+        /// POST method for create a exposition and continue
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddContinue(ExpositionModel model)
@@ -96,9 +118,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // POST: Expositions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for create a and create again a exposition
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="check"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ExpositionModel model, int? check)
@@ -130,7 +155,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // GET: Expositions/Edit/5
+        /// <summary>
+        /// GET method for edit a exposition
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Exposition == null)
@@ -146,9 +175,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(exposition);
         }
 
-        // POST: Expositions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for edit a expositions
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="product"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Location,Context")] Exposition exposition)
@@ -181,7 +213,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(exposition);
         }
 
-        // GET: Expositions/Delete/5
+        /// <summary>
+        /// GET method for delete a expositions
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Exposition == null)
@@ -199,7 +235,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(exposition);
         }
 
-        // POST: Expositions/Delete/5
+        /// <summary>
+        /// POST method for delete a exposition
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -218,12 +258,21 @@ namespace SistemaGraficosCITIC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Check of the exposition exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool tue if the product exists, false if not</returns>
         private bool ExpositionExists(Guid id)
         {
           return (_context.Exposition?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        // Skip to next form (Products)
+        /// <summary>
+        /// Skip method to go to the next page
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Skip(string projectId)
         {
             //var projectId = model.ProjectId;

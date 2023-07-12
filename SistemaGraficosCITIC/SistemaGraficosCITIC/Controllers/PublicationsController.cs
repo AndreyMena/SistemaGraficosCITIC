@@ -25,6 +25,13 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IProjectRepository projectRepository;
 
+        /// <summary>
+        /// Constructor for Publication
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_userManager"></param>
+        /// <param name="_projectRepository"></param>
         public PublicationsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
             UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
@@ -34,7 +41,10 @@ namespace SistemaGraficosCITIC.Controllers
             projectRepository = _projectRepository;
         }
 
-        // GET: Publications
+        /// <summary>
+        /// Index GET method
+        /// </summary>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Index()
         {
 
@@ -43,7 +53,11 @@ namespace SistemaGraficosCITIC.Controllers
                           Problem("Entity set 'SistemaGraficosCITICContext.Publication'  is null.");
         }
 
-        // GET: Publications/Details/5
+        /// <summary>
+        /// GET method for details of a publication
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Publication == null)
@@ -61,7 +75,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(publication);
         }
 
-        // GET: Publications/Create
+        /// <summary>
+        /// GET method for create a publication
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>
         public IActionResult Create(string projectId)
         {
             //viewd
@@ -69,9 +87,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View();
         }
 
-        // POST: Publications/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for create a publication and continue
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddContinue(PublicationModel model)
@@ -100,9 +120,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // POST: Publications/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for create a and create again
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="check"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PublicationModel model, int? check)
@@ -136,7 +159,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // GET: Publications/Edit/5
+        /// <summary>
+        /// GET method for edit a publication
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Publication == null)
@@ -152,9 +179,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(publication);
         }
 
-        // POST: Publications/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for edit a publication
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="publication"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Date,Reference,Type")] Publication publication)
@@ -187,7 +217,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(publication);
         }
 
-        // GET: Publications/Delete/5
+        /// <summary>
+        /// GET method for delete a publication
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Publication == null)
@@ -205,7 +239,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(publication);
         }
 
-        // POST: Publications/Delete/5
+        /// <summary>
+        /// POST method for delete a publication
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -224,12 +262,21 @@ namespace SistemaGraficosCITIC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Check if the publication exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool true if the publication exists, false if not/returns>
         private bool PublicationExists(Guid id)
         {
           return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        // Skip to next form (Expositions)
+        /// <summary>
+        /// Skip method to go to the next page
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Skip(string projectId)
         {
             //var projectId = model.ProjectId;
