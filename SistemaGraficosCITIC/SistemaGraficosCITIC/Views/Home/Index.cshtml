@@ -2,27 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-</div>
+<div class="parent-container" style="justify-content: center;">
 
-<div class="container">
-    @*
-    <form>
-        <div class="form-group">
-            <label>Pregunta</label>
-            <input type="email" class="form-control">
+    <div class="row align justify-content-center" style="margin-top: 50px;">
+        
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <a href="/Projects/Create">
+                    <img src="~/Images/DefaultImages/banner_create.jpg" class="card-img-top" alt="Create image" style="height: 120px;" href="/Projects/Create">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title" href="/Projects/Create"> 
+                        <a href="/Projects/Create" style="text-decoration: none; color: black; font-weight: bold">Agregar proyecto</a> 
+                    </h5>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Pregunta numero</label>
-            <input type="number" class="form-control">
+
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <a href="/Projects">
+                    <img src="~/Images/DefaultImages/banner_projects.jpg" class="card-img-top" alt="My projects image" style="height: 120px;" href="/Projects">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title" href="/Projects">
+                        <a href="/Projects" style="text-decoration: none; color: black; font-weight: bold">Mis proyectos</a>
+                    </h5>
+                </div>
+            </div>
         </div>
-        <div class="form-check">
-            <input type="radio" class="">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    *@
-    <a href="/Projects/Create">Agregar proyecto</a>
-    <a href="/Projects">Mis proyectos</a>
+
+    </div>    
+
 </div>
