@@ -52,8 +52,9 @@ body {
 #forgot-password {
     font-size: 13px;
     display: block;
-    text-align: center;
+    margin-top: 10px;
     margin-bottom: 10px;
+    text-align: left;
     color: #007bff;
 }
 
@@ -76,11 +77,15 @@ body {
     color: #007bff;
 }
 
-#ojo {
+.fa-eye {
     float: right;
     position: relative;
     margin-top: -35px;
     margin-right: 10px;
     color: #434546;
     cursor: pointer;
+}
+
+#registerSubmit {
+    font-size: 15px;
 }
