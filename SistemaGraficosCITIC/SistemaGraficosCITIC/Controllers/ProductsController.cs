@@ -25,6 +25,13 @@ namespace SistemaGraficosCITIC.Controllers
 
         private readonly IProjectRepository projectRepository;
 
+        /// <summary>
+        /// Constructor of the ProductsController class
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_userManager"></param>
+        /// <param name="_projectRepository"></param>
         public ProductsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
             UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
         {
@@ -33,8 +40,11 @@ namespace SistemaGraficosCITIC.Controllers
             signInManager = _signInManager;
             projectRepository = _projectRepository;
         }
-        
-        // GET: Products
+
+        /// <summary>
+        /// GET method for see the index of products
+        /// </summary>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Index()
         {
             return _context.Product != null ?
@@ -42,7 +52,11 @@ namespace SistemaGraficosCITIC.Controllers
                         Problem("Entity set 'SistemaGraficosCITICContext.Product'  is null.");
         }
 
-        // GET: Products/Details/5
+        /// <summary>
+        /// GET method for see the details of product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Product == null)
@@ -60,14 +74,22 @@ namespace SistemaGraficosCITIC.Controllers
             return View(product);
         }
 
-        // GET: Products/Create
+        /// <summary>
+        /// GET method for create a product
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>
         public IActionResult Create(string projectId)
         {
             ViewData["projectId"] = projectId;
             return View();
         }
 
-        // POST: Products/Create
+        /// <summary>
+        /// POST method for create a product and continue
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddContinue(ProductModel model)
@@ -98,7 +120,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // POST: Products/Create
+        /// <summary>
+        /// POST method for create a and create again a product
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="check"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductModel model, int? check)
@@ -133,7 +160,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(model);
         }
 
-        // GET: Products/Edit/5
+        /// <summary>
+        /// GET method for edit a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Product == null)
@@ -149,7 +180,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(product);
         }
 
-        // POST: Products/Edit/5
+        /// <summary>
+        /// POST method for edit a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="product"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,State,Marketable,License")] Product product)
@@ -182,7 +218,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(product);
         }
 
-        // GET: Products/Delete/5
+        /// <summary>
+        /// GET method for delete a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Product == null)
@@ -200,7 +240,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(product);
         }
 
-        // POST: Products/Delete/5
+        /// <summary>
+        /// POST method for delete a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -219,12 +263,21 @@ namespace SistemaGraficosCITIC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Check of the product exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool tue if the product exists, false if not</returns>
         private bool ProductExists(Guid id)
         {
             return (_context.Product?.Any(p => p.Id == id)).GetValueOrDefault();
         }
 
-        // Skip this form (return to view Projects page)
+        /// <summary>
+        /// Skip method to go to the next page
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns>The Task of action to the view</returns>)
         public async Task<IActionResult> Skip(string projectId)
         {
             //var projectId = model.ProjectId;

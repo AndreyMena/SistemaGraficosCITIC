@@ -27,6 +27,14 @@ namespace SistemaGraficosCITIC.Controllers
 
         ProjectModel _projectModel;
 
+        /// <summary>
+        /// Constructor of the projectsController class
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="_researcherRepository"></param>
+        /// <param name="_userManager"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_projectRepository"></param>
         public ProjectsController(SistemaGraficosCITICContext context, IResearcherRepository _researcherRepository,
             UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IProjectRepository _projectRepository)
         {
@@ -38,7 +46,10 @@ namespace SistemaGraficosCITIC.Controllers
             _projectModel = new ProjectModel();
         }
 
-        // GET: Projects
+        /// <summary>
+        /// GET method for the index view of projects
+        /// </summary>
+        /// <returns>The Task of action to the view</returns>
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -70,7 +81,11 @@ namespace SistemaGraficosCITIC.Controllers
             }
         }
 
-        // GET: Projects/Details/5
+        /// <summary>
+        /// GET method for see the details of a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Project == null)
@@ -88,15 +103,20 @@ namespace SistemaGraficosCITIC.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
+        /// <summary>
+        /// GET method for create a project
+        /// </summary>
+        /// <returns>The Task of action to the view</returns>
         public IActionResult Create()
         {
             return View(_projectModel);
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for create a project
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectModel model)
@@ -130,7 +150,11 @@ namespace SistemaGraficosCITIC.Controllers
             return RedirectToAction("index", "projects");
         }
 
-        // GET: Projects/Edit/5
+        /// <summary>
+        /// GET method for edit a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Project == null)
@@ -146,9 +170,12 @@ namespace SistemaGraficosCITIC.Controllers
             return View(project);
         }
 
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// POST method for edit a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="project"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Type,StartDate,EndDate")] Project project)
@@ -181,7 +208,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(project);
         }
 
-        // GET: Projects/Delete/5
+        /// <summary>
+        /// GET method for delete a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Project == null)
@@ -199,7 +230,11 @@ namespace SistemaGraficosCITIC.Controllers
             return View(project);
         }
 
-        // POST: Projects/Delete/5
+        /// <summary>
+        /// POST method for delete a project
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The Task of action to the view</returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -218,34 +253,14 @@ namespace SistemaGraficosCITIC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// Check of the project exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>bool tue if the project exists, false if not</returns>
         private bool ProjectExists(Guid id)
         {
           return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-        
-        // Registers each Publication stored in the DB, after registering its parent Project
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterPublications(ProjectModel model)
-        {
-            /*
-            if (ModelState.IsValid && model.ProjectPublications.Count > 0)
-            {
-                foreach (Publication p in model.ProjectPublications)
-                {
-                    //p.Id = model.storedId;  // Apply the ID used to register Project in DB
-                    _context.Add(p);
-                }
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-            return RedirectToAction("index", "projects");
-            */
-            return View();
-        }
-
     }
 }
