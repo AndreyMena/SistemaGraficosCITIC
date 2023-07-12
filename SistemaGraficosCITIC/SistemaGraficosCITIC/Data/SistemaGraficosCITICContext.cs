@@ -23,5 +23,23 @@ public class SistemaGraficosCITICContext : DbContext
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
+
+        /*
+         Use [DatabaseSistemaGraficosCITIC]
+        ALTER TABLE [dbo].[Publication]
+        ADD CONSTRAINT FK_Publication_Project
+        FOREIGN KEY (ProjectId) REFERENCES dbo.Project(Id)
+        ON DELETE CASCADE;
+
+        ALTER TABLE [dbo].[Exposition]
+        ADD CONSTRAINT FK_Exposition_Project
+        FOREIGN KEY (ProjectId) REFERENCES dbo.Project(Id)
+        ON DELETE CASCADE;
+
+        ALTER TABLE [dbo].[Product]
+        ADD CONSTRAINT FK_Product_Project
+        FOREIGN KEY (ProjectId) REFERENCES dbo.Project(Id)
+        ON DELETE CASCADE;
+         */
     }
 }
