@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models;
 using System.Diagnostics;
 
@@ -44,5 +46,6 @@ namespace SistemaGraficosCITIC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

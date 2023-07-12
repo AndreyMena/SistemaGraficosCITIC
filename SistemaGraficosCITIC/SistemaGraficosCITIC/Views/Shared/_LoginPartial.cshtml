@@ -1,11 +1,23 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using SistemaGraficosCITIC.Repositories
+@using SistemaGraficosCITIC.Models.Domain
+@using SistemaGraficosCITIC.Data;
 @inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IResearcherRepository ResearcherRepository
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+        var user = await UserManager.GetUserAsync(User);
+
+        string idString = user.Id;
+        Guid id = Guid.Parse(idString);
+        Researcher researcher = await ResearcherRepository.GetAsync(id);
+
+        <li class="nav-item">
+        <a class="nav-link text-white">@researcher.Name @researcher.LastName</a>
         <a class="nav-link text-white"@* asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"*@></a>
     </li>
     <li class="nav-item">

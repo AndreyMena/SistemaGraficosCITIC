@@ -11,6 +11,10 @@ header {
     margin-bottom: 50px;
 }
 
+main {
+    margin-bottom: 200px;
+}
+
 footer {
     position: absolute;
     bottom: 0;
