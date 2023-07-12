@@ -12,7 +12,7 @@
     <link type="text/css" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
     <link href="~/css/loginstyle.css" rel="stylesheet" />
-    <title>Iniciar Sesion</title>
+    <title>Iniciar Sesion - SIGPRO+</title>
 </head>
 <body>
     <div class="login-page">
@@ -32,7 +32,6 @@
                         <label asp-for="Input.Password" class="form-label">Contraseña</label>
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
-                    <a id="forgot-password" class="forgotPwd" asp-page="./ForgotPassword">¿Ha olvidado su contraseña?</a>
                     <div>
                     </div>
                     <div>
@@ -41,6 +40,9 @@
                     <div>
                         <a asp-page="./Register" class="registerButtom" asp-route-returnUrl="@Model.ReturnUrl">Registrarse</a>
                     </div>
+                    <a id="forgot-password mt-3" class="forgotPwd" asp-page="./ForgotPassword">Recuperar contraseña</a>
+                    <hr />
+                    <p id="legend-sigpro">Universidad de Costa Rica | SIGPRO+</p>
                 </form>
             </section>
         </div>
