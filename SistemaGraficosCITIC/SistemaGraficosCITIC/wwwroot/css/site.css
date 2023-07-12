@@ -91,3 +91,18 @@ a, .btn-link {
 .blazor-error-boundary::after {
     content: "An error has occurred."
 }
+
+#container-cards-index{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.parent-container > .card-img-top{
+    height: 70px;
+}
+
+.parent-container{
+    margin: 0 30%;
+}
