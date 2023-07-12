@@ -5,10 +5,10 @@
 }
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Details</h1>
+    <h1>Detalles</h1>
 
     <div>
-        <h4>Project</h4>
+        <h4>Proyecto</h4>
         <hr />
         <dl class="row">
             <dt class = "col-sm-2">
@@ -39,8 +39,8 @@
     </div>
     <div>
         <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Volver a la lista</a>
     </div>
 }else{
-    <h1>Please sign in to see the details of your proyects</h1>
+    <h1>Inicie sesión para ver los detalles de sus proyectos</h1>
 }

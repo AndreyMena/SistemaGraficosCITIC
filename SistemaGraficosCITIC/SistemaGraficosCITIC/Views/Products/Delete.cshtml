@@ -4,39 +4,36 @@
     ViewData["Title"] = "Eliminar producto";
 }
 
-<h1>Eliminar</h1>
-
-<h3>Estas seguro que quieres borrar este producto?</h3>
+<h3>¿Estás seguro que deseas borrar este producto?</h3>
 <div>
-    <h4>Producto</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            <p>Nombre</p>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            <p>Descripción</p>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.License)
+            <p>Licencia</p>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.License)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Marketable)
+            <p>Comercializable</p>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Marketable)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.State)
+            <p>Estado</p>
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.State)
@@ -45,7 +42,9 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Borrar" class="btn btn-danger" />
+        <div class="mt-3">
+            <a asp-action="Index" asp-controller="Projects">Volver a la lista</a>
+        </div>
     </form>
 </div>

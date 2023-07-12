@@ -6,13 +6,13 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Edit</h1>
+    <h1>Editar</h1>
 
     <h4>Proyecto</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Edit">
+            <form asp-action="Editar">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
                 <div class="form-group">
@@ -43,12 +43,12 @@
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Volver a la lista</a>
     </div>
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
 }else{
-    <h1>Please sign in to edit your proyects</h1>
+    <h1>Inicie sesión para editar sus proyectos</h1>
 }
