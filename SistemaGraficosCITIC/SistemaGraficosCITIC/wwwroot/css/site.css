@@ -5,6 +5,7 @@ html, body {
     font-weight: 500;
     position: relative;
     min-height: 100%;
+    width: 100%;
 }
 
 header {
