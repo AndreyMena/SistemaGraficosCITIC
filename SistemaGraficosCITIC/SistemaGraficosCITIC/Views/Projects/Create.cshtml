@@ -23,13 +23,12 @@
 
         <hr />
 
-        <h5>Proyecto</h5>
-        
+        <h3>Proyecto</h3>
+
         <div class="row">
             <div class="col-md-4">
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <br />
                     <div class="form-floating mt-3">
                         <input asp-for="Name" class="form-control" />
                         <label asp-for="Name" class="control-label">Nombre</label>
@@ -58,7 +57,7 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <input type="submit" value="Guardar" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
@@ -67,7 +66,7 @@
         <div>
             <a asp-action="Index">Volver a la lista</a>
         </div>
-        
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -88,7 +87,7 @@
                 //Comentado por ahora para probar el popup
                 /*
                 var div = document.getElementById("publications");
-                
+
 
                 var formularioHTML = `
                                     <div class="card  mt-3" style="width: 18rem;">
@@ -117,7 +116,7 @@
                                                 <span class="text-danger"></span>
                                             </div>
                                         </div>
-                                                                
+
                                     </div>
                         `;
                 div.insertAdjacentHTML("beforeend", formularioHTML);
@@ -140,9 +139,13 @@
         </script>
 
         @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
-    }else{
+        @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+    }
+    }
+    else
+    {
         <h1>Please sign in to create new proyects</h1>
     }
 
