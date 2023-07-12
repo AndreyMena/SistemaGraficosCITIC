@@ -213,7 +213,7 @@ namespace SistemaGraficosCITIC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Projects");
             }
             return View(product);
         }
