@@ -240,9 +240,9 @@ namespace SistemaGraficosCITIC.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (_context.Exposition == null)
             {
@@ -255,7 +255,7 @@ namespace SistemaGraficosCITIC.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Projects");
         }
 
         /// <summary>
