@@ -6,7 +6,7 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Edit</h1>
+    <h1>Editar</h1>
 
     <h4>Proyecto</h4>
     <hr />
@@ -15,24 +15,34 @@
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
+                <div class="form-floating mt-3">
                     <input asp-for="Name" class="form-control" />
+                    <label asp-for="Name" class="control-label">Nombre</label>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Type" class="control-label"></label>
-                    <input asp-for="Type" class="form-control" />
-                    <span asp-validation-for="Type" class="text-danger"></span>
+                <div class="form-floating mt-3">
+                    <select asp-for="Type" class="form-select" aria-label="Default select example">
+                        <option value="Conference">Acción Social</option>
+                        <option value="Journal">Actividad</option>
+                        <option value="Magazine">Proyecto</option>
+                        <option value="Magazine">Otro</option>
+                    </select>
+                    <label class="form-label">Tipo</label>
                 </div>
-                <div class="form-group">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" class="form-control" />
+                <div class="form-floating mt-3">
+                    <input type="date" value="" asp-for="StartDate" class="form-control" />
+                    <label asp-for="StartDate" class="control-label">Fecha de inicio</label>
                     <span asp-validation-for="StartDate" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input asp-for="EndDate" class="form-control" />
+                    <label asp-for="IsActive" class="control-label">¿Está activo?</label>
+                    <input id="CheckBoxActive" type="checkbox" asp-for="IsActive" />
+                    <span asp-validation-for="IsActive" class="text-danger"></span>
+                </div>
+                <div id="EndDateDiv" class="form-floating mt-3">
+                    <input type="date" asp-for="EndDate" class="form-control" />
+                    <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
                     <span asp-validation-for="EndDate" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -45,6 +55,39 @@
     <div>
         <a asp-action="Index">Back to List</a>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
+
+    <script>
+        $(document).ready(function () {
+            // Función para verificar si el formulario está completo
+            $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+            function checkFormCompletion() {
+                var isComplete = true;
+                $('input, select, textarea').each(function () {
+                    if ($(this).is(':visible')) {
+                        if ($(this).val() === '') {
+                            isComplete = false;
+                            return false; // Sale del bucle si encuentra un campo vacío
+                        }
+                    }
+                });
+
+                // Actualiza el estado del botón
+                if (isComplete) {
+                    $('#btnGuardar').prop('disabled', false);
+                } else {
+                    $('#btnGuardar').prop('disabled', true);
+                }
+            }
+
+            // Verificar el estado del formulario en cada cambio de campo
+            $('input, select, textarea').on('input change', function () {
+                checkFormCompletion();
+            });
+        });
+    </script>
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
