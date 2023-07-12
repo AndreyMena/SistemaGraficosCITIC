@@ -2,36 +2,45 @@
     ViewData["Title"] = "Inicio";
 }
 
-<div class="parent-container" style="justify-content: center;">
+@if (User.IsInRole("Admin"))
+{
+    <div  style="margin:0px;padding:0px;overflow:hidden">
+        <iframe width="90vw" height="90vh"  src="https://app.powerbi.com/view?r=eyJrIjoiMTgzNTZlNjktNmJjOS00Yzc3LWI4OGYtYmU1MmUxN2ZkMzU1IiwidCI6ImU3OTg0Y2FjLTI1NDMtNGY4OC04Zjk3LTk1MjQzMzVlNmJjNCIsImMiOjR9" frameborder="0" allowFullScreen="true" style="overflow:hidden;height:90vh;width:90vw;"></iframe>
+    </div>
+}
+else
+{
+    <div class="parent-container" style="justify-content: center;">
 
-    <div class="row align justify-content-center" style="margin-top: 50px;">
+        <div class="row align justify-content-center" style="margin-top: 50px;">
         
-        <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-                <a href="/Projects/Create">
-                    <img src="~/Images/DefaultImages/banner_create.jpg" class="card-img-top" alt="Create image" style="height: 120px;" href="/Projects/Create">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title" href="/Projects/Create"> 
-                        <a href="/Projects/Create" style="text-decoration: none; color: black; font-weight: bold">Agregar proyecto</a> 
-                    </h5>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <a href="/Projects/Create">
+                        <img src="~/Images/DefaultImages/banner_create.jpg" class="card-img-top" alt="Create image" style="height: 120px;" href="/Projects/Create">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title" href="/Projects/Create"> 
+                            <a href="/Projects/Create" style="text-decoration: none; color: black; font-weight: bold">Agregar proyecto</a> 
+                        </h5>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-4">
-            <div class="card" style="width: 18rem;">
-                <a href="/Projects">
-                    <img src="~/Images/DefaultImages/banner_projects.jpg" class="card-img-top" alt="My projects image" style="height: 120px;" href="/Projects">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title" href="/Projects">
-                        <a href="/Projects" style="text-decoration: none; color: black; font-weight: bold">Mis proyectos</a>
-                    </h5>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <a href="/Projects">
+                        <img src="~/Images/DefaultImages/banner_projects.jpg" class="card-img-top" alt="My projects image" style="height: 120px;" href="/Projects">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title" href="/Projects">
+                            <a href="/Projects" style="text-decoration: none; color: black; font-weight: bold">Mis proyectos</a>
+                        </h5>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>    
+        </div>    
 
-</div>
+    </div>
+}
