@@ -6,35 +6,38 @@
 
 <h1>Editar</h1>
 
-<h4>Publicaciones</h4>
+<h4>Publicacion</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
+            <div class="form-floating mt-3">
+                <input value="" asp-for="Title" class="form-control" />
+                <label asp-for="Title" class="control-label">Título</label>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+            <div class="form-floating mt-3">
+                <input type="date" value="" asp-for="Date" class="form-control" />
+                <label asp-for="Date" class="control-label">Fecha</label>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Reference" class="control-label"></label>
-                <input asp-for="Reference" class="form-control" />
+            <div class="form-floating mt-3">
+                <input value="" asp-for="Reference" class="form-control" />
+                <label asp-for="Reference" class="control-label">Referencia</label>
                 <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
+            <div class="form-floating mt-3">
+                <select asp-for="Type" class="form-select" aria-label="Default select example">
+                    <option value="Conference">Conferencia</option>
+                    <option value="Journal">Journal</option>
+                    <option value="Magazine">Revista</option>
+                </select>
+                <label class="form-label">Tipo</label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input id="btnGuardar" type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -44,6 +47,42 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
+
+<script>
+    $(document).ready(function () {
+        // Función para verificar si el formulario está completo
+        $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+        function checkFormCompletion() {
+            var isComplete = true;
+            $('input, select, textarea').each(function () {
+                if ($(this).is(':visible')) {
+                    if ($(this).val() === '') {
+                        isComplete = false;
+                        return false; // Sale del bucle si encuentra un campo vacío
+                    }
+                }
+            });
+
+            // Actualiza el estado del botón
+            if (isComplete) {
+                $('#btnGuardar').prop('disabled', false);
+            } else {
+                $('#btnGuardar').prop('disabled', true);
+            }
+        }
+
+        // Verificar el estado del formulario en cada cambio de campo
+        $('input, select, textarea').on('input change', function () {
+            checkFormCompletion();
+        });
+    });
+</script>
+
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
