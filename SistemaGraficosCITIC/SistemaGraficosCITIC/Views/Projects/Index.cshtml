@@ -54,6 +54,7 @@
                         <div class="accordion-body">
                             <!-- INICIA body Proyecto -->
 
+
                             <table class="table">
                                 <tbody>
                                     <tr>
@@ -208,6 +209,10 @@
                             </div>
                             <!-- FIN ACORDEÓN -->
                             <!-- FIN body Proyecto -->
+                            <form style="text-align:right">
+                                <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
+                                <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
+                            </form>
                         </div>
                     </div>
                 </div>
