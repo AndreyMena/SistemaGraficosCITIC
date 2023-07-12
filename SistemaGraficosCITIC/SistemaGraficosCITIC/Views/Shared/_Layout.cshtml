@@ -14,14 +14,15 @@
 
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header class="header-layout" style="background-color:#005da4;">
-        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm">
+    <header class="header-layout">
+        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#005da4;">
             <!-- Navbar content -->
             <div class="container-fluid">
                 <div class="Text" style="padding-right: 15px">
-                    <img src="/Images/Logos/citic_logo.png" class="image-logo" data-src-small="/Images/Logos/citic-logo.png" id="logo" alt="Logo" width = 90>
+                    <a href="/">
+                        <img src="/Images/Logos/UCR_logo.png" class="image-logo" data-src-small="/Images/Logos/UCR_logo.png" id="logo" alt="Logo" width="300">
+                    </a>
                 </div>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SIGPRO+</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -34,7 +35,26 @@
             </div>
         </nav>
 
+        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#e1e1e2;">
+            <!-- Navbar content -->
+            <div class="container-fluid">
+                <div class="Text" style="padding-right: 15px">
+                    <img src="/Images/Logos/citic_logo.png" class="image-logo" data-src-small="/Images/Logos/citic-logo.png" id="logo" alt="Logo" width=90>
+                </div>
+                @*<a class="navbar-brand" style="color: #414141;" asp-area="" asp-controller="Home" asp-action="Index">SIGPRO+</a>*@
+                <span class="navbar-brand" style="color: #414141;">SIGPRO+</span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
+
     <div class="container">
         <main role="main" class="">
             @RenderBody()
@@ -42,7 +62,7 @@
     </div>
 
     <footer>
-        <div class="text-center">
+        <div class="text-center"style="background-color: #e1e1e2">
             &copy; 2023 - SIGPRO+
         </div>
     </footer>
