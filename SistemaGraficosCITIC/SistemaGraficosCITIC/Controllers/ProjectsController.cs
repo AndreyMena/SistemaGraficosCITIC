@@ -108,14 +108,15 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    if (model.isActive) {
+                    if (!model.isActive) {
                         var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
                         _context.Add(project);
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
                         return RedirectToAction("Create", "Publications", new { projectId = projectId });
                     }
-                    else{ 
+                    else{
+                        model.EndDate = null!;
                         var project = new Project(model.Name!, model.Type!, researcher!,/*Enviar null*/ model.StartDate, model.EndDate, model.isActive);
                         _context.Add(project);
                         await _context.SaveChangesAsync();
