@@ -43,15 +43,31 @@
                 <div class="form-floating mt-3">
                     <select asp-for="PublicationType" id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
                         <option value="Conference">Conferencia</option>
-                        <option value="Journal">Journal</option>
                         <option value="Magazine">Revista</option>
+                        <option value="Other">Otro</option>
                     </select>
                     <label class="form-label">Tipo</label>
                 </div>
+
+                <div class="form-floating mt-3">
+                    <div class="table-responsive">
+                        <table class="table table-borderless text-center" id="table_field">
+                            <label class="control-label m-1">Autor(es)</label>
+                            <tr>
+                                <td><input type="text" class="form-control" name="name[]" required></td>
+                                <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
+                            </tr>
+                        </table> 
+                        <div class="text-right">
+                            <input type="button" name="add" id="add" value="Agregar autor" class="btn btn-success">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-floating mt-3" type="hidden">
                     <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
                 </div>
-
+                <hr />
                 <div class="form-floating mt-3">
                     <input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Publications", new { projectId=@projectId })'" />
                     <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
@@ -77,7 +93,7 @@
                             <div class="modal-footer">
                                 @*<input type="submit" value="Create" class="btn btn-primary" />*@
                                 <button type="submit" value="Create" class="btn btn-warning">Agregar otra</button>
-                                <button asp-action="AddContinue" value="Create" asp-controller="Publications" type="submit" class="btn btn-primary">Continuar</button>
+                                <button asp-action="AddToProyect" asp-controller="Publications" type="submit" class="btn btn-primary">Continuar</button>
                             </div>
                         </div>
                     </div>
@@ -123,6 +139,28 @@
     });
 </script>
 
+<script type="text/javascript">
+    // Script para agregar o eliminar textfield para autor
+    $(document).ready(function () {
+        var html = '<tr><td><input class="form-control" type="text" name="name[]" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
+        var max = 10;
+        var x = 1;
+        // Agregar fila
+        $("#add").click(function () {
+            if (x <= max) {
+                $("#table_field").append(html);
+                x++;
+            }
+        })
+        // Borrar fila
+        $("#table_field").on('click', '#remove', function () {
+            if (x > 1) {
+                $(this).closest('tr').remove();
+                x--;
+            }
+        })
+    })
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

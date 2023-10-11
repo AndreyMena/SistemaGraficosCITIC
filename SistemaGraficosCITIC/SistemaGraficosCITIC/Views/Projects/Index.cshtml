@@ -25,7 +25,7 @@
 
         <div class="section bt-4 mb-4">
             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects")'">
-                <b>+</b> Agregar 
+                <b>+</b> Agregar Proyecto
             </button>
         </div>
 
@@ -39,6 +39,7 @@
                 var idPanelPubli = "panelPublicaciones_" + projectIndex;
                 var idPanelExpo = "panelExposiciones_" + projectIndex;
                 var idPanelProd = "panelProductos_" + projectIndex;
+                var guid = item.Id;
 
                 string startDate = item.StartDate.ToString().Substring(0, item.StartDate.ToString().IndexOf(' '));
                 string endDate = item.EndDate != null ? item.EndDate.ToString().Substring(0, item.EndDate.ToString().IndexOf(' ')) : " ";
@@ -81,24 +82,29 @@
                                             Publicaciones
                                         </button>
                                     </h2>
+                                    
                                     <div id="@idPanelPubli" class="accordion-collapse collapse">
                                         <div class="accordion-body">
                                             <!-- INICIA body Publicaciones -->
 
-
+                                            <div class="section bt-4 mb-4">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid })'">
+                                                    <b>+</b> Agregar Publicación
+                                                </button>
+                                            </div>
                                             
                                             <div class="row">
                                                 @foreach (var publi in Model.publications)
                                                 {
                                                     if(publi.Project.Id == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
                                                     {
-                                                        string shortDate = @publi.Date.ToString().Substring(0, @publi.Date.ToString().IndexOf(' '));
+                                                        string year = @publi.Date.Year.ToString().Substring(0, 4);
 
                                                         <div class="col-md-4">
                                                             <div class="card mt-3" style="width: 18rem;">
                                                                 <div class="card-body">
                                                                     <h5 class="card-title">@publi.Title</h5>
-                                                                    <h8 class="card-subtitle mb-2 text-body-secondary">@shortDate</h8>
+                                                                    <h8 class="card-subtitle mb-2 text-body-secondary">@year</h8>
                                                                     <p class="card-text mt-2">Tipo: <b>@publi.Type</b> </p>
                                                                     <p class="card-text">Referencia: <b>@publi.Reference</b> </p>
                                                                     <form>
@@ -117,17 +123,21 @@
                                     </div>
                                 </div>
 
-                                <!-- EXPOSICIONES -->
+                                <!-- PRESENTACIONES -->
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idPanelExpo" aria-expanded="true" aria-controls="@idPanelExpo">
-                                            Exposiciones
+                                            Presentaciones
                                         </button>
                                     </h2>
                                     <div id="@idPanelExpo" class="accordion-collapse collapse">
                                         <div class="accordion-body">
-                                            <!-- INICIA body Exposiciones -->
-
+                                            <!-- INICIA body Presentaciones -->
+                                            <div class="section bt-4 mb-4">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Expositions")'">
+                                                    <b>+</b> Agregar Presentación
+                                                </button>
+                                            </div>
                                             <div class="row">
                                                 @foreach (var expo in Model.expositions)
                                                 {
@@ -167,7 +177,11 @@
                                     <div id="@idPanelProd" class="accordion-collapse collapse">
                                         <div class="accordion-body">
                                             <!-- INICIA body Productos -->
-
+                                            <div class="section bt-4 mb-4">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Products")'">
+                                                    <b>+</b> Agregar Producto
+                                                </button>
+                                            </div>
                                             <div class="row">
                                             @foreach (var prod in Model.products)
                                             {

@@ -153,7 +153,7 @@ namespace SistemaGraficosCITIC.Controllers
                 model.PublicationTitle = "";
                 model.PublicationType = "";
                 model.PublicationReference = "";
-                return View("Create", new PublicationModel());
+                ///return View("Create", new PublicationModel());
                 return RedirectToAction("Create", "Publications", new {projectId = model.ProjectId } );
             }
             return View(model);
@@ -281,6 +281,37 @@ namespace SistemaGraficosCITIC.Controllers
         {
             //var projectId = model.ProjectId;
             return RedirectToAction("Create", "Expositions", new { projectId = projectId });
+        }
+
+        public async Task<IActionResult> AddToProyect(PublicationModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var publication = new Publication(
+                        model.PublicationTitle!,
+                        model.PublicationDate,
+                        model.PublicationReference!,
+                        model.PublicationType!
+                    );
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    _context.Publication.Add(publication);
+                    project!.Publications.Add(publication);
+                    await _context.SaveChangesAsync();
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                var projectId = model.ProjectId;
+                return RedirectToAction("Index", "Projects", new { projectId = projectId });
+            }
+            return View(model);
         }
 
     }
