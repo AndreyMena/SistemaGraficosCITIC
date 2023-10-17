@@ -27,8 +27,8 @@
                     <span asp-validation-for="PublicationTitle" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-3">
-                    <input type="date" value="" asp-for="PublicationDate" class="form-control" />
-                    <label asp-for="PublicationDate" class="control-label">Fecha</label>
+                    <input type="number" id="year" min="1900" max="2200" step="1" value="2023" asp-for="PublicationDate" class="form-control" />
+                    <label asp-for="PublicationDate" class="control-label">Año</label>
                     <span asp-validation-for="PublicationDate" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-3">

@@ -135,7 +135,7 @@
                                         <div class="accordion-body">
                                             <!-- INICIA body Presentaciones -->
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Expositions")'">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Expositions", new { projectId = guid, projectName = projName })'">
                                                     <b>+</b> Agregar Presentación
                                                 </button>
                                             </div>
@@ -179,7 +179,7 @@
                                         <div class="accordion-body">
                                             <!-- INICIA body Productos -->
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Products")'">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Products", new { projectId = guid, projectName = projName })'">
                                                     <b>+</b> Agregar Producto
                                                 </button>
                                             </div>
