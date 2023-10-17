@@ -40,6 +40,7 @@
                 var idPanelExpo = "panelExposiciones_" + projectIndex;
                 var idPanelProd = "panelProductos_" + projectIndex;
                 var guid = item.Id;
+                var projName = item.Name;
 
                 string startDate = item.StartDate.ToString().Substring(0, item.StartDate.ToString().IndexOf(' '));
                 string endDate = item.EndDate != null ? item.EndDate.ToString().Substring(0, item.EndDate.ToString().IndexOf(' ')) : " ";
@@ -88,7 +89,7 @@
                                             <!-- INICIA body Publicaciones -->
 
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid })'">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid, projectName = projName })'">
                                                     <b>+</b> Agregar Publicación
                                                 </button>
                                             </div>
