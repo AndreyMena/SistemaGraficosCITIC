@@ -79,9 +79,11 @@ namespace SistemaGraficosCITIC.Controllers
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>e
-        public IActionResult Create(string projectId)
+        public async Task<IActionResult> Create(Guid projectId)
         {
             ViewData["projectId"] = projectId;
+            var project = await projectRepository.GetAsync(projectId);
+            ViewData["projectName"] = project?.Name;
             return View();
         }
 
