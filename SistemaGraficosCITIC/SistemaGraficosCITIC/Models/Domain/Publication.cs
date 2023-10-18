@@ -6,10 +6,10 @@ namespace SistemaGraficosCITIC.Models.Domain
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public int PublicationYear { get; set; }
         public string Reference { get; set; }
         public string Type { get; set; }
-        // Public List<string> Authors {get; set;}
+        public string Author {get; set;}
 
         public Project? Project { get; set; }
 
@@ -17,19 +17,19 @@ namespace SistemaGraficosCITIC.Models.Domain
         {
             Id = Guid.NewGuid();
             Title = "";
-            Date = DateTime.MinValue;
+            PublicationYear = 2023;
             Reference = "";
             Type = "";
-            //Authors = "";
+            Author = "";
         }
-        public Publication(string title, DateTime date, string reference, string type /*, List<String> authors*/)
+        public Publication(string title, int date, string reference, string type, string authors)
         {
             Id = Guid.NewGuid();
             Title = title;
-            Date = date;
+            PublicationYear = date;
             Reference = reference;
             Type = type;
-            // Authors = authors;
+            Author = authors;
         }
 
     }

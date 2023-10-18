@@ -80,10 +80,12 @@ namespace SistemaGraficosCITIC.Controllers
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>
-        public IActionResult Create(string projectId)
+        public async Task<IActionResult> Create(Guid projectId)
         {
             //viewd
             ViewData["projectId"] = projectId;
+            var project = await projectRepository.GetAsync(projectId);
+            ViewData["projectName"] = project?.Name;
             return View();
         }
 
@@ -103,7 +105,7 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
+                    var publication = new Publication(model.PublicationTitle!, model.PublicationYear, model.PublicationReference!, model.PublicationType!, model.PublicationAuthor!);
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
@@ -137,7 +139,7 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationDate, model.PublicationReference!, model.PublicationType!);
+                    var publication = new Publication(model.PublicationTitle!, model.PublicationYear, model.PublicationReference!, model.PublicationType!, model.PublicationAuthor!);
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
@@ -149,10 +151,11 @@ namespace SistemaGraficosCITIC.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 ViewData["projectId"] = model.ProjectId!;
-                model.PublicationDate = new DateTime();
+                model.PublicationYear = 2023;
                 model.PublicationTitle = "";
                 model.PublicationType = "";
                 model.PublicationReference = "";
+                model.PublicationAuthor = "";
                 ///return View("Create", new PublicationModel());
                 return RedirectToAction("Create", "Publications", new {projectId = model.ProjectId } );
             }
@@ -187,7 +190,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Date,Reference,Type")] Publication publication)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Year,Reference,Type,Author")] Publication publication)
         {
             if (id != publication.Id)
             {
@@ -294,9 +297,10 @@ namespace SistemaGraficosCITIC.Controllers
 
                     var publication = new Publication(
                         model.PublicationTitle!,
-                        model.PublicationDate,
+                        model.PublicationYear,
                         model.PublicationReference!,
-                        model.PublicationType!
+                        model.PublicationType!,
+                        model.PublicationAuthor!
                     );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);

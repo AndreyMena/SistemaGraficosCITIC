@@ -89,7 +89,7 @@
                                             <!-- INICIA body Publicaciones -->
 
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid, projectName = projName })'">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid, projectName = @projName })'">
                                                     <b>+</b> Agregar Publicación
                                                 </button>
                                             </div>
@@ -99,9 +99,9 @@
                                                 {
                                                     if(publi.Project.Id == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
                                                     {
-                                                        string year = @publi.Date.Year.ToString().Substring(0, 4);
+                                                        string year = @publi.PublicationYear.ToString();
 
-                                                        <div class="col-md-4">
+                                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8">
                                                             <div class="card mt-3" style="width: 18rem;">
                                                                 <div class="card-body">
                                                                     <h5 class="card-title">@publi.Title</h5>
