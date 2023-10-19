@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Editar publicaciones";
+    var projectName = ViewData["projectName"];
 }
 
 <h1>Editar</h1>
-
+<p>Proyecto: <b> @projectName </b></p>
 <h4>Publicacion</h4>
 <hr />
 <div class="row">
@@ -14,28 +15,43 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-floating mt-3">
-                <input value="" asp-for="Title" class="form-control" />
+                <input name="Title" asp-for="Title" class="form-control" />
                 <label asp-for="Title" class="control-label">Título</label>
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-floating mt-3">
-                <input type="date" value="" asp-for="PublicationYear" class="form-control" />
-                <label asp-for="PublicationYear" class="control-label">Fecha</label>
+                <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" value="2023" asp-for="PublicationYear" class="form-control" />
+                <label asp-for="PublicationYear" class="control-label">Año</label>
                 <span asp-validation-for="PublicationYear" class="text-danger"></span>
             </div>
             <div class="form-floating mt-3">
-                <input value="" asp-for="Reference" class="form-control" />
+                <input name="Reference" asp-for="Reference" class="form-control" />
                 <label asp-for="Reference" class="control-label">Referencia</label>
                 <span asp-validation-for="Reference" class="text-danger"></span>
             </div>
             <div class="form-floating mt-3">
-                <select asp-for="Type" class="form-select" aria-label="Default select example">
+                <select asp-for="Type" name="Type" class="form-select" aria-label="Default select example">
                     <option value="Conference">Conferencia</option>
-                    <option value="Journal">Journal</option>
                     <option value="Magazine">Revista</option>
+                    <option value="Journal">Otro</option>
                 </select>
                 <label class="form-label">Tipo</label>
             </div>
+            <div class="form-floating mt-3">
+                <div class="table-responsive">
+                    <table class="table table-borderless text-center" id="table_field">
+                        <label asp-for="Author" class="control-label m-1">Autor(es)</label>
+                        <tr>
+                            <td><input asp-for="Author" type="text" class="form-control" name="PublicationAuthor" required></td>
+                            <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
+                        </tr>
+                    </table>
+                    <div class="text-right">
+                        <input type="button" name="add" id="add" value="Agregar autor" class="btn btn-success">
+                    </div>
+                </div>
+            </div>
+            <hr />
             <div class="form-group mt-3">
                 <input id="btnGuardar" type="submit" value="Guardar" class="btn btn-primary" />
             </div>
