@@ -103,12 +103,11 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    string isMarketable = (model.ProductMarketable.Equals("true") ? "Comercializable" : "No comercializable");
-                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, isMarketable, model.ProductLicense);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    string isMarketable = (model.ProductMarketable!.Equals("true") ? "Comercializable" : "No comercializable");
+                    var product = new Product(model.ProductName!, model.ProductDescription!, model.ProductState!, isMarketable, model.ProductLicense!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Product.Add(product);
                     project!.Products.Add(product);
-
                     await _context.SaveChangesAsync();
                 }
                 else
@@ -139,9 +138,9 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    string isMarketable = (model.ProductMarketable.Equals("true") ? "Comercializable" : "No comercializable");
-                    var product = new Product(model.ProductName, model.ProductDescription, model.ProductState, isMarketable, model.ProductLicense);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    string isMarketable = (model.ProductMarketable!.Equals("true") ? "Comercializable" : "No comercializable");
+                    var product = new Product(model.ProductName!, model.ProductDescription!, model.ProductState!, isMarketable, model.ProductLicense!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Product.Add(product);
                     project!.Products.Add(product);
 
@@ -157,7 +156,8 @@ namespace SistemaGraficosCITIC.Controllers
                 model.ProductState = "";
                 model.ProductMarketable = "";
                 model.ProductLicense = "";
-                return View("Create", new ProductModel());
+                //return View("Create", new ProductModel());
+                return RedirectToAction("Create", "Products", new { projectId = model.ProjectId });
             }
             return View(model);
         }
