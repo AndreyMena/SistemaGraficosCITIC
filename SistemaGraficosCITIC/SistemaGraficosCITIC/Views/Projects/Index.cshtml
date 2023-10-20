@@ -42,6 +42,7 @@
                 var guid = item.Id;
                 var projName = item.Name;
 
+                var investigador = (item.Researcher.Name + " " +item.Researcher.LastName);
                 string startDate = item.StartDate.ToString().Substring(0, item.StartDate.ToString().IndexOf(' '));
                 string endDate = item.EndDate != null ? item.EndDate.ToString().Substring(0, item.EndDate.ToString().IndexOf(' ')) : " ";
 
@@ -65,6 +66,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Tipo: <b>@Html.DisplayFor(modelItem => item.Type)</b></td>
+                                        <td>Investigador: <b>@investigador</b></td>
                                         <td>Fecha inicio: <b>@startDate</b></td>
                                         @if(!item.IsActive)
                                         {
