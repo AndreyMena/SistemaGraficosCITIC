@@ -7,7 +7,7 @@
 
 <h1>Editar</h1>
 <p>Proyecto: <b> @projectName </b></p>
-<h4>Publicacion</h4>
+<h4>Publicación</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -42,7 +42,7 @@
                     <table class="table table-borderless text-center" id="table_field">
                         <label asp-for="Author" class="control-label m-1">Autor(es)</label>
                         <tr>
-                            <td><input asp-for="Author" type="text" class="form-control" name="PublicationAuthor" required></td>
+                            <td><input asp-for="Author" type="text" class="form-control" name="Author" required></td>
                             <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
                         </tr>
                     </table>
@@ -96,6 +96,28 @@
     });
 </script>
 
+<script type="text/javascript">
+    // Script para agregar o eliminar textfield para autor
+    $(document).ready(function () {
+        var html = '<tr><td><input asp-for="PublicationAuthor" class="form-control" type="text" name="PublicationAuthor" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
+        var max = 10;
+        var x = 1;
+        // Agregar fila
+        $("#add").click(function () {
+            if (x <= max) {
+                $("#table_field").append(html);
+                x++;
+            }
+        })
+        // Borrar fila
+        $("#table_field").on('click', '#remove', function () {
+            if (x > 1) {
+                $(this).closest('tr').remove();
+                x--;
+            }
+        })
+    })
+</script>
 
 @section Scripts {
     @{

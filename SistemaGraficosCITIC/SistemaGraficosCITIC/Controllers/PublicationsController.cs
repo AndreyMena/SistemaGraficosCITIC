@@ -190,7 +190,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Year,Reference,Type,Author")] Publication publication)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,PublicationYear,Reference,Type,Author")] Publication publication)
         {
             if (id != publication.Id)
             {
