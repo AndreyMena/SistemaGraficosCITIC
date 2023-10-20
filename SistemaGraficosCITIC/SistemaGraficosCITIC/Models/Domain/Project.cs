@@ -6,6 +6,7 @@ namespace SistemaGraficosCITIC.Models.Domain
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
         public string Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
@@ -19,6 +20,7 @@ namespace SistemaGraficosCITIC.Models.Domain
         {
             Id = Guid.NewGuid();
             Name = "";
+            Code = "";
             Type = "";
             EndDate = DateTime.MinValue;
             Publications = new List<Publication>();
@@ -26,10 +28,11 @@ namespace SistemaGraficosCITIC.Models.Domain
             Products = new List<Product>();
         }
 
-        public Project(string name, string type, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive)
+        public Project(string name, string type, string code, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive)
         {
             Id = Guid.NewGuid();
             Name = name;
+            Code = code;
             Type = type;
             StartDate = startDate;
             EndDate = endDate;

@@ -61,6 +61,7 @@ namespace SistemaGraficosCITIC.Repositories
             {
                 existingProj.Id = project.Id;
                 existingProj.Name = project.Name;
+                existingProj.Code = project.Code;
                 existingProj.Type = project.Type;
                 existingProj.StartDate = project.StartDate;
                 existingProj.EndDate = project.EndDate;
