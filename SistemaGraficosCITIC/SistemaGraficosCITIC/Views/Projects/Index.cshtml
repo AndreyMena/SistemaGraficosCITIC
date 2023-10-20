@@ -39,6 +39,7 @@
                 var idPanelPubli = "panelPublicaciones_" + projectIndex;
                 var idPanelExpo = "panelExposiciones_" + projectIndex;
                 var idPanelProd = "panelProductos_" + projectIndex;
+                var idPanelColab = "panelColaboradores_" + projectIndex;
                 var guid = item.Id;
                 var projName = item.Name;
 
@@ -223,6 +224,34 @@
                                             </div>
 
                                             <!-- FIN body Productos -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Colaboradores -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idPanelColab" aria-expanded="true" aria-controls="@idPanelColab">
+                                            Colaboradores
+                                        </button>
+                                    </h2>
+                                    <div id="@idPanelColab" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <!-- INICIA body Colaboradores -->
+                                            <div class="section bt-4 mb-4">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Products", new { projectId = guid, projectName = projName })'">
+                                                    <b>+</b> Agregar Colaborador
+                                                </button>
+                                            </div>
+                                            <div class="row">
+                                                @foreach (var project in Model.projects)
+                                                {
+                                                    if (project.Id == item.Id)
+                                                    {
+                                                        <h5 class="card-title">@project.Collaborators</h5>
+                                                    }
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
