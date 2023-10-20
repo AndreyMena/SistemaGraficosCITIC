@@ -12,6 +12,7 @@ namespace SistemaGraficosCITIC.Models.Domain
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
         public Researcher? Researcher { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
+        public List<Researcher> Researchers { get; set; }
         public List<Publication> Publications { get; set; } //Se cambiaron de Collection a List
         public List<Exposition> Expositions { get; set; }
         public List<Product> Products { get; set; }
@@ -23,6 +24,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             Code = "";
             Type = "";
             EndDate = DateTime.MinValue;
+            Researchers = new List<Researcher>();
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();
@@ -38,6 +40,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             EndDate = endDate;
             IsActive = isActive;
             Researcher = researcher; //Por ahora
+            Researchers = new List<Researcher>();
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();
