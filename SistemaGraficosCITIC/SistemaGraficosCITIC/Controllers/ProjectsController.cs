@@ -178,7 +178,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Type,StartDate,EndDate")] Project project)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Type,Code,StartDate,EndDate")] Project project)
         {
             if (id != project.Id)
             {
