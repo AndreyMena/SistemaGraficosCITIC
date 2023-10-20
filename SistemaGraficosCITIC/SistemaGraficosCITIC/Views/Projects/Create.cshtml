@@ -56,7 +56,26 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        <input type="submit" value="Guardar" class="btn btn-primary" />
+                        <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content d-flex justify-content-center">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Proyecto guardado</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>¿Desea agregar otro proyecto?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" value="Create" class="btn btn-warning">Agregar otro</button>
+                                    <button asp-action="AddProject" asp-controller="Projects" type="submit" class="btn btn-primary">No</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

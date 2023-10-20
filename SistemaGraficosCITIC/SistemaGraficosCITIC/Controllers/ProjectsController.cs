@@ -133,7 +133,7 @@ namespace SistemaGraficosCITIC.Controllers
                         _context.Add(project);
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Publications", new { projectId = projectId });
+                        return RedirectToAction("Create", "Projects");
                     }
                     else{
                         model.EndDate = null!;
@@ -141,7 +141,7 @@ namespace SistemaGraficosCITIC.Controllers
                         _context.Add(project);
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Publications", new { projectId = projectId });
+                        return RedirectToAction("Create", "Projects");
                     }
                 }else{
                     return RedirectToAction(nameof(Index));
@@ -261,6 +261,29 @@ namespace SistemaGraficosCITIC.Controllers
         private bool ProjectExists(Guid id)
         {
           return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        public async Task<IActionResult> AddProject(ProjectModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+                    var id = new Guid(currentUser.Id);
+                    var researcher = await researcherRepository.GetAsync(id);
+                    var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return RedirectToAction("Index", "Projects");
+            }
+            return View(model);
         }
     }
 }
