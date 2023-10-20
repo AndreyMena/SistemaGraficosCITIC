@@ -61,10 +61,11 @@ namespace SistemaGraficosCITIC.Repositories
             {
                 existingProj.Id = project.Id;
                 existingProj.Name = project.Name;
-                existingProj.Code = project.Code;
                 existingProj.Type = project.Type;
                 existingProj.StartDate = project.StartDate;
                 existingProj.EndDate = project.EndDate;
+                existingProj.Collaborators = project.Collaborators;
+                existingProj.Code = project.Code;
 
                 await _context.SaveChangesAsync();
                 return existingProj;

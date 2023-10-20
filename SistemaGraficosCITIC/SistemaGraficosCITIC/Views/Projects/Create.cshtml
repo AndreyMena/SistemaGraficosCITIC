@@ -104,6 +104,37 @@
         </script>
 
         <script>
+            $(document).ready(function () {
+                // Función para verificar si el formulario está completo
+                $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+                function checkFormCompletion() {
+                    var isComplete = true;
+                    $('input, select, textarea').each(function () {
+                        if ($(this).is(':visible')) {
+                            if ($(this).val() === '') {
+                                isComplete = false;
+                                return false; // Sale del bucle si encuentra un campo vacío
+                            }
+                        }
+                    });
+
+                    // Actualiza el estado del botón
+                    if (isComplete) {
+                        $('#btnGuardar').prop('disabled', false);
+                    } else {
+                        $('#btnGuardar').prop('disabled', true);
+                    }
+                }
+
+                // Verificar el estado del formulario en cada cambio de campo
+                $('input, select, textarea').on('input change', function () {
+                    checkFormCompletion();
+                });
+            });
+        </script>
+
+        <script>
             var contador = @publicationsCount;
 
             function buttonAddPublications(x) {
