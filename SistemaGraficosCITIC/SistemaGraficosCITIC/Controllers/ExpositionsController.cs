@@ -103,8 +103,9 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var expo = new Exposition(model.ExpositionDate, model.ExpositionLocation, model.ExpositionContext);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    var expo = new Exposition(model.ExpositionTitle!, model.ExpositionDate, model.ExpositionLocation!, model.ExpositionContext!,
+                                                model.ExpositionParticipants!, model.ExpositionSpeaker!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Exposition.Add(expo);
                     project!.Expositions.Add(expo);
 
@@ -137,8 +138,9 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var expo = new Exposition(model.ExpositionDate, model.ExpositionLocation, model.ExpositionContext);
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId));
+                    var expo = new Exposition(model.ExpositionTitle!, model.ExpositionDate, model.ExpositionLocation!, model.ExpositionContext!,
+                                                model.ExpositionParticipants!, model.ExpositionSpeaker!);
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Exposition.Add(expo);
                     project!.Expositions.Add(expo);
 
@@ -149,9 +151,12 @@ namespace SistemaGraficosCITIC.Controllers
                     return RedirectToAction(nameof(Index));
                 }
                 ViewData["projectId"] = model.ProjectId!;
+                model.ExpositionTitle = "";
                 model.ExpositionDate = new DateTime();
                 model.ExpositionLocation = "";
                 model.ExpositionContext = "";
+                model.ExpositionParticipants = "";
+                model.ExpositionSpeaker = "";
                 return View("Create", new ExpositionModel());
             }
             return View(model);
@@ -185,7 +190,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Date,Location,Context")] Exposition exposition)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Date,Location,Context,Participants,Speaker")] Exposition exposition)
         {
             if (id != exposition.Id)
             {
