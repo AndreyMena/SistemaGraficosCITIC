@@ -83,6 +83,34 @@
                             <!-- ACORDEÓN -->
                             <div class="accordion mb-3" id="accordionDetalles">
 
+                                <!-- Colaboradores -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idPanelColab" aria-expanded="true" aria-controls="@idPanelColab">
+                                            Colaboradores
+                                        </button>
+                                    </h2>
+                                    <div id="@idPanelColab" class="accordion-collapse collapse">
+                                        <div class="accordion-body">
+                                            <!-- INICIA body Colaboradores -->
+                                            <div class="section bt-4 mb-4">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects", new { projectId = guid, projectName = projName })'">
+                                                    <b>+</b> Agregar Colaborador
+                                                </button>
+                                            </div>
+                                            <div class="row">
+                                                @foreach (var project in Model.projects)
+                                                {
+                                                    if (project.Id == item.Id)
+                                                    {
+                                                        <h5 class="card-title">@project.Collaborators</h5>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- PUBLICACIONES -->
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
@@ -227,35 +255,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Colaboradores -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idPanelColab" aria-expanded="true" aria-controls="@idPanelColab">
-                                            Colaboradores
-                                        </button>
-                                    </h2>
-                                    <div id="@idPanelColab" class="accordion-collapse collapse">
-                                        <div class="accordion-body">
-                                            <!-- INICIA body Colaboradores -->
-                                            <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects", new { projectId = guid, projectName = projName })'">
-                                                    <b>+</b> Agregar Colaborador
-                                                </button>
-                                            </div>
-                                            <div class="row">
-                                                @foreach (var project in Model.projects)
-                                                {
-                                                    if (project.Id == item.Id)
-                                                    {
-                                                        <h5 class="card-title">@project.Collaborators</h5>
-                                                    }
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                             <!-- FIN ACORDEÓN -->
                             <!-- FIN body Proyecto -->
