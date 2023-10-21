@@ -14,35 +14,40 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-floating mt-3">
-                <input value="" asp-for="Title" class="form-control" />
-                <label class="control-label">Titulo</label>
+                <input name="Title" asp-for="Title" class="form-control" />
+                <label asp-for="Title" class="control-label">Título</label>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            
+            <div id="Date" class="form-floating mt-3">
+                <input type="Date" asp-for="Date" class="form-control" />
+                <label asp-for="Date" class="control-label">Fecha</label>
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
 
             <div class="form-floating mt-3">
-                <input value="" asp-for="Date" type="Date" class="form-control" />
-                <label class="control-label">Fecha</label>
+                <input name="Location" asp-for="Location" class="form-control" />
+                <label asp-for="Location" class="control-label">Lugar</label>
+                <span asp-validation-for="Location" class="text-danger"></span>
             </div>
 
             <div class="form-floating mt-3">
-                <input value="" asp-for="Location" class="form-control" />
-                <label class="control-label">Lugar</label>
+                <input name="Context" asp-for="Context" class="form-control" />
+                <label asp-for="Context" class="control-label">Contexto</label>
+                <span asp-validation-for="Context" class="text-danger"></span>
             </div>
 
             <div class="form-floating mt-3">
-                <input value="" asp-for="Context" class="form-control" />
-                <label class="control-label">Contexto</label>
+                <input name="Speaker" asp-for="Speaker" class="form-control" />
+                <label asp-for="Speaker" class="control-label">Presentador</label>
+                <span asp-validation-for="Speaker" class="text-danger"></span>
             </div>
 
             <div class="form-floating mt-3">
-                <input value="" asp-for="Speaker" class="form-control" />
-                <label class="control-label">Presentadores</label>
+                <input name="Participants" asp-for="Participants" class="form-control" />
+                <label asp-for="Participants" class="control-label">Participantes</label>
+                <span asp-validation-for="Participants" class="text-danger"></span>
             </div>
-
-            <div class="form-floating mt-3">
-                <input value="" asp-for="Participants" class="form-control" />
-                <label class="control-label">Participantes</label>
-            </div>
-
             <div class="form-group mt-3">
                 <input id="btnGuardar" type="submit" value="Guardar" class="btn btn-primary" />
             </div>
