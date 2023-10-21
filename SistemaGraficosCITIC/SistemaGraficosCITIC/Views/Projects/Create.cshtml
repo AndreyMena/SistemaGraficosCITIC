@@ -1,9 +1,20 @@
-﻿@using SistemaGraficosCITIC.Controllers
+﻿@using Microsoft.AspNetCore.Identity;
+@using SistemaGraficosCITIC.Controllers
+@using SistemaGraficosCITIC.Models.Domain;
+@using SistemaGraficosCITIC.Repositories;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject IResearcherRepository ResearcherRepository
+@inject UserManager<IdentityUser> UserManager
 
 @model ProjectModel
 @{
+    var user = await UserManager.GetUserAsync(User);
     ViewData["Title"] = "Agregar proyecto";
     var publicationsCount = 0;
+    string idString = user.Id;
+    Guid id = Guid.Parse(idString);
+    Researcher researcher = await ResearcherRepository.GetAsync(id);
 }
 
 <div class="container">
@@ -24,6 +35,9 @@
             <div class="col-md-4">
                 <form asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mt-3">
+                        Investigador Principal: @researcher.Name @researcher.LastName
+                    </div>
                     <div class="form-floating mt-3">
                         <input asp-for="Name" class="form-control" />
                         <label asp-for="Name" class="control-label">Nombre</label>

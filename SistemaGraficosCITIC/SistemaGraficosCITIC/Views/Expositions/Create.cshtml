@@ -17,12 +17,17 @@
 
     <hr />
 
-    <h3>Exposiciones</h3>
+    <h3>Presentaciones</h3>
 
     <div class="row">
         <div class="col-md-4">
         
             <form asp-action="Create">
+
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ExpositionTitle" class="form-control" />
+                    <label class="control-label">Titulo</label>
+                </div>
 
                 <div class="form-floating mt-3">
                     <input value="" asp-for="ExpositionDate" type="Date" class="form-control" />
@@ -37,6 +42,16 @@
                 <div class="form-floating mt-3">
                     <input value="" asp-for="ExpositionContext" class="form-control" />
                     <label class="control-label">Contexto</label>
+                </div>
+
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ExpositionSpeaker" class="form-control" />
+                    <label class="control-label">Presentadores</label>
+                </div>
+
+                <div class="form-floating mt-3">
+                    <input value="" asp-for="ExpositionParticipants" class="form-control" />
+                    <label class="control-label">Participantes</label>
                 </div>
 
                 <div class="form-floating mt-3" type="hidden">
