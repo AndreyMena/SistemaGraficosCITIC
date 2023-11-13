@@ -1,4 +1,8 @@
-﻿using System.Xml.Linq;
+﻿using Microsoft.Data.SqlClient;
+using SistemaGraficosCITIC.Controllers;
+using SistemaGraficosCITIC.Data;
+using SistemaGraficosCITIC.Views.ViewModels;
+using System.Xml.Linq;
 
 namespace SistemaGraficosCITIC.Models.Domain
 {
@@ -6,10 +10,10 @@ namespace SistemaGraficosCITIC.Models.Domain
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public int PublicationYear { get; set; }
+        public int Year { get; set; }
         public string Reference { get; set; }
         public string Type { get; set; }
-        public string Author {get; set;}
+        public List<Author> Authors { get; set; }
 
         public Project? Project { get; set; }
 
@@ -17,20 +21,35 @@ namespace SistemaGraficosCITIC.Models.Domain
         {
             Id = Guid.NewGuid();
             Title = "";
-            PublicationYear = 2023;
+            Year = 2023;
             Reference = "";
             Type = "";
-            Author = "";
+            Authors = new List<Author>();
         }
-        public Publication(string title, int date, string reference, string type, string authors)
+        public Publication(string title, int date, string reference, string type, string[] authors)
         {
             Id = Guid.NewGuid();
             Title = title;
-            PublicationYear = date;
+            Year = date;
             Reference = reference;
             Type = type;
-            Author = authors;
+            var Aut = new List<Author>();
+            DBControllerGetData db = new();
+            for (int i = 0; i < authors.Length; i++)
+            {
+                bool isNewAuthor = false;
+                isNewAuthor = db.myValueExist("Author", "AuthorName", authors[i]);
+                if (isNewAuthor)
+                {
+                    var author = new Author(authors[i]);
+                    Aut.Add(author);
+                } else
+                {   
+                    var author = db.GetAuthorByName(authors[i]);
+                    Aut.Append(author);
+                }
+            }
+            Authors = Aut;
         }
-
     }
 }

@@ -4,6 +4,7 @@
     ViewData["Title"] = "Agregar publicación";
     var projectId = ViewData["projectId"];
     var projectName = ViewData["projectName"];
+    var contador = 1;
 }
 <div class="container">
 
@@ -37,9 +38,10 @@
                     <span asp-validation-for="PublicationReference" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-3">
-                    <select asp-for="PublicationType" id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
-                        <option value="Conference">Conferencia</option>
-                        <option value="Other">Otro</option>
+                    <select asp-for="PublicationType" id="PublicationsType" class="form-select" aria-label="Default select example">
+                        <option value="Conferencia">Conferencia</option>
+                        <option value="Revista">Revista</option>
+                        <option value="Otro">Otro</option>
                     </select>
                     <label class="form-label">Tipo</label>
                 </div>
@@ -47,9 +49,10 @@
                 <div class="form-floating mt-3">
                     <div class="table-responsive">
                         <table class="table table-borderless text-center" id="table_field">
-                            <label asp-for="PublicationAuthor" class="control-label m-1">Autor(es)</label>
+                            <label asp-for="PublicationAuthors" class="control-label m-1">Autor(es)</label>
                             <tr>
-                                <td><input asp-for="PublicationAuthor" type="text" class="form-control" name="PublicationAuthor" required></td>
+                                {@*<td><input asp-for="PublicationAuthors" type="text" class="form-control" name="PublicationAuthor" required></td>*@}
+                                <td><input name="PublicationAuthors[0]" type="text" class="form-control" required></td>
                                 <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
                             </tr>
                         </table> 
@@ -89,7 +92,7 @@
                             </div>
                             <div class="modal-footer">
                                 @*<input type="submit" value="Create" class="btn btn-primary" />*@
-                                <button type="submit" value="Create" class="btn btn-warning">Agregar otra</button>
+                                <button type="submit" value="Create" class="btn btn-warning">Agregar otra publicación</button>
                                 <button asp-action="AddToProyect" asp-controller="Publications" type="submit" class="btn btn-primary">No</button>
                             </div>
                         </div>
@@ -139,13 +142,14 @@
 <script type="text/javascript">
     // Script para agregar o eliminar textfield para autor
     $(document).ready(function () {
-        var html = '<tr><td><input asp-for="PublicationAuthor" class="form-control" type="text" name="PublicationAuthor" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
+        var html = '<tr><td><input class="form-control" type="text" name="PublicationAuthors[@contador]" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
         var max = 10;
         var x = 1;
         // Agregar fila
         $("#add").click(function () {
             if (x <= max) {
                 $("#table_field").append(html);
+                contador++;
                 x++;
             }
         })
@@ -153,6 +157,7 @@
         $("#table_field").on('click', '#remove', function () {
             if (x > 1) {
                 $(this).closest('tr').remove();
+                contador--;
                 x--;
             }
         })

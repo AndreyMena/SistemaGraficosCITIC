@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
@@ -105,7 +107,14 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationYear, model.PublicationReference!, model.PublicationType!, model.PublicationAuthor!);
+                    var publication = new Publication(
+                        model.PublicationTitle!,
+                        model.PublicationYear,
+                        model.PublicationReference!,
+                        model.PublicationType!,
+                        model.PublicationAuthors
+                        //PublicationAuthorModelsToAuthors(model)
+                    );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
@@ -121,6 +130,21 @@ namespace SistemaGraficosCITIC.Controllers
             }
             return View(model);
         }
+
+       /* private Author AuthorModelToAuthor(AuthorModel authorModel)
+        {
+            return new Author()
+            {
+                AuthorName = authorModel.AuthorName!
+            };
+        }
+
+        private List<Author> PublicationAuthorModelsToAuthors(PublicationModel model)
+        {
+            return model.PublicationAuthors.ConvertAll(
+                new Converter<AuthorModel, Author>(AuthorModelToAuthor)
+            );
+        }*/
 
         /// <summary>
         /// POST method for create a and create again
@@ -139,12 +163,19 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
-                    var publication = new Publication(model.PublicationTitle!, model.PublicationYear, model.PublicationReference!, model.PublicationType!, model.PublicationAuthor!);
+                    var publication = new Publication(
+                        model.PublicationTitle!,
+                        model.PublicationYear,
+                        model.PublicationReference!,
+                        model.PublicationType!,
+                        model.PublicationAuthors!
+                        //PublicationAuthorModelsToAuthors(model)
+                    );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
-                    
+                    //SqlCommand sqlCommand = new("InsertarPublicacion");
                 }
                 else
                 {
@@ -155,7 +186,7 @@ namespace SistemaGraficosCITIC.Controllers
                 model.PublicationTitle = "";
                 model.PublicationType = "";
                 model.PublicationReference = "";
-                model.PublicationAuthor = "";
+                model.PublicationAuthors = new string[10];
                 ///return View("Create", new PublicationModel());
                 return RedirectToAction("Create", "Publications", new {projectId = model.ProjectId } );
             }
@@ -280,12 +311,17 @@ namespace SistemaGraficosCITIC.Controllers
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>
-        public async Task<IActionResult> Skip(string projectId)
+        public IActionResult Skip(string projectId)
         {
             //var projectId = model.ProjectId;
             return RedirectToAction("Create", "Expositions", new { projectId = projectId });
         }
 
+        /// <summary>
+        /// POST method for create a publication and go to main page
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> AddToProyect(PublicationModel model)
         {
             if (ModelState.IsValid)
@@ -295,17 +331,20 @@ namespace SistemaGraficosCITIC.Controllers
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
 
+
                     var publication = new Publication(
                         model.PublicationTitle!,
                         model.PublicationYear,
                         model.PublicationReference!,
                         model.PublicationType!,
-                        model.PublicationAuthor!
+                        model.PublicationAuthors!
+                        //PublicationAuthorModelsToAuthors(model)
                     );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
+                    //InsertarNuevaPublicacion(publication);
 
                 }
                 else
@@ -315,8 +354,44 @@ namespace SistemaGraficosCITIC.Controllers
                 var projectId = model.ProjectId;
                 return RedirectToAction("Index", "Projects", new { projectId = projectId });
             }
+            // Invalid model
             return View(model);
         }
 
+        public bool InsertarNuevaPublicacion(Publication pub)
+        {
+            bool completado = false;
+
+            string consulta = "InsertarNuevaPublicacion";
+            SqlCommand comando = new(consulta);
+            comando.CommandType = CommandType.StoredProcedure;
+            for (int i = 0; i <= pub.Authors.Count; i++)
+            {
+                comando.Parameters.AddWithValue("@NewAutor", pub.Authors[i]);
+                comando.Parameters.AddWithValue("@IdPubli", pub.Project!.Id);
+            }
+
+            SqlParameter completadoExito = new("@InsertCompletado", SqlDbType.Bit);
+            completadoExito.Direction = ParameterDirection.Output;
+            comando.Parameters.Add(completadoExito);
+
+            if (completadoExito.Value != null)
+            {
+                completado = Convert.ToBoolean(completadoExito.Value);
+            }
+
+            return completado;
+        }
+
+        
+
+        public async Task<IEnumerable<Author>> GetAllAsync()
+        {
+            var authorList = await _context.Author.ToListAsync();
+
+            authorList = authorList.OrderByDescending(x => x.AuthorName).ToList();
+
+            return authorList;
+        }
     }
 }

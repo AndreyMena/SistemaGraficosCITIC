@@ -280,12 +280,10 @@ namespace SistemaGraficosCITIC.Controllers
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>)
-        public async Task<IActionResult> Skip(string projectId)
+        public IActionResult Skip(string projectId)
         {
             //var projectId = model.ProjectId;
             return RedirectToAction("Index", "Projects", new { projectId = projectId });
         }
-
-
     }
 }
