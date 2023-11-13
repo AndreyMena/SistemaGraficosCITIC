@@ -17,30 +17,10 @@ using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
 {
-    public class PublicationsController : Controller
+    public class PublicationsController : BaseController
     {
-        private readonly SistemaGraficosCITICContext _context;
-
-        private readonly UserManager<IdentityUser> userManager;
-
-        private readonly SignInManager<IdentityUser> signInManager;
-
-        private readonly IProjectRepository projectRepository;
-
-        /// <summary>
-        /// Constructor for Publication
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="_signInManager"></param>
-        /// <param name="_userManager"></param>
-        /// <param name="_projectRepository"></param>
-        public PublicationsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager,
-            UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository)
+        public PublicationsController(SistemaGraficosCITICContext context, SignInManager<IdentityUser> _signInManager, UserManager<IdentityUser> _userManager, IProjectRepository _projectRepository) : base(context, _signInManager, _userManager, _projectRepository)
         {
-            _context = context;
-            userManager = _userManager;
-            signInManager = _signInManager;
-            projectRepository = _projectRepository;
         }
 
         /// <summary>
