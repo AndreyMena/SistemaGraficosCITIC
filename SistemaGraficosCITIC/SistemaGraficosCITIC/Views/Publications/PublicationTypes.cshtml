@@ -7,16 +7,15 @@
 <div>
     <h4>Tipos de Publicación</h4>
     <hr />
-    <button type="button" class="btn btn-primary" onclick="openTheForm()">
+    <button type="button" class="btn btn-primary m-2" onclick="openTheForm()">
         <b>+</b> Agregar Tipo
     </button>
     <!-- The form -->
     <div class="form-popup" id="popupForm" style="display: none">
         <form asp-action="PublicationTypes" class="form-container" id="addTypeForm" >
-            <label for="nuevoTipo"><b>Nuevo Tipo</b></label>
-            <input type="text" placeholder="Introduzca un nombre" name="PublicationTypeName" required>
-            <button type="submit" class="btn">Agregar</button>
-            <button type="button" class="btn cancel" onclick="closeTheForm()">Cancelar</button>
+            <input class="form-control-sm "type="text" placeholder="Nuevo nombre de tipo" name="PublicationTypeName" required>
+            <button type="submit" class="btn btn-outline-primary">Agregar</button>
+            <button type="button" class="btn btn-close" onclick="closeTheForm()"></button>
         </form>
     </div>
 
@@ -42,8 +41,7 @@
     
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 <script>
