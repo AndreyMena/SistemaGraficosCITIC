@@ -37,7 +37,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for details of a publication
+        /// GET method for details of a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -60,7 +60,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for create a publication
+        /// GET method for create a publicationType
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>
@@ -75,7 +75,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// POST method for create a publication and continue
+        /// POST method for create a publicationType and continue
         /// </summary>
         /// <param name="model"></param>
         /// <returns>The Task of action to the view</returns>
@@ -177,7 +177,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for edit a publication
+        /// GET method for edit a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -207,7 +207,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// POST method for edit a publication
+        /// POST method for edit a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <param name="publication"></param>
@@ -245,7 +245,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for delete a publication
+        /// GET method for delete a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -268,7 +268,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// POST method for delete a publication
+        /// POST method for delete a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -292,10 +292,10 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// Check if the publication exists
+        /// Check if the publicationType exists
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>bool true if the publication exists, false if not/returns>
+        /// <returns>bool true if the publicationType exists, false if not/returns>
         private bool PublicationExists(Guid id)
         {
           return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
@@ -313,7 +313,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// POST method for create a publication and go to main page
+        /// POST method for create a publicationType and go to main page
         /// </summary>
         /// <param name="model"></param>
         /// <returns>The Task of action to the view</returns>
@@ -339,7 +339,7 @@ namespace SistemaGraficosCITIC.Controllers
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
-                    //InsertarNuevaPublicacion(publication);
+                    //InsertarNuevaPublicacion(publicationType);
 
                 }
                 else
@@ -400,5 +400,44 @@ namespace SistemaGraficosCITIC.Controllers
             }
             return View(publicationTypes);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PublicationTypes(PublicationTypeModel model, int? check)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var publicationType = new PublicationType(
+                        model.PublicationTypeName
+                    );
+                    _context.PublicationType.Add(publicationType);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return RedirectToAction("PublicationTypes", "Publications");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteType(int id)
+        {
+            var publicationType = await _context.PublicationType.FindAsync(id);
+            if (publicationType != null)
+            {
+                _context.PublicationType.Remove(publicationType);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("PublicationTypes", "Publications");
+        }
+
     }
 }

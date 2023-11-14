@@ -66,10 +66,8 @@ namespace SistemaGraficosCITIC.Data
             DataTable tablaDeDesglose = CrearTablaConsulta(request);
             foreach (DataRow columna in tablaDeDesglose.Rows)
             {
-                publiTypes.Add(
-                new PublicationType
+                publiTypes.Add(new PublicationType
                 {
-                    // Id = Guid.Parse((string)columna["IdentificadorUsuario"]),
                     PublicationTypeId = Convert.ToInt32(columna["PublicationTypeId"]),
                     PublicationTypeName = Convert.ToString(columna["PublicationTypeName"])
                 });

@@ -7,21 +7,36 @@
 <div>
     <h4>Tipos de Publicación</h4>
     <hr />
-    <table class="table table-borderless text-left" id="table_field" asp-for="PublicationTypeName">
+    <button type="button" class="btn btn-primary" onclick="openTheForm()">
+        <b>+</b> Agregar Tipo
+    </button>
+    <!-- The form -->
+    <div class="form-popup" id="popupForm" style="display: none">
+        <form asp-action="PublicationTypes" class="form-container" id="addTypeForm" >
+            <label for="nuevoTipo"><b>Nuevo Tipo</b></label>
+            <input type="text" placeholder="Introduzca un nombre" name="PublicationTypeName" required>
+            <button type="submit" class="btn">Agregar</button>
+            <button type="button" class="btn cancel" onclick="closeTheForm()">Cancelar</button>
+        </form>
+    </div>
+
+    <table class="table table-borderless text-left" id="table_field" >
         <th>Nombre</th>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PublicationTypeName)
+                    <span asp-for="PublicationTypeName">@Html.DisplayFor(modelItem => item.PublicationTypeName)</span>
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item">Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@item">Borrar</a>
+                    <form asp-action="DeleteType">
+                        <a asp-action="DeleteType" asp-route-id="@item.PublicationTypeId" type="submit">Borrar</a>
+                    </form>
                 </td>
             </tr>
         }
+
 
     </table>
     
@@ -30,3 +45,13 @@
     <a asp-action="Edit" asp-route-id="@Model?">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    function openTheForm() {
+        document.getElementById("popupForm").style.display = "block";
+    }
+
+    function closeTheForm() {
+        document.getElementById("popupForm").style.display = "none";
+    }
+</script>
