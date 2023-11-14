@@ -9,5 +9,6 @@ namespace SistemaGraficosCITIC.Views.ViewModels
         public IEnumerable<Exposition>? expositions { get; set; }
         public IEnumerable<Product>? products { get; set; }
         public IEnumerable<Author>? authors { get; set; }
+        public IEnumerable<PublicationType>? publicationTypes { get; set;}
     }
 }

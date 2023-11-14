@@ -23,5 +23,11 @@ namespace SistemaGraficosCITIC.Models.Domain
             AuthorName = name;
             Publications = new List<Publication>();
         }
+        public Author(Guid authorId, string authorName, List<Publication> publications)
+        {
+            AuthorId = authorId;
+            AuthorName = authorName;
+            Publications = publications;
+        }
     }
 }

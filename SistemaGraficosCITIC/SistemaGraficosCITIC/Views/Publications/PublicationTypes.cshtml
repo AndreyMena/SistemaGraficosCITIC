@@ -1,0 +1,32 @@
+﻿@model List<SistemaGraficosCITIC.Models.Domain.PublicationType>
+
+@{
+    ViewData["Title"] = "Tipos de publicación";
+}
+
+<div>
+    <h4>Tipos de Publicación</h4>
+    <hr />
+    <table class="table table-borderless text-left" id="table_field" asp-for="PublicationTypeName">
+        <th>Nombre</th>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublicationTypeName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item">Editar</a> |
+                    <a asp-action="Delete" asp-route-id="@item">Borrar</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using SistemaGraficosCITIC.Models.Domain;
+using System.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SistemaGraficosCITIC.Data
@@ -30,9 +31,7 @@ namespace SistemaGraficosCITIC.Data
                     return true;
                 }
             }
-            
         }
-
 
         public Author GetAuthorByName(string authorName)
         {
@@ -57,7 +56,25 @@ namespace SistemaGraficosCITIC.Data
                     }
                 }
             }
-            
+        }
+        public List<PublicationType> GetPublicationTypes()
+        {
+            List<PublicationType> publiTypes = new List<PublicationType>();
+
+            string request = "SELECT * FROM PublicationType;";
+
+            DataTable tablaDeDesglose = CrearTablaConsulta(request);
+            foreach (DataRow columna in tablaDeDesglose.Rows)
+            {
+                publiTypes.Add(
+                new PublicationType
+                {
+                    // Id = Guid.Parse((string)columna["IdentificadorUsuario"]),
+                    PublicationTypeId = Convert.ToInt32(columna["PublicationTypeId"]),
+                    PublicationTypeName = Convert.ToString(columna["PublicationTypeName"])
+                });
+            }
+            return publiTypes;
         }
     }
 }

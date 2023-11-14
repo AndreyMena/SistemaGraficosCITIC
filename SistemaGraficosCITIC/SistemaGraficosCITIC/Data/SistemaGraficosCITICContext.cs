@@ -20,6 +20,7 @@ public class SistemaGraficosCITICContext : DbContext
     public DbSet<Product> Product { get; set; } = null!;
     public DbSet<Author> Author { get; set; } = null!;
     public DbSet<AuthorPublication> AuthorPublication { get; set; } = null!;
+    public DbSet<PublicationType> PublicationType { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         //builder.Entity<PublicationAuthor>().HasNoKey();
