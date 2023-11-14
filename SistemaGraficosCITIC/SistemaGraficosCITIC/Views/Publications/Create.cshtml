@@ -4,6 +4,7 @@
     ViewData["Title"] = "Agregar publicación";
     var projectId = ViewData["projectId"];
     var projectName = ViewData["projectName"];
+    var type = ViewData["type"] as List<SistemaGraficosCITIC.Models.Domain.PublicationType>;
     var contador = 1;
 }
 <div class="container">
@@ -39,9 +40,10 @@
                 </div>
                 <div class="form-floating mt-3">
                     <select asp-for="PublicationType" id="PublicationsType" class="form-select" aria-label="Default select example">
-                        <option value="Conferencia">Conferencia</option>
-                        <option value="Revista">Revista</option>
-                        <option value="Otro">Otro</option>
+                        @foreach (var item in @type)
+                        {
+                            <option>@item.PublicationTypeName</option>
+                        }
                     </select>
                     <label class="form-label">Tipo</label>
                 </div>
