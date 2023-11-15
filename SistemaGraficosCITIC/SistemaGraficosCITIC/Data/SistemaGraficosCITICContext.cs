@@ -21,9 +21,9 @@ public class SistemaGraficosCITICContext : DbContext
     public DbSet<Author> Author { get; set; } = null!;
     public DbSet<AuthorPublication> AuthorPublication { get; set; } = null!;
     public DbSet<PublicationType> PublicationType { get; set; }
+    public DbSet<ResearcherTypes> ResearcherTypes { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        //builder.Entity<PublicationAuthor>().HasNoKey();
         builder
             .Entity<Publication>()
             .HasMany(c => c.Authors)
@@ -33,13 +33,16 @@ public class SistemaGraficosCITICContext : DbContext
                                             ce => ce.HasOne(e => e.Publication)
                                                     .WithMany().HasForeignKey(r => r.PublicationId))
             .HasKey(ce => new { ce.AuthorId, ce.PublicationId });
-        //.Map(m =>
-        //    {
-        //        m.MapLeftKey("PublicationId");
-        //        m.MapRightKey("AuthorId");
-        //        m.ToTable("Authors");
-        //    }
-        //);
+
+        builder
+            .Entity<Researcher>()
+            .HasMany(c => c.TypeList)
+            .WithMany(e => e.Researchers)
+            .UsingEntity<ResearcherTypeResearcher>(ce => ce.HasOne(c => c.ResearcherTypes)
+                                                    .WithMany().HasForeignKey(c => c.ResearcherTypeId),
+                                            ce => ce.HasOne(e => e.Researcher)
+                                                    .WithMany().HasForeignKey(r => r.ResearcherId))
+            .HasKey(ce => new { ce.ResearcherTypeId, ce.ResearcherId });
 
         base.OnModelCreating(builder);
         // Customize the ASP.NET Identity model and override the defaults if needed.

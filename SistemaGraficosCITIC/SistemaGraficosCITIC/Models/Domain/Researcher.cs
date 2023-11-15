@@ -8,6 +8,7 @@ namespace SistemaGraficosCITIC.Models.Domain
         public string? Name { get; set; }
         public string? LastName { get; set; }
         public string? Type { get; set; }
+        public List<ResearcherTypes> TypeList { get; set; }
 
 
         public Researcher()
@@ -16,6 +17,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             Name = "";
             LastName = "";
             Type = "";
+            TypeList = new List<ResearcherTypes>();
         }
         public Researcher(string name, string lastName, string type)
         {
@@ -23,6 +25,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             Name = name;
             LastName = lastName;
             Type = type;
+            TypeList = new List<ResearcherTypes>();
         }
     }
 }

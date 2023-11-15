@@ -94,10 +94,10 @@ namespace UnitTesting.Repositories
             // Insert seed data into the database using one instance of the context
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                context.Researcher.Add(researcher1);
-                context.Researcher.Add(researcher2);
-                context.Researcher.Add(researcher3);
-                context.Researcher.Add(researcher4);
+                context.Researcher.Add((Researcher)researcher1);
+                context.Researcher.Add((Researcher)researcher2);
+                context.Researcher.Add((Researcher)researcher3);
+                context.Researcher.Add((Researcher)researcher4);
 
                 context.SaveChanges();
             }
