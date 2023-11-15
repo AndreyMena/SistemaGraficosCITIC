@@ -1,11 +1,26 @@
-﻿@model SistemaGraficosCITIC.Models.Domain.Project
+﻿@using Microsoft.AspNetCore.Identity;
+@using SistemaGraficosCITIC.Models.Domain;
+@using SistemaGraficosCITIC.Repositories;
+@model SistemaGraficosCITIC.Models.Domain.Project
+@inject IResearcherRepository ResearcherRepository
+@inject UserManager<IdentityUser> UserManager
+
 
 @{
     ViewData["Title"] = "Editar proyecto";
+    var user = await UserManager.GetUserAsync(User);
+    ViewData["Title"] = "Agregar proyecto";
+    var publicationsCount = 0;
+    string idString = user.Id;
+    Guid id = Guid.Parse(idString);
+    Researcher researcher = await ResearcherRepository.GetAsync(id);
+
 }
 
 @if (User.Identity.IsAuthenticated)
 {
+    if (User.IsInRole("ADMIN") || (researcher.Id.ToString() == user.Id))
+    {
     <h1>Editar</h1>
 
     <h4>Proyecto</h4>
@@ -92,6 +107,11 @@
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     }
-}else{
+        }else
+            {
+                <h1>Debe ser administrador o dueño del proyecto</h1>
+            }
+        }else{
     <h1>Inicie sesión para editar sus proyectos</h1>
 }
+
