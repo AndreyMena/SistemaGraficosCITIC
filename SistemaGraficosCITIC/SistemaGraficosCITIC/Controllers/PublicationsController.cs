@@ -30,13 +30,14 @@ namespace SistemaGraficosCITIC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
             return _context.Publication != null ?
                         View(await _context.Publication.ToListAsync()) :
-                        Problem("Entity set 'SistemaGraficosCITICContext.Publication' is null.");
+                        Problem("Entity set 'SistemaGraficosCITICContext.Publication'  is null.");
         }
 
         /// <summary>
-        /// GET method for details of a publication
+        /// GET method for details of a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -59,19 +60,74 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for create a publication
+        /// GET method for create a publicationType
         /// </summary>
         /// <param name="projectId"></param>
         /// <returns>The Task of action to the view</returns>
+        [HttpGet]
         public async Task<IActionResult> Create(Guid projectId)
         {
+            //viewd
             ViewData["projectId"] = projectId;
             var project = await projectRepository.GetAsync(projectId);
             ViewData["projectName"] = project?.Name;
-            var types = await _context.PublicationType.ToListAsync(); // Get PublicationTypes from db
-            ViewData["type"] = types;
             return View();
         }
+
+        /// <summary>
+        /// POST method for create a publicationType and continue
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>The Task of action to the view</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddContinue(PublicationModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var publication = new Publication(
+                        model.PublicationTitle!,
+                        model.PublicationYear,
+                        model.PublicationReference!,
+                        model.PublicationType!,
+                        model.PublicationAuthors
+                    //PublicationAuthorModelsToAuthors(model)
+                    );
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    _context.Publication.Add(publication);
+                    project!.Publications.Add(publication);
+                    await _context.SaveChangesAsync();
+
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                var projectId = model.ProjectId;
+                return RedirectToAction("Create", "Expositions", new { projectId = projectId });
+            }
+            return View(model);
+        }
+
+        /* private Author AuthorModelToAuthor(AuthorModel authorModel)
+         {
+             return new Author()
+             {
+                 AuthorName = authorModel.AuthorName!
+             };
+         }
+
+         private List<Author> PublicationAuthorModelsToAuthors(PublicationModel model)
+         {
+             return model.PublicationAuthors.ConvertAll(
+                 new Converter<AuthorModel, Author>(AuthorModelToAuthor)
+             );
+         }*/
 
         /// <summary>
         /// POST method for create a and create again
@@ -96,11 +152,13 @@ namespace SistemaGraficosCITIC.Controllers
                         model.PublicationReference!,
                         model.PublicationType!,
                         model.PublicationAuthors!
+                    //PublicationAuthorModelsToAuthors(model)
                     );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
+                    //SqlCommand sqlCommand = new("InsertarPublicacion");
                 }
                 else
                 {
@@ -112,13 +170,14 @@ namespace SistemaGraficosCITIC.Controllers
                 model.PublicationType = "";
                 model.PublicationReference = "";
                 model.PublicationAuthors = new string[10];
+                ///return View("Create", new PublicationModel());
                 return RedirectToAction("Create", "Publications", new { projectId = model.ProjectId });
             }
             return View(model);
         }
 
         /// <summary>
-        /// GET method for edit a publication
+        /// GET method for edit a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -132,27 +191,23 @@ namespace SistemaGraficosCITIC.Controllers
 
             var publication = await _context.Publication.FindAsync(id);
             var authorPublications = await _context.AuthorPublication.Where(x => x.PublicationId == id).ToListAsync();
+            //var types = await _context.PublicationTypes.FindAsync();
             List<Author> authors = new List<Author>();
-            if (authorPublications != null)
+            foreach (var item in authorPublications)
             {
-                foreach (var item in authorPublications)
-                {
-                    var author = await _context.Author.FindAsync(item.AuthorId);
-                    authors.Add(author!);
-                }
+                var author = await _context.Author.FindAsync(item.AuthorId);
+                authors.Add(author);
             }
-            publication!.Authors = authors;
+            publication.Authors = authors;
             if (publication == null)
             {
                 return NotFound();
             }
-            var types = await _context.PublicationType.ToListAsync(); // Get PublicationTypes from db
-            ViewData["type"] = types;
             return View(publication);
         }
 
         /// <summary>
-        /// POST method for edit a publication
+        /// POST method for edit a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <param name="publication"></param>
@@ -190,7 +245,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// GET method for delete a publication
+        /// GET method for delete a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -213,7 +268,7 @@ namespace SistemaGraficosCITIC.Controllers
         }
 
         /// <summary>
-        /// POST method for delete a publication
+        /// POST method for delete a publicationType
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The Task of action to the view</returns>
@@ -231,6 +286,7 @@ namespace SistemaGraficosCITIC.Controllers
                 // TODO needs to erase the constraints in AuthorPublication
                 _context.Publication.Remove(publication);
             }
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Projects");
         }
@@ -242,7 +298,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>bool true if the publicationType exists, false if not/returns>
         private bool PublicationExists(Guid id)
         {
-          return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         /// <summary>
@@ -277,7 +333,7 @@ namespace SistemaGraficosCITIC.Controllers
                         model.PublicationReference!,
                         model.PublicationType!,
                         model.PublicationAuthors!
-                        //PublicationAuthorModelsToAuthors(model)
+                    //PublicationAuthorModelsToAuthors(model)
                     );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
@@ -322,7 +378,7 @@ namespace SistemaGraficosCITIC.Controllers
             return completado;
         }
 
-        
+
 
         public async Task<IEnumerable<Author>> GetAllAsync()
         {

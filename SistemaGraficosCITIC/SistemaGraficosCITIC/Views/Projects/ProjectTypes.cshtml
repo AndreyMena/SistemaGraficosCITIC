@@ -1,0 +1,55 @@
+﻿@model List<SistemaGraficosCITIC.Models.Domain.ProjectType>
+
+@{
+    ViewData["Title"] = "Tipos de proyectos";
+}
+
+<div>
+    <h4>Tipos de proyectos</h4>
+    <hr />
+    <button type="button" class="btn btn-primary m-2" onclick="openTheForm()">
+        <b>+</b> Agregar Tipo
+    </button>
+    <!-- The form -->
+    <div class="form-popup" id="popupForm" style="display: none">
+        <form asp-action="PublicationTypes" class="form-container" id="addTypeForm">
+            <input class="form-control-sm " type="text" placeholder="Nuevo nombre de tipo" name="ProjectTypeName" required>
+            <button type="submit" class="btn btn-outline-primary">Agregar</button>
+            <button type="button" class="btn btn-close" onclick="closeTheForm()"></button>
+        </form>
+    </div>
+
+    <table class="table table-borderless text-left" id="table_field">
+        <th>Nombre</th>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span asp-for="ProjectTypeName">@Html.DisplayFor(modelItem => item.ProjectTypeName)</span>
+                </td>
+                <td>
+                    <form asp-action="DeleteType">
+                        <a asp-action="DeleteType" asp-route-id="@item.ProjectTypeId" type="submit">Borrar</a>
+                    </form>
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+</div>
+<div>
+    <a asp-action="Configurations" asp-controller="Admin">Regresar</a>
+</div>
+
+<script>
+    function openTheForm() {
+        document.getElementById("popupForm").style.display = "block";
+    }
+
+    function closeTheForm() {
+        document.getElementById("popupForm").style.display = "none";
+    }
+</script>

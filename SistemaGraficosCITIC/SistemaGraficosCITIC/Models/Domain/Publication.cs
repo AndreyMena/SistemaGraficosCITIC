@@ -43,8 +43,9 @@ namespace SistemaGraficosCITIC.Models.Domain
                 {
                     var author = new Author(authors[i]);
                     Aut.Add(author);
-                } else
-                {   
+                }
+                else
+                {
                     var author = db.GetAuthorByName(authors[i]);
                     Aut.Append(author);
                 }
