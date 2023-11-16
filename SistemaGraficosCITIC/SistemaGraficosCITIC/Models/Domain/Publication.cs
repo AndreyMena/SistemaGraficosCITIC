@@ -1,8 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using SistemaGraficosCITIC.Controllers;
-using SistemaGraficosCITIC.Data;
-using SistemaGraficosCITIC.Views.ViewModels;
-using System.Xml.Linq;
+﻿using SistemaGraficosCITIC.Data;
 
 namespace SistemaGraficosCITIC.Models.Domain
 {
@@ -43,8 +39,9 @@ namespace SistemaGraficosCITIC.Models.Domain
                 {
                     var author = new Author(authors[i]);
                     Aut.Add(author);
-                } else
-                {   
+                }
+                else
+                {
                     var author = db.GetAuthorByName(authors[i]);
                     Aut.Append(author);
                 }

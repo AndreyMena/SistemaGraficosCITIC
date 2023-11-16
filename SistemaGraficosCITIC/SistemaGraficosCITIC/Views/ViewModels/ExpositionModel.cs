@@ -3,7 +3,7 @@
 namespace SistemaGraficosCITIC.Views.ViewModels
 {
     public class ExpositionModel
-    {   
+    {
         public string? ExpositionTitle { get; set; }
 
         [Required]
@@ -12,9 +12,9 @@ namespace SistemaGraficosCITIC.Views.ViewModels
         public string? ExpositionLocation { get; set; }
         [Required]
         public string? ExpositionContext { get; set; }
-        
+
         public string? ProjectId { get; set; }
-        
+
         public string? ExpositionParticipants { get; set; }
 
         public string? ExpositionSpeaker { get; set; }

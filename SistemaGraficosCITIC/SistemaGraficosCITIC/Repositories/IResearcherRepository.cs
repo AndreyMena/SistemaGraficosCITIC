@@ -8,6 +8,6 @@ namespace SistemaGraficosCITIC.Repositories
 
         public Task<Researcher?> GetAsync(Guid id);
 
-        public Task<Researcher> AddAsync(Researcher researcher);  
+        public Task<Researcher> AddAsync(Researcher researcher);
     }
 }

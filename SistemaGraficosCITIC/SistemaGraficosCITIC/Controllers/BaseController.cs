@@ -1,17 +1,7 @@
-﻿using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.Evaluation;
-using Microsoft.CodeAnalysis;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
-using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
-using SistemaGraficosCITIC.Views.ViewModels;
 
 namespace SistemaGraficosCITIC.Controllers
 {

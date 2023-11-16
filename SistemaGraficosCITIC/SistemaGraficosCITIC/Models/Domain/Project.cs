@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace SistemaGraficosCITIC.Models.Domain
+﻿namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Project
     {

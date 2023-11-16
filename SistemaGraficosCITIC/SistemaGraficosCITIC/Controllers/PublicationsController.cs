@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +7,7 @@ using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
 using SistemaGraficosCITIC.Views.ViewModels;
+using System.Data;
 
 namespace SistemaGraficosCITIC.Controllers
 {
@@ -242,7 +236,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>bool true if the publicationType exists, false if not/returns>
         private bool PublicationExists(Guid id)
         {
-          return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Publication?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         /// <summary>
@@ -277,7 +271,7 @@ namespace SistemaGraficosCITIC.Controllers
                         model.PublicationReference!,
                         model.PublicationType!,
                         model.PublicationAuthors!
-                        //PublicationAuthorModelsToAuthors(model)
+                    //PublicationAuthorModelsToAuthors(model)
                     );
                     var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     _context.Publication.Add(publication);
@@ -322,7 +316,7 @@ namespace SistemaGraficosCITIC.Controllers
             return completado;
         }
 
-        
+
 
         public async Task<IEnumerable<Author>> GetAllAsync()
         {

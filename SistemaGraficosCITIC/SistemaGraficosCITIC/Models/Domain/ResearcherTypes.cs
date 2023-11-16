@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGraficosCITIC.Models.Domain
@@ -11,7 +9,7 @@ namespace SistemaGraficosCITIC.Models.Domain
         public string? ResearcherTypeName { get; set; }
         public virtual List<Researcher> Researchers { get; set; }
 
-        public ResearcherTypes() 
+        public ResearcherTypes()
         {
             ResearcherTypeId = 0;
             ResearcherTypeName = "";

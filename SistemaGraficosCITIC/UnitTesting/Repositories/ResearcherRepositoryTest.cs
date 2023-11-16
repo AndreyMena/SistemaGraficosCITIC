@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
+using Xunit;
 
 namespace UnitTesting.Repositories
 {

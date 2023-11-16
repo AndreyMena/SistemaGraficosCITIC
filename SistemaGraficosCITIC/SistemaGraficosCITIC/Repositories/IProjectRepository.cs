@@ -14,6 +14,6 @@ namespace SistemaGraficosCITIC.Repositories
 
         public Task<Project?> UpdateAsync(Project project);
 
-        public Task<Project?> DeleteAsync(Guid id);        
+        public Task<Project?> DeleteAsync(Guid id);
     }
 }

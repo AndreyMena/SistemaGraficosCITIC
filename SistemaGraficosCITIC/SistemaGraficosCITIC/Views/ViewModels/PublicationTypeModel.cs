@@ -1,5 +1,4 @@
-﻿using SistemaGraficosCITIC.Models.Domain;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGraficosCITIC.Views.ViewModels
 {

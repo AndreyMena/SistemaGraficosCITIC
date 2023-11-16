@@ -46,7 +46,7 @@ namespace SistemaGraficosCITIC.Repositories
             return await _context.Project.Include(x => x.Researcher).Include(x => x.Publications).FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id) 
+        public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id)
         {
             var projectList = await _context.Project.Include(x => x.Researcher).Where(x => x.Researcher.Id == id).ToListAsync();
             projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
