@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Editar publicaciones";
     var projectName = ViewData["projectName"];
+    var type = ViewData["type"] as List<SistemaGraficosCITIC.Models.Domain.PublicationType>;
 }
 
 <h1>Editar</h1>
@@ -20,9 +21,9 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-floating mt-3">
-                <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" asp-for="PublicationYear" class="form-control" />
-                <label asp-for="PublicationYear" class="control-label">Año</label>
-                <span asp-validation-for="PublicationYear" class="text-danger"></span>
+                <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" asp-for="Year" class="form-control" />
+                <label asp-for="Year" class="control-label">Año</label>
+                <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-floating mt-3">
                 <input name="Reference" asp-for="Reference" class="form-control" />
@@ -31,19 +32,35 @@
             </div>
             <div class="form-floating mt-3">
                 <select asp-for="Type" name="Type" class="form-select" aria-label="Default select example">
-                    <option value="Conference">Conferencia</option>
-                    <option value="Other">Otro</option>
+                    @foreach (var item in @type)
+                    {
+                        <option>@item.PublicationTypeName</option>
+                    }
                 </select>
                 <label class="form-label">Tipo</label>
             </div>
             <div class="form-floating mt-3">
                 <div class="table-responsive">
-                    <table class="table table-borderless text-center" id="table_field">
-                        <label asp-for="Author" class="control-label m-1">Autor(es)</label>
-                        <tr>
-                            <td><input asp-for="Author" type="text" class="form-control" name="Author" required></td>
+                    <table class="table table-borderless text-center" id="table_field" asp-for="Authors">
+                        <label asp-for="Authors" class="control-label m-1">Autor(es)</label>
+                        @*<tr>
+                            <td><input asp-for="Authors" type="text" class="form-control" name="Author" required></td>
                             <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
-                        </tr>
+                        </tr>*@
+                            
+                        @foreach (var item in Model.Authors)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AuthorName)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.AuthorId">Editar</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.AuthorId">Borrar</a>
+                                </td>
+                            </tr>
+                        }
+                       
                     </table>
                     <div class="text-right">
                         <input type="button" name="add" id="add" value="Agregar autor" class="btn btn-success">

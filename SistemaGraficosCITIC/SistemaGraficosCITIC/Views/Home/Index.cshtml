@@ -4,44 +4,27 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <h3>Gráficos de reporte de labores</h3>
-    <div class="mt-4">
-        <iframe width="90vw" height="90vh" src="https://app.powerbi.com/view?r=eyJrIjoiNWYxMmEyYjYtOGIyMi00YWI4LTk4YzItZGY0OWMwNGJlMjc1IiwidCI6ImU3OTg0Y2FjLTI1NDMtNGY4OC04Zjk3LTk1MjQzMzVlNmJjNCIsImMiOjR9" frameborder="0" allowFullScreen="true" style="height:90vh;width:100%;border:1px solid gray"></iframe>
+    <div class="card-body">
+        <h5 class="card-title; text-center" href="/Admin/Index">
+            <a href="/Admin/Index" style="text-decoration: none; color: black; font-weight: bold">Ver Proyectos</a>
+        </h5>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title; text-center" href="/Admin/Graphics">
+            <a href="/Admin/Graphics" style="text-decoration: none; color: black; font-weight: bold">Ver Gráficos</a>
+        </h5>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title; text-center" href="/Admin/Configurations">
+            <a href="/Admin/Configurations" style="text-decoration: none; color: black; font-weight: bold">Configuraciones</a>
+        </h5>
     </div>
 }
 else
-{
-    <div class="parent-container" style="justify-content: center;">
-
-    <div class="row">
-        
-        <div class="col-md-6 col">
-            <div class="card">
-                <a href="/Projects/Create">
-                    <img src="~/Images/DefaultImages/banner_create.jpg" class="card-img-top" alt="Create image" href="/Projects/Create">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title; text-center" href="/Projects/Create"> 
-                        <a href="/Projects/Create" style="text-decoration: none; color: black; font-weight: bold">Agregar proyecto</a> 
-                    </h5>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col">
-            <div class="card">
-                <a href="/Projects">
-                    <img src="~/Images/DefaultImages/banner_projects.jpg" class="card-img-top" alt="My projects image" href="/Projects">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title; text-center" href="/Projects">
-                        <a href="/Projects" style="text-decoration: none; color: black; font-weight: bold">Mis proyectos</a>
-                    </h5>
-                </div>
-            </div>
-        </div>
-
-        </div>    
-
-    </div>
+{ // Si no es administrador muestra el indice de proyectos
+    string url = Url.Action("Index", "Projects");
+    
+    <script type="text/javascript">
+        window.location.href = "@url";
+    </script>
 }

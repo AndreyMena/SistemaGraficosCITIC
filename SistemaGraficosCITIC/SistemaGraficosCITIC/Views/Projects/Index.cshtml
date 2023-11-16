@@ -134,7 +134,7 @@
                                                 {
                                                     if(publi.Project.Id == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
                                                     {
-                                                        string year = @publi.PublicationYear.ToString();
+                                                        string year = @publi.Year.ToString();
 
                                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8">
                                                             <div class="card mt-3" style="width: 18rem;">
@@ -266,12 +266,8 @@
                     </div>
                 </div>
             }
-
-
         </div>
-
     </div>
-
 
 }else{
     <h1>Inicie sesión para ver sus proyectos</h1>

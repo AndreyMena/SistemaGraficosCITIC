@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SistemaGraficosCITIC.Models.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGraficosCITIC.Views.ViewModels
 {
@@ -13,7 +14,7 @@ namespace SistemaGraficosCITIC.Views.ViewModels
         [Required]
         public string? PublicationType { get; set; }
         [Required]
-        public string? PublicationAuthor { get; set; }
+        public string[]? PublicationAuthors { get; set; }
         public string? ProjectId { get; set; }
     }
 }
