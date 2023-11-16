@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models;
 using System.Diagnostics;
 

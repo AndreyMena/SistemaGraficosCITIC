@@ -7,7 +7,11 @@
 <h1>Lista de proyectos</h1>
 
 <p>
-    <a asp-action="Create">Agregar</a>
+    <div class="section bt-4 mb-4">
+        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects")'">
+            <b></b> Agregar Proyecto
+        </button>
+    </div>
 </p>
 <table class="table">
     <thead>
@@ -24,7 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.IsActive)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -44,9 +48,13 @@
                     @Html.DisplayFor(modelItem => item.IsActive)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+                    <div class="btn-group-vertical text-center">
+                        <form>
+                            <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
+                            <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
+                            <button asp-action="Details" value="Details" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Más</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }

@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace SistemaGraficosCITIC.Views.ViewModels
+﻿namespace SistemaGraficosCITIC.Views.ViewModels
 {
     public class ResearcherModel
     {

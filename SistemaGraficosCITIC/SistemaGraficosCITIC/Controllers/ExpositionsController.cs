@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Data;
@@ -28,9 +22,9 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         public async Task<IActionResult> Index()
         {
-              return _context.Exposition != null ? 
-                          View(await _context.Exposition.ToListAsync()) :
-                          Problem("Entity set 'SistemaGraficosCITICContext.Exposition'  is null.");
+            return _context.Exposition != null ?
+                        View(await _context.Exposition.ToListAsync()) :
+                        Problem("Entity set 'SistemaGraficosCITICContext.Exposition'  is null.");
         }
 
         /// <summary>
@@ -241,7 +235,7 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 _context.Exposition.Remove(exposition);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Projects");
         }
@@ -253,7 +247,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>bool tue if the product exists, false if not</returns>
         private bool ExpositionExists(Guid id)
         {
-          return (_context.Exposition?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Exposition?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         /// <summary>

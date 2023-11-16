@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SistemaGraficosCITIC.Models.Domain;
-using System.Reflection.Emit;
 
 namespace SistemaGraficosCITIC.Data;
 
