@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 @{
     ViewData["Title"] = "Register";
+    var types = ViewData["types"] as List<SistemaGraficosCITIC.Models.Domain.ResearcherTypes>;
 }
 
 <html lang="en">
@@ -32,21 +33,28 @@
                         <label asp-for="Input.Lastname" class="form-label">Apellido</label>
                         <span asp-validation-for="Input.Lastname" class="text-danger"></span>
                     </div>
+
+                    <div class="dropdown d-grid m-2">
+                        <button class="btn btn-warning dropdown-toggle" type="button"
+                                id="multiSelectDropdown" data-bs-toggle="dropdown">
+                            Tipo de investigador
+                        </button>
+                        <ul class="dropdown-menu align-content-center" aria-labelledby="multiSelectDropdown">
+                            @foreach (var item in types)
+                            {
+                                <li class=" btn-light">
+                                    <label><input type="checkbox" value="@item.ResearcherTypeName"> @item.ResearcherTypeName </label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
                     <div class="form-floating mt-3">
                         <input asp-for="Input.Email" id="Email" class="form-control" autocomplete="email" aria-required="true" />
                         <label asp-for="Input.Email" class="form-label">Correo</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
-                    <div class="form-floating mt-3">
-                        <select class="form-select" asp-for="Input.Type" aria-label="Default select example" >
-                            @foreach(var item in Model.typeList)
-                            {
-                                <option value="@item.Value">@item.Value</option>
-                            }
-                        </select>
-                        <label asp-for="Input.Type" class="form-label">Tipo de investigador</label>
-                        <span asp-validation-for="Input.Type" class="text-danger"></span>
-                    </div>
+                   
                     <div class="form-floating mt-3">
                         <input asp-for="Input.Password" id="Contrasena" class="form-control" autocomplete="contraseña" aria-required="true" />
                         <span id=ojo1 onclick="myFunction(this)" class="fa fa-fw fa-eye password-icon show-password"></span>
@@ -70,6 +78,8 @@
         </div>
     </div>
 </body>
+
+</html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
     jQuery('#ojo1').on('click', function () {
@@ -96,6 +106,34 @@
         let eye2 = document.getElementById(this.id);
         x.classList.toggle("fa-eye-slash");
     }
+</script>
+
+<script>
+    const chBoxes =
+        document.querySelectorAll('.dropdown-menu input[type="checkbox"]');
+    const dpBtn =
+        document.getElementById('multiSelectDropdown');
+    let mySelectedListItems = [];
+
+    function handleCB() {
+        mySelectedListItems = [];
+        let mySelectedListItemsText = '';
+
+        chBoxes.forEach((checkbox) => {
+            if (checkbox.checked) {
+                mySelectedListItems.push(checkbox.value);
+                mySelectedListItemsText += checkbox.value + ', ';
+            }
+        });
+
+        dpBtn.innerText =
+            mySelectedListItems.length > 0
+                ? mySelectedListItemsText.slice(0, -2) : 'Select';
+    }
+
+    chBoxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', handleCB);
+    });
 </script>
 
 @section Scripts {

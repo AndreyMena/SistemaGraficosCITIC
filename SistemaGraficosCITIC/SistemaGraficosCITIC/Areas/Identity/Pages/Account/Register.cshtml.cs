@@ -21,6 +21,9 @@ using Microsoft.AspNetCore.WebUtilities;
 using SistemaGraficosCITIC.Repositories;
 using SistemaGraficosCITIC.Models.Domain;
 using Microsoft.Extensions.Logging;
+using SistemaGraficosCITIC.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.CodeAnalysis;
 
 namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
 {
@@ -33,9 +36,11 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IResearcherRepository _researcher;
-        public readonly List<SelectListItem> typeList;
+        //public readonly List<SelectListItem> typeList;
+        public readonly SistemaGraficosCITICContext _context;
 
         public RegisterModel(
+            SistemaGraficosCITICContext context,
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
@@ -51,15 +56,16 @@ namespace SistemaGraficosCITIC.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
 
-            typeList = new List<SelectListItem>();
+            var typeList = _context.ResearcherTypes.ToListAsync();
 
-            typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) con propiedad", Text = "Profesor(a) con propiedad" });
+            ViewData["types"] = typeList;
+            /*typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) con propiedad", Text = "Profesor(a) con propiedad" });
             typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) interino ECCI", Text = "Profesor(a) interino ECCI" });
             typeList.Insert(0, new SelectListItem() { Value = "Profesor(a) interino CITIC", Text = "Profesor(a) interino CITIC" });
             typeList.Insert(0, new SelectListItem() { Value = "Otras unidades", Text = "Otras unidades" });
             typeList.Insert(0, new SelectListItem() { Value = "Estudiante doctorado", Text = "Estudiante doctorado" });
             typeList.Insert(0, new SelectListItem() { Value = "Estudiante maestría", Text = "Estudiante maestría" });
-            typeList.Insert(0, new SelectListItem() { Value = "Horas asistente", Text = "Horas asistente" });
+            typeList.Insert(0, new SelectListItem() { Value = "Horas asistente", Text = "Horas asistente" });*/
         }
 
         /// <summary>
