@@ -39,7 +39,7 @@ Las principales características de la aplicación son:
 
 Para ejecutar la aplicación, se requieren los siguientes requisitos:
 
-    .NET Core 3.1 o superior
+    .NET Core 6 o superior
     SQL Server 2019 o superior
 
 ### Uso
