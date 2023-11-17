@@ -11,7 +11,8 @@ namespace SistemaGraficosCITIC.Models.Domain
         public string Type { get; set; }
         public List<Author> Authors { get; set; }
 
-        public Project? Project { get; set; }
+        public Guid ProjectId { get; set; }
+        public virtual Project? Project { get; set; }
 
         public Publication()
         {
@@ -22,7 +23,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             Type = "";
             Authors = new List<Author>();
         }
-        public Publication(string title, int date, string reference, string type, string[] authors)
+        public Publication(string title, int date, string reference, string type, string[] authors, Guid projectId)
         {
             Id = Guid.NewGuid();
             Title = title;
@@ -33,8 +34,7 @@ namespace SistemaGraficosCITIC.Models.Domain
             DBControllerGetData db = new();
             for (int i = 0; i < authors.Length; i++)
             {
-                bool isNewAuthor = false;
-                isNewAuthor = db.myValueExist("Author", "AuthorName", authors[i]);
+                bool isNewAuthor = db.myValueExist("Author", "AuthorName", authors[i]);
                 if (isNewAuthor)
                 {
                     var author = new Author(authors[i]);
@@ -47,6 +47,7 @@ namespace SistemaGraficosCITIC.Models.Domain
                 }
             }
             Authors = Aut;
+            ProjectId = projectId;
         }
     }
 }

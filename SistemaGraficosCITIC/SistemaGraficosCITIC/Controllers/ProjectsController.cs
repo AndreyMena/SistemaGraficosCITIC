@@ -31,7 +31,8 @@ namespace SistemaGraficosCITIC.Controllers
         /// <param name="_signInManager"></param>
         /// <param name="_projectRepository"></param>
         public ProjectsController(SistemaGraficosCITICContext context, IResearcherRepository _researcherRepository,
-            UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, IProjectRepository _projectRepository)
+            UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> _signInManager, 
+            IProjectRepository _projectRepository)
         {
             _context = context;
             researcherRepository = _researcherRepository;
@@ -248,11 +249,26 @@ namespace SistemaGraficosCITIC.Controllers
             var project = await _context.Project.FindAsync(id);
             if (project != null)
             {
-                _context.Project.Remove(project);
+                var publications = await _context.Publication.Where(x => x.Project.Id == id).ToListAsync();
+                var products = await _context.Product.Where(x => x.Project.Id == id).ToListAsync();
+                var presentations = await _context.Exposition.Where(x => x.Project.Id == id).ToListAsync();
+                // Erase possible if there are not any products, publications or Expositions
+                if (products.Count == 0 && publications.Count == 0 && presentations.Count == 0) { 
+                    _context.Project.Remove(project);
+                    await _context.SaveChangesAsync();
+                } else
+                {
+                    await Console.Out.WriteLineAsync("Error borrando proyecto");
+                }
             }
 
-            await _context.SaveChangesAsync();
+           
             return RedirectToAction(nameof(Index));
+        }
+
+        private void Show(object value)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
