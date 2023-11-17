@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
@@ -287,5 +288,55 @@ namespace SistemaGraficosCITIC.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public async Task<IActionResult> ProjectTypes()
+        {
+            var projectTypes = await _context.ProjectType.ToListAsync();
+
+            if (projectTypes == null)
+            {
+                return NotFound();
+            }
+            return View(projectTypes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProjectTypes(ProjectTypeModel model, int? check)
+        {
+            if (ModelState.IsValid)
+            {
+                if (signInManager.IsSignedIn(User))
+                {
+                    var userName = User.Identity!.Name;
+                    var currentUser = await userManager.FindByNameAsync(userName);
+
+                    var projectType = new ProjectType(
+                        model.ProjectTypeName
+                    );
+                    _context.ProjectType.Add(projectType);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return RedirectToAction("ProjectTypes", "Projects");
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> DeleteType(int id)
+        {
+            var projectType = await _context.ProjectType.FindAsync(id);
+            if (projectType != null)
+            {
+                _context.ProjectType.Remove(projectType);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("ProjectTypes", "Projects");
+        }
+
     }
 }
