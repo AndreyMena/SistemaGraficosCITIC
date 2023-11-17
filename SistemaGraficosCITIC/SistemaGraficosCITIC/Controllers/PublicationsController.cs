@@ -64,63 +64,10 @@ namespace SistemaGraficosCITIC.Controllers
             ViewData["projectId"] = projectId;
             var project = await projectRepository.GetAsync(projectId);
             ViewData["projectName"] = project?.Name;
+            var types = await _context.PublicationType.ToListAsync(); // Get PublicationTypes from db
+            ViewData["type"] = types; // Pass types list to the view to show it
             return View();
         }
-
-        /// <summary>
-        /// POST method for create a publicationType and continue
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>The Task of action to the view</returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddContinue(PublicationModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                if (signInManager.IsSignedIn(User))
-                {
-                    var userName = User.Identity!.Name;
-                    var currentUser = await userManager.FindByNameAsync(userName);
-
-                    var publication = new Publication(
-                        model.PublicationTitle!,
-                        model.PublicationYear,
-                        model.PublicationReference!,
-                        model.PublicationType!,
-                        model.PublicationAuthors
-                    //PublicationAuthorModelsToAuthors(model)
-                    );
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
-                    _context.Publication.Add(publication);
-                    project!.Publications.Add(publication);
-                    await _context.SaveChangesAsync();
-
-                }
-                else
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-                var projectId = model.ProjectId;
-                return RedirectToAction("Create", "Expositions", new { projectId = projectId });
-            }
-            return View(model);
-        }
-
-        /* private Author AuthorModelToAuthor(AuthorModel authorModel)
-         {
-             return new Author()
-             {
-                 AuthorName = authorModel.AuthorName!
-             };
-         }
-
-         private List<Author> PublicationAuthorModelsToAuthors(PublicationModel model)
-         {
-             return model.PublicationAuthors.ConvertAll(
-                 new Converter<AuthorModel, Author>(AuthorModelToAuthor)
-             );
-         }*/
 
         /// <summary>
         /// POST method for create a and create again
@@ -151,7 +98,6 @@ namespace SistemaGraficosCITIC.Controllers
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
-                    //SqlCommand sqlCommand = new("InsertarPublicacion");
                 }
                 else
                 {
@@ -164,7 +110,7 @@ namespace SistemaGraficosCITIC.Controllers
                 model.PublicationReference = "";
                 model.PublicationAuthors = new string[10];
                 ///return View("Create", new PublicationModel());
-                return RedirectToAction("Create", "Publications", new { projectId = model.ProjectId });
+                return RedirectToAction("Index", "Projects", new { projectId = model.ProjectId });
             }
             return View(model);
         }
@@ -212,7 +158,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,PublicationYear,Reference,Type,Author")] Publication publication)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,PublicationYear,Reference,Type,Author,ProjectId")] Publication publication)
         {
             if (id != publication.Id)
             {
