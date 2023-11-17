@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NuGet.ProjectModel;
 using SistemaGraficosCITIC.Data;
@@ -77,7 +72,9 @@ namespace SistemaGraficosCITIC.Controllers
                 return _context.Project != null ?
                               View(model) :
                               Problem("Entity set 'SistemaGraficosCITICContext.Project'  is null.");
-            }else{
+            }
+            else
+            {
                 return View();
             }
         }
@@ -124,19 +121,22 @@ namespace SistemaGraficosCITIC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (signInManager.IsSignedIn(User)) {
+                if (signInManager.IsSignedIn(User))
+                {
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    if (!model.isActive) {
+                    if (!model.isActive)
+                    {
                         var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive, model.Collaborators, model.Code);
                         _context.Add(project);
                         await _context.SaveChangesAsync();
                         var projectId = project.Id.ToString();
                         return RedirectToAction("Create", "Projects");
                     }
-                    else{
+                    else
+                    {
                         model.EndDate = null!;
                         var project = new Project(model.Name!, model.Type!, researcher!,/*Enviar null*/ model.StartDate, model.EndDate, model.isActive, model.Collaborators, model.Code);
                         _context.Add(project);
@@ -144,7 +144,9 @@ namespace SistemaGraficosCITIC.Controllers
                         var projectId = project.Id.ToString();
                         return RedirectToAction("Create", "Projects");
                     }
-                }else{
+                }
+                else
+                {
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -249,7 +251,7 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 _context.Project.Remove(project);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -261,7 +263,7 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>bool tue if the project exists, false if not</returns>
         private bool ProjectExists(Guid id)
         {
-          return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         public async Task<IActionResult> AddProject(ProjectModel model)

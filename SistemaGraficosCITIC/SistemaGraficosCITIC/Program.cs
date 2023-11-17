@@ -53,12 +53,12 @@ app.UseAuthorization();
 app.Use(async (context, next) =>
 {
     if (!context.User.Identity.IsAuthenticated && !context.Request.Path.StartsWithSegments("/Identity/Account/Login") &&
-    !context.Request.Path.StartsWithSegments("/Identity/Account/Register") && 
+    !context.Request.Path.StartsWithSegments("/Identity/Account/Register") &&
     !context.Request.Path.StartsWithSegments("/Identity/Account/ForgotPassword"))
     {
-    // El usuario no está autenticado y no se encuentra en la página de inicio de sesión,
-    // redirigir al inicio de sesión
-    context.Response.Redirect("/Identity/Account/Login");
+        // El usuario no está autenticado y no se encuentra en la página de inicio de sesión,
+        // redirigir al inicio de sesión
+        context.Response.Redirect("/Identity/Account/Login");
         return;
     }
 

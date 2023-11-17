@@ -1,6 +1,4 @@
-﻿using SistemaGraficosCITIC.Views.ViewModels;
-
-namespace SistemaGraficosCITIC.Models.Domain
+﻿namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Author
     {
@@ -18,7 +16,7 @@ namespace SistemaGraficosCITIC.Models.Domain
         }
 
         public Author(string name)
-        {   
+        {
             AuthorId = Guid.NewGuid();
             AuthorName = name;
             Publications = new List<Publication>();

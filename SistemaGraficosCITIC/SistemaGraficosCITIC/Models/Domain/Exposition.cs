@@ -21,7 +21,7 @@
             Participants = "";
             Speaker = "";
         }
-        public Exposition(string title,DateTime date, string location, string context, 
+        public Exposition(string title, DateTime date, string location, string context,
                             string participants, string speaker)
         {
             Title = title;

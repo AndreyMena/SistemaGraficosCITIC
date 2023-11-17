@@ -1,16 +1,9 @@
-﻿using FluentAssertions.Execution;
+﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using SistemaGraficosCITIC.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using FluentAssertions;
 using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
+using Xunit;
 
 namespace UnitTesting.Repositories
 {
@@ -134,7 +127,7 @@ namespace UnitTesting.Repositories
                 context.Database.EnsureDeleted();
             }
         }
-        
+
         [Fact]
         public async void GetAsyncByIdProjectTest()
         {

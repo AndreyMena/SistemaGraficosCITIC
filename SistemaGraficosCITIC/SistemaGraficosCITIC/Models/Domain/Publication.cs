@@ -1,8 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using SistemaGraficosCITIC.Controllers;
-using SistemaGraficosCITIC.Data;
-using SistemaGraficosCITIC.Views.ViewModels;
-using System.Xml.Linq;
+﻿using SistemaGraficosCITIC.Data;
 
 namespace SistemaGraficosCITIC.Models.Domain
 {

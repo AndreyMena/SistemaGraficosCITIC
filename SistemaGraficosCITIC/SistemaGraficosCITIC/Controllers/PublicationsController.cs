@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +7,7 @@ using SistemaGraficosCITIC.Data;
 using SistemaGraficosCITIC.Models.Domain;
 using SistemaGraficosCITIC.Repositories;
 using SistemaGraficosCITIC.Views.ViewModels;
+using System.Data;
 
 namespace SistemaGraficosCITIC.Controllers
 {
@@ -67,7 +61,6 @@ namespace SistemaGraficosCITIC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(Guid projectId)
         {
-            //viewd
             ViewData["projectId"] = projectId;
             var project = await projectRepository.GetAsync(projectId);
             ViewData["projectName"] = project?.Name;
@@ -203,6 +196,9 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 return NotFound();
             }
+            var types = await _context.PublicationType.ToListAsync(); // Get PublicationTypes from db
+            ViewData["type"] = types; // Pass types list to the view to show it
+
             return View(publication);
         }
 
@@ -283,7 +279,12 @@ namespace SistemaGraficosCITIC.Controllers
             var publication = await _context.Publication.FindAsync(id);
             if (publication != null)
             {
-                // TODO needs to erase the constraints in AuthorPublication
+                // First delete reference in AuthorPublication table to delete in Publication table
+                var publis = _context.AuthorPublication.Where(x => x.PublicationId == id);
+                foreach (var item in publis)
+                {
+                    _context.AuthorPublication.Remove(item);
+                }
                 _context.Publication.Remove(publication);
             }
 

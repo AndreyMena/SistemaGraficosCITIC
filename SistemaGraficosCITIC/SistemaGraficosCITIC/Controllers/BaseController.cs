@@ -26,7 +26,7 @@ namespace SistemaGraficosCITIC.Controllers
         public readonly IProjectRepository projectRepository;
 
         /// <summary>
-        /// Constructor for Publication
+        /// Constructor base
         /// </summary>
         /// <param name="context"></param>
         /// <param name="_signInManager"></param>

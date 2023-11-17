@@ -2,10 +2,10 @@
 
 namespace SistemaGraficosCITIC.Views.ViewModels
 {
-    public class PublicationTypeModel
+    public class ResearcherTypeModel
     {
         [Required]
-        public string? PublicationTypeName { get; set; }
+        public string? ResearcherTypeName { get; set; }
 
     }
 }

@@ -51,8 +51,12 @@
                 <td>
                     <div class="btn-group-vertical text-center">
                         <form>
-                            <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
-                            <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
+                            @if (User.IsInRole("Admin") @* || (researcher.Id.ToString() == user.Id)*@)
+                            {
+                                <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
+                                <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
+                            }
+                            
                             <button asp-action="Details" value="Details" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Más</button>
                         </form>
                     </div>
@@ -61,3 +65,10 @@
         }
     </tbody>
 </table>
+
+<hr />
+
+<div>
+    <a asp-action="index" asp-controller="Home">Regresar</a>
+</div>
+

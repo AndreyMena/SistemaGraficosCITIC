@@ -1,11 +1,5 @@
-﻿using SistemaGraficosCITIC.Models.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Microsoft.CodeAnalysis;
+﻿using FluentAssertions;
+using SistemaGraficosCITIC.Models.Domain;
 using Xunit;
 
 namespace UnitTesting.Domain
@@ -43,7 +37,7 @@ namespace UnitTesting.Domain
                 Date = DateTime.MinValue,
                 Location = "",
                 Context = "",
-        };
+            };
             // act 
             var exposition = new Exposition();
             exposition.Id = id;
