@@ -52,6 +52,13 @@
                     </ul>
                 </div>
             </div>
+            @if (ViewBag.ShowChartsButton == true)
+            {
+            <a href="@Url.Action("Graphics", "Admin")" class="nav-link btn btn-link text-dark">
+                <span style="color: #005da4;">Gráficos</span>
+            </a>
+            }
+
         </nav>
     </header>
 

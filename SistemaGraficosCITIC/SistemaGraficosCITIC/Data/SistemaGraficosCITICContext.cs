@@ -18,7 +18,9 @@ public class SistemaGraficosCITICContext : DbContext
     public DbSet<Author> Author { get; set; } = null!;
     public DbSet<AuthorPublication> AuthorPublication { get; set; } = null!;
     public DbSet<PublicationType> PublicationType { get; set; }
+    public DbSet<ProjectType> ProjectType { get; set; }
     public DbSet<ResearcherTypes> ResearcherTypes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder
