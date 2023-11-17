@@ -10,7 +10,6 @@ namespace SistemaGraficosCITIC.Models.Domain
         public string Reference { get; set; }
         public string Type { get; set; }
         public List<Author> Authors { get; set; }
-
         public Guid ProjectId { get; set; }
         public virtual Project? Project { get; set; }
 
