@@ -138,16 +138,16 @@ namespace SistemaGraficosCITIC.Controllers
                 {
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
-
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
                     var publication = new Publication(
                         model.PublicationTitle!,
                         model.PublicationYear,
                         model.PublicationReference!,
                         model.PublicationType!,
-                        model.PublicationAuthors!
-                    //PublicationAuthorModelsToAuthors(model)
+                        model.PublicationAuthors!,
+                        project.Id
                     );
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();
@@ -196,6 +196,8 @@ namespace SistemaGraficosCITIC.Controllers
             {
                 return NotFound();
             }
+            var project = await _context.Project.FindAsync(publication.ProjectId);
+            ViewData["projectName"] = project?.Name;
             var types = await _context.PublicationType.ToListAsync(); // Get PublicationTypes from db
             ViewData["type"] = types; // Pass types list to the view to show it
 
@@ -326,17 +328,17 @@ namespace SistemaGraficosCITIC.Controllers
                 {
                     var userName = User.Identity!.Name;
                     var currentUser = await userManager.FindByNameAsync(userName);
-
+                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
 
                     var publication = new Publication(
                         model.PublicationTitle!,
                         model.PublicationYear,
                         model.PublicationReference!,
                         model.PublicationType!,
-                        model.PublicationAuthors!
-                    //PublicationAuthorModelsToAuthors(model)
+                        model.PublicationAuthors!,
+                        project.Id
                     );
-                    var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
+                    
                     _context.Publication.Add(publication);
                     project!.Publications.Add(publication);
                     await _context.SaveChangesAsync();

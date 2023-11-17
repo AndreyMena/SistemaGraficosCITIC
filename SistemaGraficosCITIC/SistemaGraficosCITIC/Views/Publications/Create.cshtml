@@ -55,7 +55,7 @@
                             <tr>
                                 @*<td><input asp-for="PublicationAuthors" type="text" class="form-control" name="PublicationAuthor" required></td>*@
                                 <td><input name="PublicationAuthors[0]" type="text" class="form-control" required></td>
-                                <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
+                                <td><input class="btn btn-danger btn-close invisible" name="remove" id="remove"  type="button"></td>
                             </tr>
                         </table> 
                         <div class="text-right">
@@ -144,7 +144,7 @@
 <script type="text/javascript">
     // Script para agregar o eliminar textfield para autor
     $(document).ready(function () {
-        var html = '<tr><td><input class="form-control" type="text" name="PublicationAuthors[@contador]" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
+        var html = '<tr><td><input class="form-control" type="text" name="PublicationAuthors[@contador]" required></td><td><input class="btn btn-danger btn-close" id="remove" type="button" name="remove" tabindex="-1"></td></tr>';
         var max = 10;
         var x = 1;
         // Agregar fila
