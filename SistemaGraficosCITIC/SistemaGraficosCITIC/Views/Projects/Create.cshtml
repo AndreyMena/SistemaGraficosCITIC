@@ -15,6 +15,7 @@
     string idString = user.Id;
     Guid id = Guid.Parse(idString);
     Researcher researcher = await ResearcherRepository.GetAsync(id);
+    var projectTypes = ViewData["projectTypes"] as List<SistemaGraficosCITIC.Models.Domain.ProjectType>;
 }
 
 <div class="container">
@@ -44,14 +45,15 @@
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
                     <div class="form-floating mt-3">
-                        <select asp-for="Type" class="form-select" aria-label="Default select example">
-                            <option value="Acción Social">Acción Social</option>
-                            <option value="Actividad">Actividad</option>
-                            <option value="Proyecto">Proyecto</option>
-                            <option value="Otro">Otro</option>
+                        <select asp-for="Type" id="PublicationsType" class="form-select" aria-label="Default select example">
+                            @foreach (var item in projectTypes)
+                            {
+                                <option>@item.ProjectTypeName</option>
+                            }
                         </select>
                         <label class="form-label">Tipo</label>
                     </div>
+                    
                     <div class="form-floating mt-3">
                         <input asp-for="Code" class="form-control" />
                         <label asp-for="Code" class="control-label">Código</label>

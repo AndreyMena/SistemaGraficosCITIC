@@ -57,6 +57,7 @@ namespace SistemaGraficosCITIC.Controllers
                 var id = new Guid(currentUser.Id);
                 IndexProjectsViewModel model = new IndexProjectsViewModel();
                 model.projects = await projectRepository.GetProjectsByResearcher(id);
+                model.projectTypes = await _context.ProjectType.ToListAsync();
                 // Publicaciones asociadas
                 model.publications = await _context.Publication.Include(x => x.Project)
                     .Include(c => c.Project!.Researcher)
@@ -108,6 +109,8 @@ namespace SistemaGraficosCITIC.Controllers
         /// <returns>The Task of action to the view</returns>
         public IActionResult Create()
         {
+            var types = _context.ProjectType.ToList(); // Get PublicationTypes from db
+            ViewData["projectTypes"] = types; // Pass types list to the view to show it
             return View(_projectModel);
         }
 
@@ -262,8 +265,9 @@ namespace SistemaGraficosCITIC.Controllers
                     await Console.Out.WriteLineAsync("Error borrando proyecto");
                 }
             }
-
-           
+            if (User.IsInRole("Admin")){
+                return RedirectToAction("Index", "Admin");
+            }
             return RedirectToAction(nameof(Index));
         }
 
