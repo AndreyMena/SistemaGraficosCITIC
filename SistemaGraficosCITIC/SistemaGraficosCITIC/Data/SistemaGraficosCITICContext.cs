@@ -17,12 +17,23 @@ public class SistemaGraficosCITICContext : DbContext
     public DbSet<Product> Product { get; set; } = null!;
     public DbSet<Author> Author { get; set; } = null!;
     public DbSet<AuthorPublication> AuthorPublication { get; set; } = null!;
+    public DbSet<ProjectResearcher> ProjectResearcher { get; set; } = null!;
     public DbSet<PublicationType> PublicationType { get; set; }
     public DbSet<ProjectType> ProjectType { get; set; }
     public DbSet<ResearcherTypes> ResearcherTypes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder
+            .Entity<Project>()
+            .HasMany(c => c.Collaborators)
+            .WithMany(e => e.Projects)
+            .UsingEntity<ProjectResearcher>(ce => ce.HasOne(c => c.Researcher)
+                                                    .WithMany().HasForeignKey(c => c.ResearcherId),
+                                            ce => ce.HasOne(e => e.Project)
+                                                    .WithMany().HasForeignKey(r => r.ProjectId))
+            .HasKey(ce => new { ce.ResearcherId, ce.ProjectId });
+
         builder
             .Entity<Publication>()
             .HasMany(c => c.Authors)

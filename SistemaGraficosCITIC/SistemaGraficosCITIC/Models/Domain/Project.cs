@@ -8,8 +8,8 @@
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
-        public Researcher? Researcher { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
-        public string? Collaborators { get; set; }
+        public Guid ResearcherId { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
+        public List<Researcher> Collaborators { get; set; }
         public string? Code { get; set; }
         public List<Publication> Publications { get; set; } //Se cambiaron de Collection a List
         public List<Exposition> Expositions { get; set; }
@@ -21,14 +21,14 @@
             Name = "";
             Type = "";
             EndDate = DateTime.MinValue;
-            Collaborators = "";
+            Collaborators = new List<Researcher>();
             Code = "";
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();
         }
 
-        public Project(string name, string type, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive, string? collaborators, string? code)
+        public Project(string name, string type, DateTime startDate, DateTime? endDate, bool isActive, Guid researcherId, string? code)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -36,8 +36,8 @@
             StartDate = startDate;
             EndDate = endDate;
             IsActive = isActive;
-            Researcher = researcher; //Por ahora
-            Collaborators = collaborators;
+            ResearcherId = researcherId; //Por ahora
+            Collaborators = new List<Researcher>();
             Code = code;
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();

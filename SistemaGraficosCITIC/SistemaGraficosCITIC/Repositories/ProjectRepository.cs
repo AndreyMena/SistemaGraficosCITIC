@@ -34,7 +34,7 @@ namespace SistemaGraficosCITIC.Repositories
 
         public async Task<IEnumerable<Project>> GetAllAsync()
         {
-            var projectList = await _context.Project.Include(x => x.Researcher).ToListAsync();
+            var projectList = await _context.Project.Include(x => x.ResearcherId).ToListAsync();
 
             projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
 
@@ -43,19 +43,19 @@ namespace SistemaGraficosCITIC.Repositories
 
         public async Task<Project> GetAsync(Guid id)
         {
-            return await _context.Project.Include(x => x.Researcher).Include(x => x.Publications).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Project.Include(x => x.ResearcherId).Include(x => x.Publications).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id)
         {
-            var projectList = await _context.Project.Include(x => x.Researcher).Where(x => x.Researcher.Id == id).ToListAsync();
+            var projectList = await _context.Project.Where(x => x.ResearcherId == id).ToListAsync();
             projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
             return projectList;
         }
 
         public async Task<Project> UpdateAsync(Project project)
         {
-            var existingProj = await _context.Project.Include(x => x.Researcher).FirstOrDefaultAsync(x => x.Id == project.Id);
+            var existingProj = await _context.Project.FirstOrDefaultAsync(x => x.Id == project.Id);
 
             if (existingProj != null)
             {

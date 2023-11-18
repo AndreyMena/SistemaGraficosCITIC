@@ -57,18 +57,20 @@ namespace SistemaGraficosCITIC.Controllers
                 var id = new Guid(currentUser.Id);
                 IndexProjectsViewModel model = new IndexProjectsViewModel();
                 model.projects = await projectRepository.GetProjectsByResearcher(id);
+
+                model.researchers = await _context.Researcher.Include(x => x.Projects)
+                    .Include(c => c.Projects!)
+                    .Where(c => c.Id == id).ToListAsync();
+
                 // Publicaciones asociadas
                 model.publications = await _context.Publication.Include(x => x.Project)
-                    .Include(c => c.Project!.Researcher)
-                    .Where(c => c.Project!.Researcher!.Id == id).ToListAsync();
+                    .Where(c => c.Project!.ResearcherId == id).ToListAsync();
                 // Exposiciones asociadas
                 model.expositions = await _context.Exposition.Include(e => e.Project)
-                    .Include(e => e.Project!.Researcher)
-                    .Where(e => e.Project!.Researcher!.Id == id).ToListAsync();
+                    .Where(e => e.Project!.ResearcherId == id).ToListAsync();
                 // Productos asociados
                 model.products = await _context.Product.Include(p => p.Project)
-                    .Include(p => p.Project!.Researcher)
-                    .Where(p => p.Project!.Researcher!.Id == id).ToListAsync();
+                    .Where(p => p.Project!.ResearcherId == id).ToListAsync();
 
                 return _context.Project != null ?
                               View(model) :
@@ -128,23 +130,19 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    if (!model.isActive)
+                    if (!model.IsActive)
                     {
-                        var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive, model.Collaborators, model.Code);
-                        _context.Add(project);
-                        await _context.SaveChangesAsync();
-                        var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Projects");
+                        
                     }
                     else
                     {
                         model.EndDate = null!;
-                        var project = new Project(model.Name!, model.Type!, researcher!,/*Enviar null*/ model.StartDate, model.EndDate, model.isActive, model.Collaborators, model.Code);
-                        _context.Add(project);
-                        await _context.SaveChangesAsync();
-                        var projectId = project.Id.ToString();
-                        return RedirectToAction("Create", "Projects");
                     }
+                    var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive, model.ResearcherId, model.Code);
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                    var projectId = project.Id.ToString();
+                    return RedirectToAction("Create", "Projects");
                 }
                 else
                 {
@@ -292,7 +290,8 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    var project = new Project(model.Name!, model.Type!, researcher!, model.StartDate, model.EndDate, model.isActive, model.Collaborators!, model.Code!);
+                    var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive,
+                        id/*se agrega el usuario actual como investigador principal*/, model.Code!);
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                 }

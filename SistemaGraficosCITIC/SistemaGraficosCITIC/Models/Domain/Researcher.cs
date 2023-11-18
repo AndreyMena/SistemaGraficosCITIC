@@ -7,7 +7,7 @@
         public string? LastName { get; set; }
         public string? Type { get; set; }
         public List<ResearcherTypes> TypeList { get; set; }
-
+        public virtual List<Project> Projects { get; set; }
 
         public Researcher()
         {
