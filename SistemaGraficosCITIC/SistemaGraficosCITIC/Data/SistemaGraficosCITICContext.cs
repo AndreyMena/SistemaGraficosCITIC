@@ -19,6 +19,7 @@ public class SistemaGraficosCITICContext : DbContext
     public DbSet<AuthorPublication> AuthorPublication { get; set; } = null!;
     public DbSet<PublicationType> PublicationType { get; set; }
     public DbSet<ResearcherTypes> ResearcherTypes { get; set; }
+    public DbSet<ProjectResearcher> ProjectResearcher { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder
@@ -33,13 +34,23 @@ public class SistemaGraficosCITICContext : DbContext
 
         builder
             .Entity<Researcher>()
-            .HasMany(c => c.TypeList)
-            .WithMany(e => e.Researchers)
-            .UsingEntity<ResearcherTypeResearcher>(ce => ce.HasOne(c => c.ResearcherTypes)
-                                                    .WithMany().HasForeignKey(c => c.ResearcherTypeId),
+            .HasMany(c => c.Projects)
+            .WithMany(e => e.Collaborators)
+            .UsingEntity<ProjectResearcher>(ce => ce.HasOne(c => c.Project)
+                                                    .WithMany().HasForeignKey(c => c.ProjectId),
                                             ce => ce.HasOne(e => e.Researcher)
-                                                    .WithMany().HasForeignKey(r => r.ResearcherId))
-            .HasKey(ce => new { ce.ResearcherTypeId, ce.ResearcherId });
+                                                    .WithMany().HasForeignKey(r => r.ProjectId))
+            .HasKey(ce => new { ce.ProjectId, ce.ResearcherId });
+
+        builder
+           .Entity<Researcher>()
+           .HasMany(c => c.TypeList)
+           .WithMany(e => e.Researchers)
+           .UsingEntity<ResearcherTypeResearcher>(ce => ce.HasOne(c => c.ResearcherTypes)
+                                                   .WithMany().HasForeignKey(c => c.ResearcherTypeId),
+                                           ce => ce.HasOne(e => e.Researcher)
+                                                   .WithMany().HasForeignKey(r => r.ResearcherId))
+           .HasKey(ce => new { ce.ResearcherTypeId, ce.ResearcherId });
 
         base.OnModelCreating(builder);
         // Customize the ASP.NET Identity model and override the defaults if needed.

@@ -29,7 +29,7 @@ namespace SistemaGraficosCITIC.Repositories
             return researchersList;
         }
 
-        public async Task<Researcher> GetAsync(Guid id)
+        public async Task<Researcher?> GetAsync(Guid id)
         {
             return await _context.Researcher.FirstOrDefaultAsync(x => x.Id == id);
         }

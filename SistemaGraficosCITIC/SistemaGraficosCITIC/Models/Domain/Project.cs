@@ -1,4 +1,6 @@
-﻿namespace SistemaGraficosCITIC.Models.Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Project
     {
@@ -8,10 +10,10 @@
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
-        public Researcher? Researcher { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
-        public string? Collaborators { get; set; }
+        public Guid? ResearcherId { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
         public string? Code { get; set; }
-        public List<Publication> Publications { get; set; } //Se cambiaron de Collection a List
+        public virtual List<Researcher> Collaborators { get; set; }
+        public List<Publication> Publications { get; set; }
         public List<Exposition> Expositions { get; set; }
         public List<Product> Products { get; set; }
 
@@ -21,14 +23,14 @@
             Name = "";
             Type = "";
             EndDate = DateTime.MinValue;
-            Collaborators = "";
             Code = "";
+            Collaborators = new List<Researcher>();
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();
         }
 
-        public Project(string name, string type, Researcher? researcher, DateTime startDate, DateTime? endDate, bool isActive, string? collaborators, string? code)
+        public Project(string name, string type, Guid? researcherId, DateTime startDate, DateTime? endDate, bool isActive, string? code)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -36,9 +38,9 @@
             StartDate = startDate;
             EndDate = endDate;
             IsActive = isActive;
-            Researcher = researcher; //Por ahora
-            Collaborators = collaborators;
+            ResearcherId = researcherId;
             Code = code;
+            Collaborators = new List<Researcher>();
             Publications = new List<Publication>();
             Expositions = new List<Exposition>();
             Products = new List<Product>();

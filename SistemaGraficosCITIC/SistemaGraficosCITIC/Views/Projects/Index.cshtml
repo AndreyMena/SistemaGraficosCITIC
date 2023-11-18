@@ -42,8 +42,7 @@
                 var idPanelColab = "panelColaboradores_" + projectIndex;
                 var guid = item.Id;
                 var projName = item.Name;
-
-                var investigador = (item.Researcher.Name + " " +item.Researcher.LastName);
+                //var investigador = (item.Researcher.Name + " " +item.Researcher.LastName);
                 string startDate = item.StartDate.ToString().Substring(0, item.StartDate.ToString().IndexOf(' '));
                 string endDate = item.EndDate != null ? item.EndDate.ToString().Substring(0, item.EndDate.ToString().IndexOf(' ')) : " ";
 
@@ -67,7 +66,7 @@
                                 <tbody>
                                     <tr>
                                         <td>Tipo: <b>@Html.DisplayFor(modelItem => item.Type)</b></td>
-                                        <td>Investigador: <b>@investigador</b></td>
+                                        @*<td>Investigador: <b>@investigador</b></td>*@
                                         <td>Fecha inicio: <b>@startDate</b></td>
                                         @if(!item.IsActive)
                                         {
@@ -83,7 +82,7 @@
                             <!-- ACORDEÓN -->
                             <div class="accordion mb-3" id="accordionDetalles">
 
-                                <!-- Colaboradores -->
+                                <!-- COLABORADORES -->
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@idPanelColab" aria-expanded="true" aria-controls="@idPanelColab">
@@ -94,18 +93,7 @@
                                         <div class="accordion-body">
                                             <!-- INICIA body Colaboradores -->
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects", new { projectId = guid, projectName = projName })'">
-                                                    <b>+</b> Agregar Colaborador
-                                                </button>
-                                            </div>
-                                            <div class="row">
-                                                @foreach (var project in Model.projects)
-                                                {
-                                                    if (project.Id == item.Id)
-                                                    {
-                                                        <h5 class="card-title">@project.Collaborators</h5>
-                                                    }
-                                                }
+                                                @Html.DropDownList("Colaboradores", new SelectList(Model.collaborators), new { @class = "form-control" })
                                             </div>
                                         </div>
                                     </div>
@@ -268,7 +256,14 @@
             }
         </div>
     </div>
-
+    <script>
+        function showCollaboratorList(){
+            document.getElementById("collaboratorList").classList.toggle("show");
+        }
+    </script>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 }else{
     <h1>Inicie sesión para ver sus proyectos</h1>
 }
