@@ -75,13 +75,13 @@
                     </div>
                     <div class="form-floating mt-3">
                         <div class="table-responsive">
-                            @*<table class="table table-borderless text-center" id="table_field">
-                                <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
+                            <table class="table table-borderless text-center" id="table_field">
+                                <label asp-for="Researchers" class="control-label m-1">Colaborador(es)</label>
                                 <tr>
-                                    <td><input asp-for="Collaborators" type="text" class="form-control" name="Collaborators" required></td>
-                                    <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
+                                    <td><input name="Researchers[0].Name + ' ' + Researchers[0].LastName" type="text" class="form-control"></td>
+                                    <td><button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button></td>
                                 </tr>
-                            </table>*@
+                            </table>
                             <div class="text-right">
                                 <input type="button" name="add" id="add" value="Agregar colaborador" class="btn btn-success">
                             </div>

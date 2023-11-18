@@ -93,16 +93,16 @@
                                         <div class="accordion-body">
                                             <!-- INICIA body Colaboradores -->
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects", new { projectId = guid, projectName = projName })'">
+                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid, projectName = @projName })'">
                                                     <b>+</b> Agregar Colaborador
                                                 </button>
                                             </div>
                                             <div class="row">
-                                                @foreach (var project in Model.projects)
+                                                @foreach (var collaborator in Model.researchers)
                                                 {
-                                                    if (project.Id == item.Id)
+                                                    if (collaborator.Id == item.Id)
                                                     {
-                                                        <h5 class="card-title">@project.Collaborators</h5>
+                                                        <h5 class="card-title">@collaborator.Name</h5>
                                                     }
                                                 }
                                             </div>
