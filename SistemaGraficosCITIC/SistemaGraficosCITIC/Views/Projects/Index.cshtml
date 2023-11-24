@@ -1,7 +1,11 @@
-﻿@model IndexProjectsViewModel
+﻿@using SistemaGraficosCITIC.Models.Domain;
+@using SistemaGraficosCITIC.Repositories;
+@inject IResearcherRepository ResearcherRepository
 
+@model IndexProjectsViewModel
 @{
     ViewData["Title"] = "Lista proyectos";
+    IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -93,17 +97,14 @@
                                         <div class="accordion-body">
                                             <!-- INICIA body Colaboradores -->
                                             <div class="section bt-4 mb-4">
-                                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Publications", new { projectId = guid, projectName = @projName })'">
+                                                <button type="button" class="btn btn-primary" onclick="">
                                                     <b>+</b> Agregar Colaborador
                                                 </button>
                                             </div>
                                             <div class="row">
-                                                @foreach (var collaborator in Model.researchers)
+                                                @foreach (var collaborator in researchers)
                                                 {
-                                                    if (collaborator.Id == item.Id)
-                                                    {
-                                                        <h5 class="card-title">@collaborator.Name</h5>
-                                                    }
+                                                    <h5 class="card-title">@collaborator.LastName, @collaborator.Name</h5>
                                                 }
                                             </div>
                                         </div>

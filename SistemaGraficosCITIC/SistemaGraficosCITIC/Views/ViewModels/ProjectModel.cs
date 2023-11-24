@@ -16,6 +16,7 @@ namespace SistemaGraficosCITIC.Views.ViewModels
         public DateTime? EndDate { get; set; }
         public Guid ResearcherId { get; set; }
         public List<Researcher>? Researchers { get; set; }
+        public string[]? Collaborators { get; set; }
         public string? Code { get; set; }
     }
 }

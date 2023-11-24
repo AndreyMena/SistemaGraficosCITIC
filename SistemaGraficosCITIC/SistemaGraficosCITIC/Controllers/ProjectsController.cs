@@ -59,9 +59,7 @@ namespace SistemaGraficosCITIC.Controllers
                 model.projects = await projectRepository.GetProjectsByResearcher(id);
 
                 // Colaboradores asociados
-                model.researchers = await _context.Researcher.Include(x => x.Projects)
-                    .Include(c => c.Projects!)
-                    .Where(c => c.Id == id).ToListAsync();
+                model.researchers = await researcherRepository.GetAllAsync();
                 // Publicaciones asociadas
                 model.publications = await _context.Publication.Include(x => x.Project)
                     .Where(c => c.Project!.ResearcherId == id).ToListAsync();
@@ -130,15 +128,9 @@ namespace SistemaGraficosCITIC.Controllers
                     var currentUser = await userManager.FindByNameAsync(userName);
                     var id = new Guid(currentUser.Id);
                     var researcher = await researcherRepository.GetAsync(id);
-                    if (!model.IsActive)
-                    {
-                        
-                    }
-                    else
-                    {
-                        model.EndDate = null!;
-                    }
+                    var researchers = await researcherRepository.GetAllAsync();
                     var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive, model.ResearcherId, model.Code);
+                    project.Collaborators = researchers.ToList();
                     _context.Add(project);
                     await _context.SaveChangesAsync();
                     var projectId = project.Id.ToString();

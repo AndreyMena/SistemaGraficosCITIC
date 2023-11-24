@@ -15,6 +15,7 @@
     string idString = user.Id;
     Guid id = Guid.Parse(idString);
     Researcher researcher = await ResearcherRepository.GetAsync(id);
+    IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
 }
 
 <div class="container">
@@ -76,15 +77,34 @@
                     <div class="form-floating mt-3">
                         <div class="table-responsive">
                             <table class="table table-borderless text-center" id="table_field">
-                                <label asp-for="Researchers" class="control-label m-1">Colaborador(es)</label>
+                                <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
                                 <tr>
-                                    <td><input name="Researchers[0].Name + ' ' + Researchers[0].LastName" type="text" class="form-control"></td>
-                                    <td><button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button></td>
+                                    @{
+                                        string name;
+                                        if(researchers != null && researchers.Any())
+                                        {
+                                            <select class="form-select", name="collaborators" , id="collaborators">
+                                                <option value=0></option>
+                                                @foreach (var collaborator in researchers)
+                                                {
+                                                    name = collaborator.LastName + ", " + collaborator.Name;
+                                                    <option value="@collaborator.Id">@name</option>
+                                                }
+                                            </select>
+                                            <button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button>
+                                            <div class="text-right">
+                                                <input type="button" name="add" id="add" value="Añadir colaborador" class="btn btn-success">
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <button class="button" type="button">
+                                                No hay colaboradores disponibles.
+                                            </button>
+                                        }
+                                    }
                                 </tr>
                             </table>
-                            <div class="text-right">
-                                <input type="button" name="add" id="add" value="Agregar colaborador" class="btn btn-success">
-                            </div>
                         </div>
                     </div>
                     <br />
@@ -162,73 +182,27 @@
             });
         </script>
 
-        <script>
-            var contador = @publicationsCount;
-
-            function buttonAddPublications(x) {
-                //Comentado por ahora para probar el popup
-                /*
-                var div = document.getElementById("publications");
-
-
-                var formularioHTML = `
-                                    <div class="card  mt-3" style="width: 18rem;">
-                                        <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">Publicación</h5>
-                                                <button type="button" onclick="deletePublicationCard(this)" class="btn-close" aria-label="Close"></button>
-                                                        </div>
-
-                                            <div class="form-floating">
-                                                <input id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Título</label>
-                                            </div>
-                                            <div class="form-floating">
-                                                <label type="Date" class="control-label"></label>
-                                                <input id="PublicationsDate${contador}" type="Date" class="form-control" />
-                                            </div>
-                                            <div class="form-floating">
-                                                <input id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Referencia</label>
-                                            </div>
-                                            <div class="form-floating mt-3">
-                                                <select id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
-                                                </select>
-                                                <label class="form-label">Tipo</label>
-                                                <span class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                        `;
-                div.insertAdjacentHTML("beforeend", formularioHTML);
-                */
-                contador = contador + 1;
-            }
-
-
-            function deletePublicationCard(x) {
-                //Comentado por ahora para probar el popup
-                /*
-                var padre = x.parentNode;
-                var abuelo = padre.parentNode;
-                var abuelo = abuelo.parentNode;
-                abuelo.remove();
-                */
-                contador = contador - 1;
-            }
-
-        </script>
-
         <script type="text/javascript">
             // Script para agregar o eliminar textfield para colaborador
             $(document).ready(function () {
-                var html = '<tr><td><input asp-for="Collaborators" class="form-control" type="text" name="Collaborators" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
                 var max = 10;
                 var x = 1;
                 // Agregar fila
                 $("#add").click(function () {
                     if (x <= max) {
+                        var collaborators = document.getElementById("collaborators");
+                        var selectedValue = collaborators.options[collaborators.selectedIndex].value;
+                        var newInput = document.createElement("select")
+                        var default = document.createElement("option");
+                        newInput.appendChild(el);
+                        for (var i = 1; i < researchers.length; i++) {
+                            var collaborator = researchers[i];
+                            var element = document.createElement("option");
+                            element.textContent = collaborator.LastName + ", " + collaborator.Name;;
+                            element.value = i;
+                            newInput.appendChild(element);
+                            var html = '<select class="form-select", name="collaborators" , id="collaborators"></select>'
+                        }
                         $("#table_field").append(html);
                         x++;
                     }
