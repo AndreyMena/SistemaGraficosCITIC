@@ -67,13 +67,13 @@ namespace SistemaGraficosCITIC.Controllers
         // Colaboradores asociados
         model.researchers = await researcherRepository.GetAllAsync();
         // Publicaciones asociadas
-        model.publications = await _context.Publication.Include(x => x.Project)
-            .Where(c => c.Project!.ResearcherId == id).ToListAsync();
+        model.publications = await _context.Publication
+          .Where(c => c.Project!.ResearcherId == id).ToListAsync();
         // Exposiciones asociadas
-        model.expositions = await _context.Exposition.Include(e => e.Project)
+        model.expositions = await _context.Exposition
             .Where(e => e.Project!.ResearcherId == id).ToListAsync();
         // Productos asociados
-        model.products = await _context.Product.Include(p => p.Project)
+        model.products = await _context.Product
             .Where(p => p.Project!.ResearcherId == id).ToListAsync();
         model.projectResearchers = await _context.ProjectResearcher.ToListAsync();
 
@@ -115,6 +115,8 @@ namespace SistemaGraficosCITIC.Controllers
     /// <returns>The Task of action to the view</returns>
     public IActionResult Create()
     {
+      var types = _context.ProjectType.ToList(); // Get PublicationTypes from db
+      ViewData["projectTypes"] = types; // Pass types list to the view to show it
       return View(_projectModel);
     }
 
@@ -269,8 +271,10 @@ namespace SistemaGraficosCITIC.Controllers
           await Console.Out.WriteLineAsync("Error borrando proyecto");
         }
       }
-
-
+      if (User.IsInRole("Admin"))
+      {
+        return RedirectToAction("Index", "Admin");
+      }
       return RedirectToAction(nameof(Index));
     }
 
