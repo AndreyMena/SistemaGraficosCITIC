@@ -9,251 +9,212 @@
 
 @model ProjectModel
 @{
-    var user = await UserManager.GetUserAsync(User);
-    ViewData["Title"] = "Agregar proyecto";
-    var publicationsCount = 0;
-    string idString = user.Id;
-    Guid id = Guid.Parse(idString);
-    Researcher researcher = await ResearcherRepository.GetAsync(id);
-    var projectTypes = ViewData["projectTypes"] as List<SistemaGraficosCITIC.Models.Domain.ProjectType>;
+  var user = await UserManager.GetUserAsync(User);
+  ViewData["Title"] = "Agregar proyecto";
+  var publicationsCount = 0;
+  string idString = user.Id;
+  Guid id = Guid.Parse(idString);
+  Researcher researcher = await ResearcherRepository.GetAsync(id);
+  IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
+  var contador = 0;
+
 }
 
 <div class="container">
+  @if (User.Identity.IsAuthenticated)
+  {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <h2><a href="/"><img src="~/Images/Logos/retroceder.png" style="width: 30px; height: 30px;"></img></a> Crear Proyecto</h2>
 
-        <h2><a href="/"><img src="~/Images/Logos/retroceder.png" style="width: 30px; height: 30px;"></img></a> Crear Proyecto</h2>
+    <hr />
 
-        <hr />
+    <h3>Proyecto</h3>
 
-        <h3>Proyecto</h3>
-
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-floating mt-3">
-                        Investigador Principal: @researcher.Name @researcher.LastName
-                    </div>
-                    <div class="form-floating mt-3">
-                        <input asp-for="Name" class="form-control" />
-                        <label asp-for="Name" class="control-label">Nombre</label>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mt-3">
-                        <select asp-for="Type" id="PublicationsType" class="form-select" aria-label="Default select example">
-                            @foreach (var item in projectTypes)
-                            {
-                                <option>@item.ProjectTypeName</option>
-                            }
-                        </select>
-                        <label class="form-label">Tipo</label>
-                    </div>
-                    
-                    <div class="form-floating mt-3">
-                        <input asp-for="Code" class="form-control" />
-                        <label asp-for="Code" class="control-label">Código</label>
-                        <span asp-validation-for="Code" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mt-3">
-                        <input type="date" value="" asp-for="StartDate" class="form-control" />
-                        <label asp-for="StartDate" class="control-label">Fecha de inicio</label>
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <label asp-for="isActive" class="control-label">¿Está activo?</label>
-                        <input id="CheckBoxActive" type="checkbox" asp-for="isActive" />
-                        <span asp-validation-for="isActive" class="text-danger"></span>
-                    </div>
-                    <div id="EndDateDiv" class="form-floating mt-3">
-                        <input type="date" asp-for="EndDate" class="form-control" />
-                        <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
-                        <span asp-validation-for="EndDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-floating mt-3">
-                        <div class="table-responsive">
-                            <table class="table table-borderless text-center" id="table_field">
-                                <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
-                                <tr>
-                                    <td><input asp-for="Collaborators" type="text" class="form-control" name="Collaborators" required></td>
-                                    <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
-                                </tr>
-                            </table>
-                            <div class="text-right">
-                                <input type="button" name="add" id="add" value="Agregar colaborador" class="btn btn-success">
-                            </div>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="form-group">
-                        <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
-                    </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content d-flex justify-content-center">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Proyecto guardado</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>¿Desea agregar otro proyecto?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" value="Create" class="btn btn-warning">Agregar otro</button>
-                                    <button asp-action="AddProject" asp-controller="Projects" type="submit" class="btn btn-primary">No</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <br />
-        <div>
-            <a asp-action="Index">Volver a la lista</a>
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $("#CheckBoxActive").change(function () {
-                    if ($(this).is(":checked")) {
-                        $("#EndDateDiv").hide();
-                    } else {
-                        $("#EndDateDiv").show();
-                    }
-                });
-            });
-        </script>
-
-        <script>
-            $(document).ready(function () {
-                // Función para verificar si el formulario está completo
-                $('#btnGuardar').prop('disabled', true); // Disable button by default
-
-                function checkFormCompletion() {
-                    var isComplete = true;
-                    $('input, select, textarea').each(function () {
-                        if ($(this).is(':visible')) {
-                            if ($(this).val() === '') {
-                                isComplete = false;
-                                return false; // Sale del bucle si encuentra un campo vacío
-                            }
+    <div class="row">
+      <div class="col-md-4">
+        <form asp-action="Create">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-floating mt-3">
+            Investigador Principal: @researcher.Name @researcher.LastName
+          </div>
+          <div class="form-floating mt-3">
+            <input asp-for="Name" class="form-control" />
+            <label asp-for="Name" class="control-label">Nombre</label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          <div class="form-floating mt-3">
+            <select asp-for="Type" class="form-select" aria-label="Default select example">
+              <option value="Acción Social">Acción Social</option>
+              <option value="Actividad">Actividad</option>
+              <option value="Proyecto">Proyecto</option>
+              <option value="Otro">Otro</option>
+            </select>
+            <label class="form-label">Tipo</label>
+          </div>
+          <div class="form-floating mt-3">
+            <input asp-for="Code" class="form-control" />
+            <label asp-for="Code" class="control-label">Código</label>
+            <span asp-validation-for="Code" class="text-danger"></span>
+          </div>
+          <div class="form-floating mt-3">
+            <input type="date" value="" asp-for="StartDate" class="form-control" />
+            <label asp-for="StartDate" class="control-label">Fecha de inicio</label>
+            <span asp-validation-for="StartDate" class="text-danger"></span>
+          </div>
+          <br />
+          <div class="form-group">
+            <label asp-for="IsActive" class="control-label">¿Está activo?</label>
+            <input id="CheckBoxActive" type="checkbox" asp-for="IsActive" />
+            <span asp-validation-for="IsActive" class="text-danger"></span>
+          </div>
+          <div id="EndDateDiv" class="form-floating mt-3">
+            <input type="date" asp-for="EndDate" class="form-control" />
+            <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
+            <span asp-validation-for="EndDate" class="text-danger"></span>
+          </div>
+          <div class="form-floating mt-3">
+            <div class="table-responsive">
+              <table class="table table-borderless text-center" id="table_field">
+                <tr>
+                  @{
+                    string name;
+                    if (researchers != null)
+                    {
+                      <input class="btn bg-success text-light mb-2" type="button" value="Añadir collaborador(es)" onclick="openclose()">
+                      <div class="select" id="mySelect" hidden="hidden">
+                        @foreach (var collaborator in researchers)
+                        {
+                          name = collaborator.LastName + ", " + collaborator.Name;
+                          <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
                         }
-                    });
-
-                    // Actualiza el estado del botón
-                    if (isComplete) {
-                        $('#btnGuardar').prop('disabled', false);
-                    } else {
-                        $('#btnGuardar').prop('disabled', true);
+                      </div>
                     }
-                }
-
-                // Verificar el estado del formulario en cada cambio de campo
-                $('input, select, textarea').on('input change', function () {
-                    checkFormCompletion();
-                });
-            });
-        </script>
-
-        <script>
-            var contador = @publicationsCount;
-
-            function buttonAddPublications(x) {
-                //Comentado por ahora para probar el popup
-                /*
-                var div = document.getElementById("publications");
-
-
-                var formularioHTML = `
-                                    <div class="card  mt-3" style="width: 18rem;">
-                                        <div class="card-body">
-                                                        <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">Publicación</h5>
-                                                <button type="button" onclick="deletePublicationCard(this)" class="btn-close" aria-label="Close"></button>
-                                                        </div>
-
-                                            <div class="form-floating">
-                                                <input id="PublicationsTitle${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Título</label>
-                                            </div>
-                                            <div class="form-floating">
-                                                <label type="Date" class="control-label"></label>
-                                                <input id="PublicationsDate${contador}" type="Date" class="form-control" />
-                                            </div>
-                                            <div class="form-floating">
-                                                <input id="PublicationsReferencia${contador}" class="form-control" autocomplete="" aria-required="true" />
-                                                <label class="form-label">Referencia</label>
-                                            </div>
-                                            <div class="form-floating mt-3">
-                                                <select id="PublicationsType${contador}" class="form-select" aria-label="Default select example">
-                                                </select>
-                                                <label class="form-label">Tipo</label>
-                                                <span class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                        `;
-                div.insertAdjacentHTML("beforeend", formularioHTML);
-                */
-                contador = contador + 1;
-            }
-
-
-            function deletePublicationCard(x) {
-                //Comentado por ahora para probar el popup
-                /*
-                var padre = x.parentNode;
-                var abuelo = padre.parentNode;
-                var abuelo = abuelo.parentNode;
-                abuelo.remove();
-                */
-                contador = contador - 1;
-            }
-
-        </script>
-
-        <script type="text/javascript">
-            // Script para agregar o eliminar textfield para colaborador
-            $(document).ready(function () {
-                var html = '<tr><td><input asp-for="Collaborators" class="form-control" type="text" name="Collaborators" required></td><td><input class="btn btn-danger" id="remove" type="button" name="remove" value="X" tabindex="-1"></td></tr>';
-                var max = 10;
-                var x = 1;
-                // Agregar fila
-                $("#add").click(function () {
-                    if (x <= max) {
-                        $("#table_field").append(html);
-                        x++;
+                    else
+                    {
+                      <button class="btn button" type="button">
+                        No hay colaboradores disponibles.
+                      </button>
                     }
-                })
-                // Borrar fila
-                $("#table_field").on('click', '#remove', function () {
-                    if (x > 1) {
-                        $(this).closest('tr').remove();
-                        x--;
-                    }
-                })
-            })
-        </script>
+                  }
+                </tr>
+              </table>
+            </div>
+          </div>
+          <br />
+          <div class="form-group">
+            <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+          </div>
 
-        @section Scripts {
-        @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content d-flex justify-content-center">
+                <div class="modal-header">
+                  <h4 class="modal-title">Proyecto guardado</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>¿Desea agregar otro proyecto?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" value="Create" class="btn btn-warning">Agregar otro</button>
+                  <button asp-action="AddProject" asp-controller="Projects" type="submit" class="btn btn-primary">No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br />
+    <div>
+      <a asp-action="Index">Volver a la lista</a>
+    </div>
+  }
+  else
+  {
+    <h1>Inicie sesión para ver crear un nuevo proyecto</h1>
+  }
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+
+    $(document).ready(function () {
+      $('#mySelect').change(function () {
+        var checkboxes = document.getElementsByName("Collaborators");
+        var numberOfCheckedItems = 0;
+        foreach(var box in checkboxes) {
+        if (box.checked) {
+          Model.Collaborators.Append(box);
+        }
+        if (numberOfCheckedItems > 10) {
+          alert("You can't select more than 10!");
+          return false;
+        }
+      }
+    })
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $("#CheckBoxActive").change(function () {
+        if ($(this).is(":checked")) {
+          $("#EndDateDiv").hide();
+        } else {
+          $("#EndDateDiv").show();
+        }
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Función para verificar si el formulario está completo
+      $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+      function checkFormCompletion() {
+        var isComplete = true;
+        $('input, select, textarea').each(function () {
+          if ($(this).is(':visible')) {
+            if ($(this).val() === '') {
+              isComplete = false;
+              return false; // Sale del bucle si encuentra un campo vacío
             }
-    }
-    }
-    else
-    {
-        <h1>Inicie sesión para ver crear un nuevo proyecto</h1>
-    }
+          }
+        });
 
+        // Actualiza el estado del botón
+        if (isComplete) {
+          $('#btnGuardar').prop('disabled', false);
+        } else {
+          $('#btnGuardar').prop('disabled', true);
+        }
+      }
+
+      // Verificar el estado del formulario en cada cambio de campo
+      $('input, select, textarea').on('input change', function () {
+        checkFormCompletion();
+      });
+    });
+  </script>
+
+  <script>
+    var isHiddenCollabs = true; // Starts hidden
+    function openclose() { // Open and close the select collaborators box
+      if (isHiddenCollabs) {
+        $('#mySelect').prop('hidden', false);
+        isHiddenCollabs = false;
+      } else if (!isHiddenCollabs) {
+        $('#mySelect').prop('hidden', true);
+        isHiddenCollabs = true;
+      }
+    }
+  </script>
+  @section Scripts {
+    @{
+      await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+  }
 </div>

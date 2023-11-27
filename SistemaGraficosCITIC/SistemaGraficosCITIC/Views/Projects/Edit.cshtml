@@ -14,6 +14,7 @@
     string idString = user.Id;
     Guid id = Guid.Parse(idString);
     Researcher researcher = await ResearcherRepository.GetAsync(id);
+    IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
 
 }
 
@@ -57,6 +58,39 @@
                     <input type="date" asp-for="EndDate" class="form-control" />
                     <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
                     <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="form-floating mt-3">
+                    <div class="table-responsive">
+                        <table class="table table-borderless text-center" id="table_field">
+                            <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
+                            <tr>
+                                @{
+                                    string name;
+                                    if (researchers != null && researchers.Any())
+                                    {
+                                        <select class="form-select" , name="collaborators" , id="collaborators">
+                                            <option value=0></option>
+                                            @foreach (var collaborator in researchers)
+                                            {
+                                                name = collaborator.LastName + ", " + collaborator.Name;
+                                                <option value="@collaborator.Id">@name</option>
+                                            }
+                                        </select>
+                                        <button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button>
+                                        <div class="text-right">
+                                            <input type="button" name="add" id="add" value="Añadir colaborador" class="btn btn-success">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <button class="button" type="button">
+                                            No hay colaboradores disponibles.
+                                        </button>
+                                    }
+                                }
+                            </tr>
+                        </table>
+                    </div>
                 </div>
                 <div class="form-group mt-3">
                     <input type="submit" value="Guardar" class="btn btn-primary" />

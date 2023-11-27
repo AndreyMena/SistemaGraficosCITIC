@@ -1,4 +1,5 @@
-﻿namespace SistemaGraficosCITIC.Models.Domain
+﻿
+namespace SistemaGraficosCITIC.Models.Domain
 {
     public class Author
     {
