@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Data.SqlClient;
 using SistemaGraficosCITIC.Models.Domain;
 using System.Data;
 
@@ -100,5 +101,24 @@ namespace SistemaGraficosCITIC.Data
       }
       return publiTypes;
     }
+
+    public int DeleteResearchersByProject(string projectId)
+    {
+      connection.Open();
+      int removedCount = 0;
+
+      // Delete duplicate records
+      using (var command = new SqlCommand("DELETE FROM ProjectResearcher WHERE ProjectId = @projectId", connection))
+      {
+        command.Parameters.AddWithValue("@projectId", projectId);
+        removedCount = command.ExecuteNonQuery();
+      }
+
+      // Close the connection to release resources
+      connection.Close();
+
+      return removedCount;
+    }
+
   }
 }

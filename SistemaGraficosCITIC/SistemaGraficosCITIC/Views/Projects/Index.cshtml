@@ -16,9 +16,6 @@
   <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
   <!-- Accordion scripts -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.min.js"></script>
-
-
   <div class="container">
 
     @{
@@ -49,10 +46,11 @@
         var guid = item.Id;
         var projName = item.Name;
         var mainResearcher = allResearchers.Where(r => r.Id == item.ResearcherId).FirstOrDefault();
-        var projectResearchers = Model.projectResearchers!.Where(pr => pr.ProjectId == guid).ToList();
-        var researchers = new List<Researcher>();
+        var projectResearchers = Model.projectResearchers!.Where(pr => pr.ProjectId == guid).ToList(); //Busca en la tabla intermedia
+        var researchers = new List<Researcher>(); // Researchers de este proyecto
         foreach (var pro in projectResearchers)
         {
+          // Se rellena una lista con los researchers de este proyecto
           researchers.Add(allResearchers.Where(r => r.Id == pro.ResearcherId).First());
         }
 
@@ -108,15 +106,47 @@
                     <div class="accordion-body">
                       <!-- INICIA body Colaboradores -->
                       <div class="section bt-4 mb-4">
-                        <button type="button" class="btn btn-primary" onclick="">
-                          <b>+</b> Agregar Colaborador
-                        </button>
-                      </div>
-                      <div class="row">
-                        @foreach (var collaborator in researchers)
-                        {
-                          <p><h5 class="card-title">@collaborator.LastName, @collaborator.Name</h5></p>
-                        }
+                        <div id="actualCollabs" data-researchers-edit-button="@guid">
+                          <button type="button"
+                                  class="btn btn-primary mb-2"
+                                  data-project-id="@guid"
+                                  data-select-behavior="open-collaborators-section">
+                            Editar Colaborador(es)
+                          </button>
+                          <div class="row">
+                            @foreach (var collaborator in researchers) // Colaboradores del proyecto específico
+                            {
+                              <p class="card-title">@collaborator.LastName, @collaborator.Name</p>
+                            }
+                          </div>
+                        </div>
+                        <div class="select" data-researchers-select="@guid" style="display: none">
+                          <form method="post" action="@Url.Action("UpdateResearchers", "Projects")">
+                            <input type="hidden" name="projectId" value="@guid" />
+                            @foreach (var collaborator in allResearchers)
+                            {
+                              string name;
+                              name = collaborator.LastName + ", " + collaborator.Name;
+                              // Muestra con check los que ya forman parte del proyecto
+                              if (researchers.Contains(collaborator))
+                              {
+                                <p><label><input value="@collaborator.Id" name="ids" type="checkbox" checked>@name</label></p>
+                              }
+                              else
+                              {
+                                <p><label><input value="@collaborator.Id" name="ids" type="checkbox">@name</label></p>
+                              }
+                            }
+                            <div class="col">
+                              <button type="submit" class="btn btn-secondary">
+                                Guardar selección
+                              </button>
+                              <button type="button" class="btn btn-danger" data-cancel-collaborators-editing="@guid">
+                                Cancelar
+                              </button>
+                            </div>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -284,4 +314,55 @@ else
 {
   <h1>Inicie sesión para ver sus proyectos</h1>
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  /*
+  var isHiddenCollabs = true; // Starts hidden
+  function openclose() { // Open and close the select collaborators box
+    if (isHiddenCollabs) {
+      $('#mySelect').prop('hidden', false);
+      $('#actualCollabs').prop('hidden', true);
+      isHiddenCollabs = false;
+    } else if (!isHiddenCollabs) {
+      $('#mySelect').prop('hidden', true);
+      $('#actualCollabs').prop('hidden', false);
+      isHiddenCollabs = true;
+    }
+  }
+  */
+
+  document
+    .querySelectorAll('[data-select-behavior=open-collaborators-section]')
+    .forEach((node) => {
+      const guid = node.getAttribute('data-project-id')
+
+      node.addEventListener('click', () => {
+        const editButton =
+          document.querySelector(`[data-researchers-edit-button="${guid}"]`)
+        editButton.style.display = 'none'
+
+        const researchesSelect =
+          document.querySelector(`[data-researchers-select="${guid}"]`)
+        researchesSelect.style.display = 'block'
+      })
+    })
+
+  document
+    .querySelectorAll('[data-cancel-collaborators-editing]')
+    .forEach((node) => {
+      const guid = node.getAttribute('data-cancel-collaborators-editing')
+
+      node.addEventListener('click', () => {
+        const editButton =
+          document.querySelector(`[data-researchers-edit-button="${guid}"]`)
+        editButton.style.display = 'block'
+
+        const researchesSelect =
+          document.querySelector(`[data-researchers-select="${guid}"]`)
+        researchesSelect.style.display = 'none'
+      })
+    })
+</script>
+
 
