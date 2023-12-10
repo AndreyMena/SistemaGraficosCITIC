@@ -77,7 +77,7 @@
                 <tbody>
                   <tr>
                     <td>Tipo: <b>@Html.DisplayFor(modelItem => item.Type)</b></td>
-                    <td>Investigador: <b>@investigador</b></td>
+                    <td>Investigador Principal: <b>@investigador</b></td>
                     <td>Fecha inicio: <b>@startDate</b></td>
                     @if (!item.IsActive)
                     {
@@ -116,7 +116,10 @@
                           <div class="row">
                             @foreach (var collaborator in researchers) // Colaboradores del proyecto específico
                             {
-                              <p class="card-title">@collaborator.LastName, @collaborator.Name</p>
+                              if (collaborator.Id != mainResearcher.Id && collaborator.Name != "Admin")
+                              {
+                                <p class="card-title">@collaborator.LastName, @collaborator.Name</p>
+                              }
                             }
                           </div>
                         </div>
@@ -125,16 +128,19 @@
                             <input type="hidden" name="projectId" value="@guid" />
                             @foreach (var collaborator in allResearchers)
                             {
-                              string name;
-                              name = collaborator.LastName + ", " + collaborator.Name;
-                              // Muestra con check los que ya forman parte del proyecto
-                              if (researchers.Contains(collaborator))
+                              if (collaborator.Id != mainResearcher.Id && collaborator.Name != "Admin")
                               {
-                                <p><label><input value="@collaborator.Id" name="ids" type="checkbox" checked>@name</label></p>
-                              }
-                              else
-                              {
-                                <p><label><input value="@collaborator.Id" name="ids" type="checkbox">@name</label></p>
+                                string name;
+                                name = collaborator.LastName + ", " + collaborator.Name;
+                                // Muestra con check los que ya forman parte del proyecto
+                                if (researchers.Contains(collaborator))
+                                {
+                                  <p><label><input value="@collaborator.Id" name="ids" type="checkbox" checked>@name</label></p>
+                                }
+                                else
+                                {
+                                  <p><label><input value="@collaborator.Id" name="ids" type="checkbox">@name</label></p>
+                                }
                               }
                             }
                             <div class="col">
@@ -171,27 +177,24 @@
                       </div>
 
                       <div class="row">
-                        @foreach (var publi in Model.publications)
+                        @foreach (var publi in item.Publications)
                         {
-                          if (publi.ProjectId == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
-                          {
-                            string year = @publi.Year.ToString();
+                          string year = @publi.Year.ToString();
 
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8">
-                              <div class="card mt-3" style="width: 18rem;">
-                                <div class="card-body">
-                                  <h5 class="card-title">@publi.Title</h5>
-                                  <h8 class="card-subtitle mb-2 text-body-secondary">@year</h8>
-                                  <p class="card-text mt-2">Tipo: <b>@publi.Type</b> </p>
-                                  <p class="card-text">Referencia: <b>@publi.Reference</b> </p>
-                                  <form>
-                                    <button asp-action="Delete" value="Delete" asp-controller="Publications" asp-route-id="@publi.Id" type="submit" class="btn btn-danger">Borrar</button>
-                                    <button asp-action="Edit" value="Edit" asp-controller="Publications" asp-route-id="@publi.Id" type="submit" class="btn btn-primary">Editar</button>
-                                  </form>
-                                </div>
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-8">
+                            <div class="card mt-3" style="width: 18rem;">
+                              <div class="card-body">
+                                <h5 class="card-title">@publi.Title</h5>
+                                <h8 class="card-subtitle mb-2 text-body-secondary">@year</h8>
+                                <p class="card-text mt-2">Tipo: <b>@publi.Type</b> </p>
+                                <p class="card-text">Referencia: <b>@publi.Reference</b> </p>
+                                <form>
+                                  <button asp-action="Delete" value="Delete" asp-controller="Publications" asp-route-id="@publi.Id" type="submit" class="btn btn-danger">Borrar</button>
+                                  <button asp-action="Edit" value="Edit" asp-controller="Publications" asp-route-id="@publi.Id" type="submit" class="btn btn-primary">Editar</button>
+                                </form>
                               </div>
                             </div>
-                          }
+                          </div>
                         }
                       </div>
 
@@ -218,7 +221,7 @@
                       <div class="row">
                         @foreach (var expo in Model.expositions)
                         {
-                          if (expo.Project.Id == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
+                          if (expo.ProjectId == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
                           {
                             string shortDate = @expo.Date.ToString().Substring(0, @expo.Date.ToString().IndexOf(' '));
 
@@ -262,7 +265,7 @@
                       <div class="row">
                         @foreach (var prod in Model.products)
                         {
-                          if (prod.Project.Id == item.Id)   // Muestre solo los Productos del Proyecto actual
+                          if (prod.ProjectId == item.Id)   // Muestre solo los Productos del Proyecto actual
                           {
                             <div class="col-md-4">
                               <div class="card mt-3" style="width: 18rem;">

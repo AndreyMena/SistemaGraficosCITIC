@@ -87,8 +87,11 @@
                       <div class="select" id="mySelect" hidden="hidden">
                         @foreach (var collaborator in researchers)
                         {
-                          name = collaborator.LastName + ", " + collaborator.Name;
-                          <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                          if (collaborator.Id != researcher.Id && collaborator.Name != "Admin")
+                          {
+                            name = collaborator.LastName + ", " + collaborator.Name;
+                            <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                          }
                         }
                       </div>
                     }

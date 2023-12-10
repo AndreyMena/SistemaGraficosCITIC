@@ -9,5 +9,6 @@
     public virtual Guid ResearcherId { get; set; }
 
     public virtual Researcher Researcher { get; set; }
+    public virtual bool IsMainResearcher { get; set; }
   }
 }

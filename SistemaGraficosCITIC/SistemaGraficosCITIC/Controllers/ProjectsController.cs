@@ -136,21 +136,21 @@ namespace SistemaGraficosCITIC.Controllers
           var userName = User.Identity!.Name;
           var currentUser = await userManager.FindByNameAsync(userName);
           var id = new Guid(currentUser.Id);
-          //var researcher = await researcherRepository.GetAsync(id);
-          var collab = new List<Researcher>();
+          var researcher = await researcherRepository.GetAsync(id);
+          var collab = new List<Researcher>
+          {
+            researcher
+          };
           foreach (var coll in model.Collaborators)
           {
             var idR = new Guid(coll);
             var r = await researcherRepository.GetAsync(idR);
             collab.Add(r);
           }
-          //var researchers = await researcherRepository.GetAllAsync();
-          var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive, model.ResearcherId, model.Code, collab);
-
-          //_context.Entry(collab).State = EntityState.Modified;
+          var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive,
+            id/*se agrega el usuario actual como investigador principal*/, model.Code!, collab);
           _context.Add(project);
           await _context.SaveChangesAsync();
-          var projectId = project.Id.ToString();
           return RedirectToAction("Create", "Projects");
         }
         else
@@ -303,7 +303,10 @@ namespace SistemaGraficosCITIC.Controllers
           var currentUser = await userManager.FindByNameAsync(userName);
           var id = new Guid(currentUser.Id);
           var researcher = await researcherRepository.GetAsync(id);
-          var collab = new List<Researcher>();
+          var collab = new List<Researcher>
+          {
+            researcher
+          };
           foreach (var coll in model.Collaborators)
           {
             var idR = new Guid(coll);
@@ -324,6 +327,7 @@ namespace SistemaGraficosCITIC.Controllers
       }
       return View(model);
     }
+
     [HttpGet]
     public async Task<IActionResult> ProjectTypes()
     {

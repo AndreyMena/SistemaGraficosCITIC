@@ -48,9 +48,14 @@ namespace SistemaGraficosCITIC.Repositories
 
     public async Task<IEnumerable<Project>?> GetProjectsByResearcher(Guid id)
     {
-      var projectList = await _context.Project.Where(x => x.ResearcherId == id).ToListAsync();
-      projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
-      return projectList;
+      var res = await _context.Researcher.FindAsync(id);
+
+      return _context
+          .Project
+          .Where(x => x.Collaborators.Contains(res))
+          .Include(x => x.Publications)
+          .Include(x => x.Expositions)
+          .Include(x => x.Products);
     }
 
     public async Task<Project> UpdateAsync(Project project)
