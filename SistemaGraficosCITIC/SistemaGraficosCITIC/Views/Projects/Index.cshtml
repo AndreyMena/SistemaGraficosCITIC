@@ -7,6 +7,10 @@
   ViewData["Title"] = "Lista proyectos";
 
   IEnumerable<Researcher> allResearchers = Model.researchers!;
+  if (User.IsInRole("Admin"))
+  {
+    ViewBag.ShowChartsButton = true;
+  }
 
 }
 

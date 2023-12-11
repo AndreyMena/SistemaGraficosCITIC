@@ -10,8 +10,8 @@ namespace SistemaGraficosCITIC.Models.Domain
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public bool IsActive { get; set; }
-    public Guid ResearcherId { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
-    public ICollection<Researcher> Collaborators { get; set; }
+    public Guid ResearcherId { get; set; } // Guarda el Id del Investigador principal
+    public ICollection<Researcher> Collaborators { get; set; } // Guarda todos los investigadores
     public string? Code { get; set; }
     public ICollection<Publication> Publications { get; set; } //Se cambiaron de Collection a List
     public List<Exposition> Expositions { get; set; }

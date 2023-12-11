@@ -1,74 +1,74 @@
 ﻿@model IEnumerable<SistemaGraficosCITIC.Models.Domain.Project>
 
 @{
-    ViewData["Title"] = "Lista de publicaciones";
-    ViewBag.ShowChartsButton = true;
+  ViewData["Title"] = "Lista de proyectos";
+  ViewBag.ShowChartsButton = true;
 }
 
 <h1>Lista de proyectos</h1>
 
 <p>
-    <div class="section bt-4 mb-4">
-        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects")'">
-            <b></b> Agregar Proyecto
-        </button>
-    </div>
+  <div class="section bt-4 mb-4">
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Projects")'">
+      <b></b> Agregar Proyecto
+    </button>
+  </div>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    <div class="btn-group-vertical text-center">
-                        <form>
-                            @if (User.IsInRole("Admin") @* || (researcher.Id.ToString() == user.Id)*@)
-                            {
-                                <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
-                                <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
-                            }
-                            
-                            <button asp-action="Details" value="Details" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Más</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
+  <thead>
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.Code)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Name)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Type)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.IsActive)
+      </th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Code)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+          <div class="btn-group-vertical text-center">
+            <form>
+              @if (User.IsInRole("Admin") @* || (researcher.Id.ToString() == user.Id)*@)
+              {
+                <button asp-action="Edit" value="Edit" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Editar</button>
+                <button asp-action="Delete" value="Delete" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-danger">Borrar</button>
+              }
+
+              <button asp-action="Details" value="Details" asp-controller="Projects" asp-route-id="@item.Id" type="submit" class="btn btn-primary">Más</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+    }
+  </tbody>
 </table>
 
 <hr />
 
 <div>
-    <a asp-action="index" asp-controller="Home">Regresar</a>
+  <a asp-action="index" asp-controller="Home">Regresar</a>
 </div>
 

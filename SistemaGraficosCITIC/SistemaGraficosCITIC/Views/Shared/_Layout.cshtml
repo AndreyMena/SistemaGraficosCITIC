@@ -1,82 +1,88 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <base href="~/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"]</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <base href="~/" />
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
 
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header class="header-layout">
-        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#005da4;">
-            <!-- Navbar content -->
-            <div class="container-fluid">
-                <div class="Text" style="padding-right: 15px">
-                    <a href="/">
-                        <img src="/Images/Logos/UCR_logo.png" class="image-logo" data-src-small="/Images/Logos/UCR_logo.png" id="logo" alt="Logo" width="300">
-                    </a>
-                </div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-
-        <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#e1e1e2;">
-            <!-- Navbar content -->
-            <div class="container-fluid">
-                <div class="Text" style="padding-right: 15px">
-                    <img src="/Images/Logos/citic_logo.png" class="image-logo" data-src-small="/Images/Logos/citic-logo.png" id="logo" alt="Logo" width=90>
-                </div>
-                @*<a class="navbar-brand" style="color: #414141;" asp-area="" asp-controller="Home" asp-action="Index">SIGPRO+</a>*@
-                <span class="navbar-brand" style="color: #414141;">SIGPRO+</span>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                    </ul>
-                </div>
-            </div>
-            @if (ViewBag.ShowChartsButton == true)
-            {
-            <a href="@Url.Action("Graphics", "Admin")" class="nav-link btn btn-link text-dark">
-                <span style="color: #005da4;">Gráficos</span>
-            </a>
-            }
-
-        </nav>
-    </header>
-
-    <div class="container">
-        <main role="main" class="">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer>
-        <div class="text-center"style="background-color: #e1e1e2">
-            &copy; 2023 - SIGPRO+
+  <header class="header-layout">
+    <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#005da4;">
+      <!-- Navbar content -->
+      <div class="container-fluid">
+        <div class="Text" style="padding-right: 15px">
+          <a href="/">
+            <img src="/Images/Logos/UCR_logo.png" class="image-logo" data-src-small="/Images/Logos/UCR_logo.png" id="logo" alt="Logo" width="300">
+          </a>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+          <ul class="navbar-nav flex-grow-1">
+          </ul>
+          <partial name="_LoginPartial" />
+        </div>
+      </div>
+    </nav>
+
+    <nav class="navbar navbar-dark navbar-expand-sm navbar-toggleable-sm" style="background-color:#e1e1e2;">
+      <!-- Navbar content -->
+      <div class="container-fluid">
+        <div class="Text" style="padding-right: 15px">
+          <img src="/Images/Logos/citic_logo.png" class="image-logo" data-src-small="/Images/Logos/citic-logo.png" id="logo" alt="Logo" width=90>
+        </div>
+        @*<a class="navbar-brand" style="color: #414141;" asp-area="" asp-controller="Home" asp-action="Index">SIGPRO+</a>*@
+        <span class="navbar-brand" style="color: #414141;">SIGPRO+</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+          <ul class="navbar-nav flex-grow-1">
+          </ul>
+        </div>
+      </div>
+      @if (ViewBag.ShowChartsButton == true)
+      {
+        <a href="@Url.Action("Graphics", "Admin")" class="nav-link btn btn-link text-dark">
+          <span style="color: #005da4;">Gráficos</span>
+        </a>
+        <a href="@Url.Action("Configurations", "Admin")" class="nav-link btn btn-link text-dark">
+          <span style="color: #005da4;">Configuraciones</span>
+        </a>
+        <a href="@Url.Action("Index", "Admin")" class="nav-link btn btn-link text-dark">
+          <span style="color: #005da4;">Proyectos</span>
+        </a>
+      }
+
+    </nav>
+  </header>
+
+  <div class="container">
+    <main role="main" class="">
+      @RenderBody()
+    </main>
+  </div>
+
+  <footer>
+    <div class="text-center" style="background-color: #e1e1e2">
+      &copy; 2023 - SIGPRO+
+    </div>
+  </footer>
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

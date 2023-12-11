@@ -62,8 +62,16 @@ namespace SistemaGraficosCITIC.Controllers
         var currentUser = await userManager.FindByNameAsync(userName);
         var id = new Guid(currentUser.Id);
         IndexProjectsViewModel model = new IndexProjectsViewModel();
-        model.projects = await projectRepository.GetProjectsByResearcher(id);
-
+        if (User.IsInRole("Admin"))
+        {
+          // Si es administrador puede ver todos los proyectos
+          model.projects = await projectRepository.GetAllAsyncAdmin();
+        }
+        else
+        {
+          // Investigador solo puede ver los proyectos en los que participa
+          model.projects = await projectRepository.GetProjectsByResearcher(id);
+        }
         // Colaboradores asociados
         model.researchers = await researcherRepository.GetAllAsync();
         // Publicaciones asociadas
@@ -139,8 +147,9 @@ namespace SistemaGraficosCITIC.Controllers
           var researcher = await researcherRepository.GetAsync(id);
           var collab = new List<Researcher>
           {
-            researcher
+            researcher // Se introduce a si mismo
           };
+          // Introduce de la lista de investigadores colaboradores
           foreach (var coll in model.Collaborators)
           {
             var idR = new Guid(coll);
@@ -305,7 +314,7 @@ namespace SistemaGraficosCITIC.Controllers
           var researcher = await researcherRepository.GetAsync(id);
           var collab = new List<Researcher>
           {
-            researcher
+            researcher // Se agrega a si mismo a la lista
           };
           foreach (var coll in model.Collaborators)
           {
@@ -315,7 +324,6 @@ namespace SistemaGraficosCITIC.Controllers
           }
           var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive,
             id/*se agrega el usuario actual como investigador principal*/, model.Code!, collab);
-          //_context.Entry(collab).State = EntityState.Modified;
           _context.Add(project);
           await _context.SaveChangesAsync();
         }
