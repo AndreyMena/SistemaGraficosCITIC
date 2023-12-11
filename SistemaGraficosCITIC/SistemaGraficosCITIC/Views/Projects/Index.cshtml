@@ -219,26 +219,23 @@
                         </button>
                       </div>
                       <div class="row">
-                        @foreach (var expo in Model.expositions)
+                        @foreach (var expo in item.Expositions)
                         {
-                          if (expo.ProjectId == item.Id)   // Muestre solo las Publicaciones del Proyecto actual
-                          {
-                            string shortDate = @expo.Date.ToString().Substring(0, @expo.Date.ToString().IndexOf(' '));
+                          string shortDate = @expo.Date.ToString().Substring(0, @expo.Date.ToString().IndexOf(' '));
 
-                            <div class="col-md-4">
-                              <div class="card mt-3" style="width: 18rem;">
-                                <div class="card-body">
-                                  <h5 class="card-title">@expo.Location</h5>
-                                  <h8 class="card-subtitle mb-2 text-body-secondary">@shortDate</h8>
-                                  <h6 class="card-subtitle mt-2 mb-2 text-body-secondary">@expo.Context</h6>
-                                  <form>
-                                    <button asp-action="Delete" value="Delete" asp-controller="Expositions" asp-route-id="@expo.Id" type="submit" class="btn btn-danger">Borrar</button>
-                                    <button asp-action="Edit" value="Edit" asp-controller="Expositions" asp-route-id="@expo.Id" type="submit" class="btn btn-primary">Editar</button>
-                                  </form>
-                                </div>
+                          <div class="col-md-4">
+                            <div class="card mt-3" style="width: 18rem;">
+                              <div class="card-body">
+                                <h5 class="card-title">@expo.Location</h5>
+                                <h8 class="card-subtitle mb-2 text-body-secondary">@shortDate</h8>
+                                <h6 class="card-subtitle mt-2 mb-2 text-body-secondary">@expo.Context</h6>
+                                <form>
+                                  <button asp-action="Delete" value="Delete" asp-controller="Expositions" asp-route-id="@expo.Id" type="submit" class="btn btn-danger">Borrar</button>
+                                  <button asp-action="Edit" value="Edit" asp-controller="Expositions" asp-route-id="@expo.Id" type="submit" class="btn btn-primary">Editar</button>
+                                </form>
                               </div>
                             </div>
-                          }
+                          </div>
                         }
                       </div>
 
@@ -263,35 +260,32 @@
                         </button>
                       </div>
                       <div class="row">
-                        @foreach (var prod in Model.products)
+                        @foreach (var prod in item.Products)
                         {
-                          if (prod.ProjectId == item.Id)   // Muestre solo los Productos del Proyecto actual
-                          {
-                            <div class="col-md-4">
-                              <div class="card mt-3" style="width: 18rem;">
-                                <div class="card-body">
-                                  <h5 class="card-title">@prod.Name</h5>
-                                  <h8 class="card-subtitle mb-2 text-body-secondary">
-                                    @prod.State •
-                                    @if (prod.Marketable == "Comercializable")
-                                    {
-                                      <span style="font-weight: bold; color: darkgreen;">@prod.Marketable</span>
-                                    }
-                                    else
-                                    {
-                                      <span style="font-weight: bold; color: darkred;">@prod.Marketable</span>
-                                    }
-                                  </h8>
-                                  <p class="card-text mt-2">@prod.Description</p>
-                                  <p class="card-text">Licencia: <b>@prod.License</b> </p>
-                                  <form>
-                                    <button asp-action="Delete" value="Delete" asp-controller="Products" asp-route-id="@prod.Id" type="submit" class="btn btn-danger">Borrar</button>
-                                    <button asp-action="Edit" value="Edit" asp-controller="Products" asp-route-id="@prod.Id" type="submit" class="btn btn-primary">Editar</button>
-                                  </form>
-                                </div>
+                          <div class="col-md-4">
+                            <div class="card mt-3" style="width: 18rem;">
+                              <div class="card-body">
+                                <h5 class="card-title">@prod.Name</h5>
+                                <h8 class="card-subtitle mb-2 text-body-secondary">
+                                  @prod.State •
+                                  @if (prod.Marketable == "Comercializable")
+                                  {
+                                    <span style="font-weight: bold; color: darkgreen;">@prod.Marketable</span>
+                                  }
+                                  else
+                                  {
+                                    <span style="font-weight: bold; color: darkred;">@prod.Marketable</span>
+                                  }
+                                </h8>
+                                <p class="card-text mt-2">@prod.Description</p>
+                                <p class="card-text">Licencia: <b>@prod.License</b> </p>
+                                <form>
+                                  <button asp-action="Delete" value="Delete" asp-controller="Products" asp-route-id="@prod.Id" type="submit" class="btn btn-danger">Borrar</button>
+                                  <button asp-action="Edit" value="Edit" asp-controller="Products" asp-route-id="@prod.Id" type="submit" class="btn btn-primary">Editar</button>
+                                </form>
                               </div>
                             </div>
-                          }
+                          </div>
                         }
                       </div>
 

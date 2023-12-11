@@ -79,7 +79,13 @@ namespace SistemaGraficosCITIC.Controllers
 
           string isMarketable = (model.ProductMarketable!.Equals("true") ? "Comercializable" : "No comercializable");
           var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
-          var product = new Product(model.ProductName!, model.ProductDescription!, model.ProductState!, isMarketable, model.ProductLicense!, project.Id);
+          var product = new Product(
+            model.ProductName!,
+            model.ProductDescription!,
+            model.ProductState!,
+            isMarketable,
+            model.ProductLicense!,
+            project.Id);
           _context.Product.Add(product);
           project!.Products.Add(product);
           await _context.SaveChangesAsync();
@@ -89,7 +95,6 @@ namespace SistemaGraficosCITIC.Controllers
           return RedirectToAction(nameof(Index));
         }
         var projectId = model.ProjectId;
-        //, new { projectId = projectId });
         return RedirectToAction("Index", "Projects");   // Redirigir a la página inicial de proyectos?
       }
       return View(model);
@@ -111,14 +116,18 @@ namespace SistemaGraficosCITIC.Controllers
         {
           var userName = User.Identity!.Name;
           var currentUser = await userManager.FindByNameAsync(userName);
-
           string isMarketable = (model.ProductMarketable!.Equals("true") ? "Comercializable" : "No comercializable");
           var project = await projectRepository.GetAsync(new Guid(model.ProjectId!));
-          var product = new Product(model.ProductName!, model.ProductDescription!, model.ProductState!, isMarketable, model.ProductLicense!, project.Id);
+          var product = new Product(
+            model.ProductName!,
+            model.ProductDescription!,
+            model.ProductState!,
+            isMarketable,
+            model.ProductLicense!,
+            project.Id);
 
           _context.Product.Add(product);
           project!.Products.Add(product);
-
           await _context.SaveChangesAsync();
         }
         else
@@ -165,7 +174,7 @@ namespace SistemaGraficosCITIC.Controllers
     /// <returns>The Task of action to the view</returns>
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,State,Marketable,License")] Product product)
+    public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description,State,Marketable,License,ProjectId")] Product product)
     {
       if (id != product.Id)
       {
