@@ -2,7 +2,10 @@
 
 @{
   ViewData["Title"] = "Lista de proyectos";
-  ViewBag.ShowChartsButton = true;
+  if (User.IsInRole("Admin"))
+  {
+    ViewBag.ShowChartsButton = true;
+  }
 }
 
 <h1>Lista de proyectos</h1>

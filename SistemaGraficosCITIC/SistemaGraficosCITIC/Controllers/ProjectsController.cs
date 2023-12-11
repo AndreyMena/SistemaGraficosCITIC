@@ -280,10 +280,6 @@ namespace SistemaGraficosCITIC.Controllers
           await Console.Out.WriteLineAsync("Error borrando proyecto");
         }
       }
-      if (User.IsInRole("Admin"))
-      {
-        return RedirectToAction("Index", "Admin");
-      }
       return RedirectToAction(nameof(Index));
     }
 
