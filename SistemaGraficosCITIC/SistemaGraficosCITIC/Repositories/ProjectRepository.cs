@@ -41,6 +41,15 @@ namespace SistemaGraficosCITIC.Repositories
       return projectList;
     }
 
+    public async Task<IEnumerable<Project>> GetAllAsyncAdmin()
+    {
+      var projectList = await _context.Project.ToListAsync();
+
+      projectList = projectList.OrderByDescending(x => x.StartDate).ToList();
+
+      return projectList;
+    }
+
     public async Task<Project> GetAsync(Guid id)
     {
       return await _context.Project.FirstOrDefaultAsync(x => x.Id == id);

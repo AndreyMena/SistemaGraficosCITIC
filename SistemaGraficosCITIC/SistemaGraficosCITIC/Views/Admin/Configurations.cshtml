@@ -1,43 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Configurations";
+  ViewData["Title"] = "Configuraciones";
+  ViewBag.ShowChartsButton = true;
 }
 @if (User.IsInRole("Admin"))
 {
-    <h1>Configuraciones</h1>
+  <h1>Configuraciones</h1>
 
-    <div class="mt-4">
-        <h3>Proyectos:</h3>
-        <a asp-action="" asp-controller=""></a>
-    </div>
+  <div class="mt-4">
+    <h3>Proyectos:</h3>
+    <a asp-action="ProjectTypes" asp-controller="Projects">Editar tipos de proyectos</a>
+    <h3>Investigadores:</h3>
+    <a asp-action="ResearcherTypes" asp-controller="Admin">Editar tipos de investigador</a>
+    <h3>Publicaciones:</h3>
+    <a asp-action="PublicationTypes" asp-controller="Publications">Editar tipos de publicaciones</a>
+    @*<h3>Productos:</h3>
+  <a asp-action="" asp-controller=""></a>
+  <h3>Presentaciones:</h3>
+  <a asp-action="" asp-controller=""></a>*@
+  </div>
 
-    <div class="mt-4">
-        <h3>Publicaciones</h3>
-        <a asp-action="PublicationTypes" asp-controller="Publications">Editar tipos de publicaciones</a>
-        <h3>Proyectos</h3>
-        <a asp-action="ProjectTypes" asp-controller="Projects">Editar tipos de proyectos</a>
-    </div>
+  <hr />
 
-    <div class="mt-4">
-        <h3>Productos:</h3>
-        <a asp-action="" asp-controller=""></a>
-    </div>
-    <div class="mt-4">
-        <h3>Presentaciones:</h3>
-        <a asp-action="" asp-controller=""></a>
-    </div>
-
-    <div class="mt-4">
-        <h3>Investigadores:</h3>
-        <a asp-action="ResearcherTypes" asp-controller="Admin">Editar tipos de investigador</a>
-    </div>
-
-    <hr />
-
-    <div>
-        <a asp-action="index" asp-controller="Home">Regresar</a>
-    </div>
+  <div>
+    <a asp-action="index" asp-controller="Home">Regresar</a>
+  </div>
 }
 else
 {
-    <h1>Not allowed</h1>
+  <h1>Not allowed</h1>
 }

@@ -1,91 +1,91 @@
 ﻿@model ExpositionModel
 
 @{
-    ViewData["Title"] = "Agregar exposición";
-    var projectId = ViewData["projectId"];
-    var projectName = ViewData["projectName"];
+  ViewData["Title"] = "Agregar exposición";
+  var projectId = ViewData["projectId"];
+  var projectName = ViewData["projectName"];
 }
 
 <div class="container">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <h2>Crear Presentación</h2>
-    <p>Proyecto: <b> @projectName </b></p>
+  <h2>Crear Presentación</h2>
+  <p>Proyecto: <b> @projectName </b></p>
 
-    <hr />
+  <hr />
 
-    <h3>Presentaciones</h3>
+  <h3>Presentaciones</h3>
 
-    <div class="row">
-        <div class="col-md-4">
-        
-            <form asp-action="Create">
+  <div class="row">
+    <div class="col-md-4">
 
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionTitle" class="form-control" />
-                    <label class="control-label">Titulo</label>
-                </div>
+      <form asp-action="Create">
 
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionDate" type="Date" class="form-control" />
-                    <label class="control-label">Fecha</label>
-                </div>
-
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionLocation" class="form-control" />
-                    <label class="control-label">Lugar</label>
-                </div>
-
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionContext" class="form-control" />
-                    <label class="control-label">Contexto</label>
-                </div>
-
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionSpeaker" class="form-control" />
-                    <label class="control-label">Presentadores</label>
-                </div>
-
-                <div class="form-floating mt-3">
-                    <input value="" asp-for="ExpositionParticipants" class="form-control" />
-                    <label class="control-label">Participantes</label>
-                </div>
-
-                <div class="form-floating mt-3" type="hidden">
-                    <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
-                </div>
-
-                <div class="form-floating mt-3">
-                    <input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Expositions", new { projectId=@projectId })'" />
-                    <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
-                </div>
-
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content d-flex justify-content-center">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Exposición guardada</h4>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>¿Desea continuar o agregar otra exposición?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" value="Crear" class="btn btn-warning">Agregar otra</button>
-                                <button asp-action="AddContinue" value="Crear" asp-controller="Expositions" type="submit" class="btn btn-primary">Continuar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-        
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionTitle" class="form-control" />
+          <label class="control-label">Titulo</label>
         </div>
+
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionDate" type="Date" class="form-control" />
+          <label class="control-label">Fecha</label>
+        </div>
+
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionLocation" class="form-control" />
+          <label class="control-label">Lugar</label>
+        </div>
+
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionContext" class="form-control" />
+          <label class="control-label">Contexto</label>
+        </div>
+
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionSpeaker" class="form-control" />
+          <label class="control-label">Presentadores</label>
+        </div>
+
+        <div class="form-floating mt-3">
+          <input value="" asp-for="ExpositionParticipants" class="form-control" />
+          <label class="control-label">Participantes</label>
+        </div>
+
+        <div class="form-floating mt-3" type="hidden">
+          <input type="hidden" asp-for="ProjectId" class="form-control" value="@projectId" />
+        </div>
+
+        <div class="form-floating mt-3">
+          <input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Expositions", new { projectId=@projectId })'" />
+          <button id="btnGuardar" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content d-flex justify-content-center">
+              <div class="modal-header">
+                <h4 class="modal-title">Exposición guardada</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>¿Desea continuar o agregar otra exposición?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" value="Create" class="btn btn-warning">Agregar otra</button>
+                <button asp-action="AddContinue" value="Crear" asp-controller="Expositions" type="submit" class="btn btn-primary">Finalizar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
     </div>
+  </div>
 
 </div>
 
@@ -93,39 +93,39 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
 
 <script>
-    $(document).ready(function () {
-        // Función para verificar si el formulario está completo
-        $('#btnGuardar').prop('disabled', true); // Disable button by default
+  $(document).ready(function () {
+    // Función para verificar si el formulario está completo
+    $('#btnGuardar').prop('disabled', true); // Disable button by default
 
-        function checkFormCompletion() {
-            var isComplete = true;
-            $('input, select, textarea').each(function () {
-                if ($(this).is(':visible')) {
-                    if ($(this).val() === '') {
-                        isComplete = false;
-                        return false; // Sale del bucle si encuentra un campo vacío
-                    }
-                }
-            });
-
-            // Actualiza el estado del botón
-            if (isComplete) {
-                $('#btnGuardar').prop('disabled', false);
-            } else {
-                $('#btnGuardar').prop('disabled', true);
-            }
+    function checkFormCompletion() {
+      var isComplete = true;
+      $('input, select, textarea').each(function () {
+        if ($(this).is(':visible')) {
+          if ($(this).val() === '') {
+            isComplete = false;
+            return false; // Sale del bucle si encuentra un campo vacío
+          }
         }
+      });
 
-        // Verificar el estado del formulario en cada cambio de campo
-        $('input, select, textarea').on('input change', function () {
-            checkFormCompletion();
-        });
+      // Actualiza el estado del botón
+      if (isComplete) {
+        $('#btnGuardar').prop('disabled', false);
+      } else {
+        $('#btnGuardar').prop('disabled', true);
+      }
+    }
+
+    // Verificar el estado del formulario en cada cambio de campo
+    $('input, select, textarea').on('input change', function () {
+      checkFormCompletion();
     });
+  });
 </script>
 
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
 }

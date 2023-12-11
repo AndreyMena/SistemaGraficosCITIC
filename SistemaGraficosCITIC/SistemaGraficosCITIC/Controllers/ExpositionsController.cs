@@ -255,10 +255,9 @@ namespace SistemaGraficosCITIC.Controllers
     /// </summary>
     /// <param name="projectId"></param>
     /// <returns>The Task of action to the view</returns>
-    public Task<IActionResult> Skip(string projectId)
+    public Task<IActionResult> Skip()
     {
-      //var projectId = model.ProjectId;
-      return Task.FromResult<IActionResult>(RedirectToAction("Create", "Products", new { projectId = projectId }));
+      return Task.FromResult<IActionResult>(RedirectToAction("Index", "Projects"));
     }
 
   }
