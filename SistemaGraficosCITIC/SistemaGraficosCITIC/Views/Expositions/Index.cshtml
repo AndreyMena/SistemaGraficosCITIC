@@ -1,47 +1,49 @@
 ﻿@model IEnumerable<SistemaGraficosCITIC.Models.Domain.Exposition>
 
 @{
-    ViewData["Title"] = "Lista de exposiciones";
+  ViewData["Title"] = "Lista de exposiciones";
+  if (User.IsInRole("Admin"))
+  {
+    ViewBag.ShowChartsButton = true;
+  }
 }
 
 <h1>Lista de exposiciones</h1>
 
-<p>
-    <a asp-action="Create">Agregar</a>
-</p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Context)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Context)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
-            </td>
-        </tr>
-}
-    </tbody>
+  <thead>
+    <tr>
+      <th>
+        @Html.DisplayNameFor(model => model.Date)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Location)
+      </th>
+      <th>
+        @Html.DisplayNameFor(model => model.Context)
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @Html.DisplayFor(modelItem => item.Date)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Context)
+        </td>
+        <td>
+          <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+          <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+          <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
+        </td>
+      </tr>
+    }
+  </tbody>
 </table>

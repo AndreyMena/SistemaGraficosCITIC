@@ -66,24 +66,34 @@ namespace SistemaGraficosCITIC.Controllers
         {
           // Si es administrador puede ver todos los proyectos
           model.projects = await projectRepository.GetAllAsyncAdmin();
+          // Colaboradores asociados
+          model.researchers = await researcherRepository.GetAllAsync();
+          // Publicaciones asociadas
+          model.publications = await _context.Publication.ToListAsync();
+          // Exposiciones asociadas
+          model.expositions = await _context.Exposition.ToListAsync();
+          // Productos asociados
+          model.products = await _context.Product.ToListAsync();
+          model.projectResearchers = await _context.ProjectResearcher.ToListAsync();
         }
         else
         {
           // Investigador solo puede ver los proyectos en los que participa
           model.projects = await projectRepository.GetProjectsByResearcher(id);
+          // Colaboradores asociados
+          model.researchers = await researcherRepository.GetAllAsync();
+          // Publicaciones asociadas
+          model.publications = await _context.Publication
+            .Where(c => c.Project!.ResearcherId == id).ToListAsync();
+          // Exposiciones asociadas
+          model.expositions = await _context.Exposition
+              .Where(e => e.Project!.ResearcherId == id).ToListAsync();
+          // Productos asociados
+          model.products = await _context.Product
+              .Where(p => p.Project!.ResearcherId == id).ToListAsync();
+          model.projectResearchers = await _context.ProjectResearcher.ToListAsync();
         }
-        // Colaboradores asociados
-        model.researchers = await researcherRepository.GetAllAsync();
-        // Publicaciones asociadas
-        model.publications = await _context.Publication
-          .Where(c => c.Project!.ResearcherId == id).ToListAsync();
-        // Exposiciones asociadas
-        model.expositions = await _context.Exposition
-            .Where(e => e.Project!.ResearcherId == id).ToListAsync();
-        // Productos asociados
-        model.products = await _context.Product
-            .Where(p => p.Project!.ResearcherId == id).ToListAsync();
-        model.projectResearchers = await _context.ProjectResearcher.ToListAsync();
+
 
         return _context.Project != null ?
                       View(model) :
@@ -279,10 +289,6 @@ namespace SistemaGraficosCITIC.Controllers
         {
           await Console.Out.WriteLineAsync("Error borrando proyecto");
         }
-      }
-      if (User.IsInRole("Admin"))
-      {
-        return RedirectToAction("Index", "Admin");
       }
       return RedirectToAction(nameof(Index));
     }

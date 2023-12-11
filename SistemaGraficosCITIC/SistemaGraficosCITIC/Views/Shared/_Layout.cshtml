@@ -54,14 +54,26 @@
       </div>
       @if (ViewBag.ShowChartsButton == true)
       {
-        <a href="@Url.Action("Graphics", "Admin")" class="nav-link btn btn-link text-dark">
+        <a href="@Url.Action("Index", "Projects")" class="nav-link btn btn-link text-dark m-1">
+          <span style="color: #005da4;">Inicio</span>
+        </a>
+        <a href="@Url.Action("Graphics", "Admin")" class="nav-link btn btn-link text-dark m-1">
           <span style="color: #005da4;">Gráficos</span>
         </a>
-        <a href="@Url.Action("Configurations", "Admin")" class="nav-link btn btn-link text-dark">
+        <a href="@Url.Action("Configurations", "Admin")" class="nav-link btn btn-link text-dark m-1">
           <span style="color: #005da4;">Configuraciones</span>
         </a>
-        <a href="@Url.Action("Index", "Admin")" class="nav-link btn btn-link text-dark">
+        <a href="@Url.Action("Index", "Admin")" class="nav-link btn btn-link text-dark m-1">
           <span style="color: #005da4;">Proyectos</span>
+        </a>
+        <a href="@Url.Action("Index", "Publications")" class="nav-link btn btn-link text-dark m-1">
+          <span style="color: #005da4;">Publicaciones</span>
+        </a>
+        <a href="@Url.Action("Index", "Expositions")" class="nav-link btn btn-link text-dark m-1">
+          <span style="color: #005da4;">Presentaciones</span>
+        </a>
+        <a href="@Url.Action("Index", "Products")" class="nav-link btn btn-link text-dark m-1">
+          <span style="color: #005da4;">Productos</span>
         </a>
       }
 
