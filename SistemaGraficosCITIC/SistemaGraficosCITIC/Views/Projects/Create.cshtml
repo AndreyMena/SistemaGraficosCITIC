@@ -87,8 +87,11 @@
                       <div class="select" id="mySelect" hidden="hidden">
                         @foreach (var collaborator in researchers)
                         {
-                          name = collaborator.LastName + ", " + collaborator.Name;
-                          <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                          if (collaborator.Id != researcher.Id && collaborator.Name != "Admin")
+                          {
+                            name = collaborator.LastName + ", " + collaborator.Name;
+                            <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                          }
                         }
                       </div>
                     }
@@ -140,7 +143,6 @@
   }
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-
     $(document).ready(function () {
       $('#mySelect').change(function () {
         var checkboxes = document.getElementsByName("Collaborators");
@@ -148,6 +150,7 @@
         foreach(var box in checkboxes) {
         if (box.checked) {
           Model.Collaborators.Append(box);
+          numberOfCheckedItems++;
         }
         if (numberOfCheckedItems > 10) {
           alert("You can't select more than 10!");

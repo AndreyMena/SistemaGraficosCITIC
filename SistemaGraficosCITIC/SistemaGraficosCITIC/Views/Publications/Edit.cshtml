@@ -1,10 +1,10 @@
 ﻿@model SistemaGraficosCITIC.Models.Domain.Publication
 
 @{
-    ViewData["Title"] = "Editar publicaciones";
-    var projectName = ViewData["projectName"];
-    var type = ViewData["type"] as List<SistemaGraficosCITIC.Models.Domain.PublicationType>;
-    var authorsCount = 0;
+  ViewData["Title"] = "Editar publicaciones";
+  var projectName = ViewData["projectName"];
+  var type = ViewData["type"] as List<SistemaGraficosCITIC.Models.Domain.PublicationType>;
+  var authorsCount = 0;
 }
 
 <h1>Editar</h1>
@@ -12,143 +12,145 @@
 <h4>Publicación</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-floating mt-3">
-                <input name="Title" asp-for="Title" class="form-control" />
-                <label asp-for="Title" class="control-label">Título</label>
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-floating mt-3">
-                <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" asp-for="Year" class="form-control" />
-                <label asp-for="Year" class="control-label">Año</label>
-                <span asp-validation-for="Year" class="text-danger"></span>
-            </div>
-            <div class="form-floating mt-3">
-                <input name="Reference" asp-for="Reference" class ="form-control" />
-                <label asp-for="Reference" class="control-label">Referencia</label>
-                <span asp-validation-for="Reference" class="text-danger"></span>
-            </div>
-            <div class="form-floating mt-3">
-                <select asp-for="Type" name="Type" class="form-select" aria-label="Default select example">
-                    @foreach (var item in @type)
-                    {
-                        <option>@item.PublicationTypeName</option>
-                    }
-                </select>
-                <label class="form-label">Tipo</label>
-            </div>
-            <div class="form-floating mt-3">
-                <div class="table-responsive">
-                    <table class="table table-borderless text-center" id="table_field" asp-for="Authors">
-                        <label asp-for="Authors" class="control-label m-1">Autor(es)</label>
-                         
-                        @foreach (var item in Model.Authors)
-                        {
-                            authorsCount++;
-                            <tr>
-                                <td>
-                                    <input value=@item.AuthorName asp-for="Authors" class="form-control" />
-                                    <span asp-validation-for="Authors" class="text-danger"></span>
-                                </td>
-                                @*<tr>
-                            <td><input asp-for="Authors" type="text" class="form-control" name="Author" required></td>
-                            <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
-                            </tr>*@
-                                <td>
-                                    @if (authorsCount <= 1)
-                                    {
-                                        <button name="remove" id="remove" hidden class="btn btn-danger btn-close"></button>
-                                    } else {
-                                        <button name="remove" id="remove" class="btn btn-danger btn-close"></button>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                       
-                    </table>
-                    <div class="text-right">
-                        <input type="button" name="add" id="add" value="Agregar autor" class="btn btn-success">
-                    </div>
-                </div>
-            </div>
-            <div class="form-floating mt-3" type="hidden">
-                <input type="hidden" asp-for="ProjectId" class="form-control"/>
-            </div>
-            <hr />
-            <div class="form-group mt-3">
-                <input id="btnGuardar" type="submit" value="Guardar" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+  <div class="col-md-4">
+    <form asp-action="Edit">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <input type="hidden" asp-for="Id" />
+      <div class="form-floating mt-3">
+        <input name="Title" asp-for="Title" class="form-control" />
+        <label asp-for="Title" class="control-label">Título</label>
+        <span asp-validation-for="Title" class="text-danger"></span>
+      </div>
+      <div class="form-floating mt-3">
+        <input name="Year" type="number" id="year" min="1960" max="2200" step="1" asp-for="Year" class="form-control" />
+        <label asp-for="Year" class="control-label">Año</label>
+        <span asp-validation-for="Year" class="text-danger"></span>
+      </div>
+      <div class="form-floating mt-3">
+        <input name="Reference" asp-for="Reference" class="form-control" />
+        <label asp-for="Reference" class="control-label">Referencia</label>
+        <span asp-validation-for="Reference" class="text-danger"></span>
+      </div>
+      <div class="form-floating mt-3">
+        <select asp-for="Type" name="Type" class="form-select" aria-label="Default select example">
+          @foreach (var item in @type)
+          {
+            <option>@item.PublicationTypeName</option>
+          }
+        </select>
+        <label class="form-label">Tipo</label>
+      </div>
+      <div class="form-floating mt-3">
+        <div class="table-responsive">
+          <table class="table table-borderless text-center" id="table_field" asp-for="Authors">
+            <label asp-for="Authors" class="control-label m-1">Autor(es)</label>
+
+            @foreach (var item in Model.Authors)
+            {
+              authorsCount++;
+              <tr>
+                <td>
+                  <input value=@item.AuthorName asp-for="Authors" class="form-control" />
+                  <span asp-validation-for="Authors" class="text-danger"></span>
+                </td>
+                @*<tr>
+              <td><input asp-for="Authors" type="text" class="form-control" name="Author" required></td>
+              <td><input class="btn btn-danger invisible" name="remove" id="remove" value="X" type="button"></td>
+              </tr>*@
+                <td>
+                  @if (authorsCount <= 1)
+                  {
+                    <button name="remove" id="remove" hidden class="btn btn-danger btn-close"></button>
+                  }
+                  else
+                  {
+                    <button name="remove" id="remove" class="btn btn-danger btn-close"></button>
+                  }
+                </td>
+              </tr>
+            }
+
+          </table>
+          <div class="text-right">
+            <input type="button" name="add" id="add" value="Agregar autor" class="btn btn-success">
+          </div>
+        </div>
+      </div>
+      <div class="form-floating mt-3" type="hidden">
+        <input type="hidden" asp-for="ProjectId" class="form-control" />
+      </div>
+      <hr />
+      <div class="form-group mt-3">
+        <input id="btnGuardar" type="submit" value="Guardar" class="btn btn-primary" />
+      </div>
+    </form>
+  </div>
 </div>
 
 <div class="mt-3">
-    <a asp-action="Index" asp-controller="Projects">Volver a la lista</a>
+  <a asp-action="Index" asp-controller="Projects">Volver a la lista</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
 
 <script>
-    $(document).ready(function () {
-        // Función para verificar si el formulario está completo
-        $('#btnGuardar').prop('disabled', true); // Disable button by default
+  $(document).ready(function () {
+    // Función para verificar si el formulario está completo
+    $('#btnGuardar').prop('disabled', true); // Disable button by default
 
-        function checkFormCompletion() {
-            var isComplete = true;
-            $('input, select, textarea').each(function () {
-                if ($(this).is(':visible')) {
-                    if ($(this).val() === '') {
-                        isComplete = false;
-                        return false; // Sale del bucle si encuentra un campo vacío
-                    }
-                }
-            });
-
-            // Actualiza el estado del botón
-            if (isComplete) {
-                $('#btnGuardar').prop('disabled', false);
-            } else {
-                $('#btnGuardar').prop('disabled', true);
-            }
+    function checkFormCompletion() {
+      var isComplete = true;
+      $('input, select, textarea').each(function () {
+        if ($(this).is(':visible')) {
+          if ($(this).val() === '') {
+            isComplete = false;
+            return false; // Sale del bucle si encuentra un campo vacío
+          }
         }
+      });
 
-        // Verificar el estado del formulario en cada cambio de campo
-        $('input, select, textarea').on('input change', function () {
-            checkFormCompletion();
-        });
+      // Actualiza el estado del botón
+      if (isComplete) {
+        $('#btnGuardar').prop('disabled', false);
+      } else {
+        $('#btnGuardar').prop('disabled', true);
+      }
+    }
+
+    // Verificar el estado del formulario en cada cambio de campo
+    $('input, select, textarea').on('input change', function () {
+      checkFormCompletion();
     });
+  });
 </script>
 
 <script type="text/javascript">
-    // Script para agregar o eliminar textfield para autor
-    $(document).ready(function () {
-        var html = '<tr><td><input asp-for="PublicationAuthor" class="form-control" type="text" name="PublicationAuthor" required></td><td><input class="btn btn-danger btn-close" id="remove" type="button" name="remove" tabindex="-1"></td></tr>';
-        var max = 10;
-        var x = 1;
-        // Agregar fila
-        $("#add").click(function () {
-            if (x <= max) {
-                $("#table_field").append(html);
-                x++;
-                authorsCount++;
-            }
-        })
-        // Borrar fila
-        $("#table_field").on('click', '#remove', function () {
-            if (x > 1) {
-                $(this).closest('tr').remove();
-                x--;
-                authorsCount--;
-            }
-        })
+  // Script para agregar o eliminar textfield para autor
+  $(document).ready(function () {
+    var html = '<tr><td><input asp-for="PublicationAuthor" class="form-control" type="text" name="PublicationAuthor" required></td><td><input class="btn btn-danger btn-close" id="remove" type="button" name="remove" tabindex="-1"></td></tr>';
+    var max = 10;
+    var x = 1;
+    // Agregar fila
+    $("#add").click(function () {
+      if (x <= max) {
+        $("#table_field").append(html);
+        x++;
+        authorsCount++;
+      }
     })
+    // Borrar fila
+    $("#table_field").on('click', '#remove', function () {
+      if (x > 1) {
+        $(this).closest('tr').remove();
+        x--;
+        authorsCount--;
+      }
+    })
+  })
 </script>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+  @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
     }

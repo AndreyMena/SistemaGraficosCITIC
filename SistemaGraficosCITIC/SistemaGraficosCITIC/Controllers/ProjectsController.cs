@@ -11,7 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using System.Collections.Specialized;
 
 namespace SistemaGraficosCITIC.Controllers
 {
@@ -137,20 +137,20 @@ namespace SistemaGraficosCITIC.Controllers
           var currentUser = await userManager.FindByNameAsync(userName);
           var id = new Guid(currentUser.Id);
           var researcher = await researcherRepository.GetAsync(id);
-          var collab = new List<Researcher>();
+          var collab = new List<Researcher>
+          {
+            researcher
+          };
           foreach (var coll in model.Collaborators)
           {
             var idR = new Guid(coll);
             var r = await researcherRepository.GetAsync(idR);
             collab.Add(r);
           }
-          var researchers = await researcherRepository.GetAllAsync();
-          var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive, model.ResearcherId, model.Code, collab);
-
-          //_context.Entry(collab).State = EntityState.Modified;
+          var project = new Project(model.Name!, model.Type!, model.StartDate, model.EndDate, model.IsActive,
+            id/*se agrega el usuario actual como investigador principal*/, model.Code!, collab);
           _context.Add(project);
           await _context.SaveChangesAsync();
-          var projectId = project.Id.ToString();
           return RedirectToAction("Create", "Projects");
         }
         else
@@ -303,7 +303,10 @@ namespace SistemaGraficosCITIC.Controllers
           var currentUser = await userManager.FindByNameAsync(userName);
           var id = new Guid(currentUser.Id);
           var researcher = await researcherRepository.GetAsync(id);
-          var collab = new List<Researcher>();
+          var collab = new List<Researcher>
+          {
+            researcher
+          };
           foreach (var coll in model.Collaborators)
           {
             var idR = new Guid(coll);
@@ -324,6 +327,7 @@ namespace SistemaGraficosCITIC.Controllers
       }
       return View(model);
     }
+
     [HttpGet]
     public async Task<IActionResult> ProjectTypes()
     {
@@ -372,6 +376,41 @@ namespace SistemaGraficosCITIC.Controllers
       }
 
       return RedirectToAction("ProjectTypes", "Projects");
+    }
+
+    public async Task<IActionResult> UpdateResearchers(string[] ids, string projectId)
+    {
+      if (_context.Project == null)
+      {
+        return Problem("Entity set 'SistemaGraficosCITICContext.Project'  is null.");
+      }
+      // List<string> collaboratorIds = Request.Form.TryGetValue("collaborators", col)?.ToList() ?? new List<string>();
+      var project = await projectRepository.GetAsync(new Guid(projectId));
+      var collab = new List<Researcher>();
+      foreach (var id in ids)
+      {
+        var idR = new Guid(id);
+        var r = await researcherRepository.GetAsync(idR);
+        collab.Add(r);
+      }
+
+      if (project != null)
+      {
+        DBControllerGetData db = new DBControllerGetData();
+        var deleted = db.DeleteResearchersByProject(projectId);
+        project.Collaborators = collab;
+        _context.Project.Update(project);
+        await _context.SaveChangesAsync();
+      }
+      else
+      {
+        await Console.Out.WriteLineAsync("Error editando proyecto");
+      }
+      if (User.IsInRole("Admin"))
+      {
+        return RedirectToAction("Index", "Admin");
+      }
+      return RedirectToAction("Index", "Projects");
     }
 
   }

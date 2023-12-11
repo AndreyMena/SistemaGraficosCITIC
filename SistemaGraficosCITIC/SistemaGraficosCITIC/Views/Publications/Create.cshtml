@@ -1,4 +1,6 @@
-﻿@model PublicationModel
+﻿@using SistemaGraficosCITIC.Controllers
+@using SistemaGraficosCITIC.Models.Domain;
+@model PublicationModel
 
 @{
   ViewData["Title"] = "Agregar publicación";
@@ -28,7 +30,8 @@
           <span asp-validation-for="PublicationTitle" class="text-danger"></span>
         </div>
         <div class="form-floating mt-3">
-          <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" value="2023" asp-for="PublicationYear" class="form-control" />
+          <input name="PublicationYear" type="number" id="year" min="1960" max="2200" step="1" value="2023"
+            asp-for="PublicationYear" class="form-control" />
           <label asp-for="PublicationYear" class="control-label">Año</label>
           <span asp-validation-for="PublicationYear" class="text-danger"></span>
         </div>
@@ -38,7 +41,8 @@
           <span asp-validation-for="PublicationReference" class="text-danger"></span>
         </div>
         <div class="form-floating mt-3">
-          <select asp-for="PublicationType" id="PublicationsType" class="form-select" aria-label="Default select example">
+          <select asp-for="PublicationType" id="PublicationsType" class="form-select"
+            aria-label="Default select example">
             @foreach (var item in @type)
             {
               <option>@item.PublicationTypeName</option>
@@ -52,7 +56,8 @@
             <table class="table table-borderless text-center" id="table_field">
               <label asp-for="PublicationAuthors" class="control-label m-1">Autor(es)</label>
               <tr>
-                @*<td><input asp-for="PublicationAuthors" type="text" class="form-control" name="PublicationAuthor" required></td>*@
+                @*<td><input asp-for="PublicationAuthors" type="text" class="form-control" name="PublicationAuthor"
+                required></td>*@
                 <td><input name="PublicationAuthors[0]" type="text" class="form-control" required></td>
                 <td><button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button></td>
               </tr>
@@ -68,20 +73,15 @@
         </div>
         <hr />
         <div class="form-floating mt-3">
-          @*<input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip", "Publications", new { projectId=@projectId })'" />*@
-          <button id="btnGuardar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Guardar</button>
+          @*<input type="button" class="btn btn-warning" value="Omitir" onclick="location.href='@Url.Action("Skip",
+          "Publications", new { projectId=@projectId })'" />*@
+          <button id="btnGuardar" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop">Guardar</button>
         </div>
-        <div>
-          <a asp-controller="Projects" asp-action="Index">Volver a la lista</a>
-        </div>
-        @*<script>
-        function skipPublication(parametroString) {
-        window.location.href = '@Url.Action("Skip", "Publications")?parametro=' + encodeURIComponent(parametroString);
-        }
-        </script>*@
 
         <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content d-flex justify-content-center">
               <div class="modal-header">
@@ -92,18 +92,20 @@
                 <p>¿Desea agregar otra publicación?</p>
               </div>
               <div class="modal-footer">
-                @*<input type="submit" value="Create" class="btn btn-primary" />*@
                 <button type="submit" value="Create" class="btn btn-warning">Agregar otra publicación</button>
-                <button asp-action="AddToProyect" asp-controller="Publications" type="submit" class="btn btn-primary">No</button>
+                <button asp-action="AddToProject" asp-controller="Publications" type="submit"
+                  class="btn btn-primary">No</button>
               </div>
             </div>
           </div>
         </div>
       </form>
-
     </div>
   </div>
-
+  <br />
+  <div>
+    <a asp-controller="Projects" asp-action="Index">Volver a la lista</a>
+  </div>
 </div>
 
 

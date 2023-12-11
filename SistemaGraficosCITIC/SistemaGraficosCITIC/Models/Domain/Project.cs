@@ -13,7 +13,7 @@ namespace SistemaGraficosCITIC.Models.Domain
     public Guid ResearcherId { get; set; } //Null por facilidad para probar insertar project, enrealidad nunca se va a agregar null researcher
     public ICollection<Researcher> Collaborators { get; set; }
     public string? Code { get; set; }
-    public List<Publication> Publications { get; set; } //Se cambiaron de Collection a List
+    public ICollection<Publication> Publications { get; set; } //Se cambiaron de Collection a List
     public List<Exposition> Expositions { get; set; }
     public List<Product> Products { get; set; }
 
@@ -39,14 +39,6 @@ namespace SistemaGraficosCITIC.Models.Domain
       EndDate = endDate;
       IsActive = isActive;
       ResearcherId = researcherId; //Main researcher id
-      /*var Col = new List<Researcher>();
-      DBControllerGetData db = new();
-      for (int i = 0; i < collaborators.Length; i++)
-      {
-        var collab = db.GetResearcherById(collaborators[i]);
-        Col.Add(collab);
-      }
-      Collaborators = Col;*/
       Collaborators = collaborators;
       Code = code;
       Publications = new List<Publication>();
