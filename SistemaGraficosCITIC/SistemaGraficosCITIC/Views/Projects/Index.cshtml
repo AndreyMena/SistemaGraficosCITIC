@@ -130,24 +130,31 @@
                         <div class="select" data-researchers-select="@guid" style="display: none">
                           <form method="post" action="@Url.Action("UpdateResearchers", "Projects")">
                             <input type="hidden" name="projectId" value="@guid" />
-                            @foreach (var collaborator in allResearchers)
-                            {
-                              if (collaborator.Id != mainResearcher.Id && collaborator.Name != "Admin")
-                              {
-                                string name;
-                                name = collaborator.LastName + ", " + collaborator.Name;
-                                // Muestra con check los que ya forman parte del proyecto
-                                if (researchers.Contains(collaborator))
+                            <div style="display: flex;">
+                              <div class="col container-sm overflow-auto" style="width: 250px; height: 150px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; align-self: flex-start;">
+                                @foreach (var collaborator in allResearchers)
                                 {
-                                  <p><label><input value="@collaborator.Id" name="ids" type="checkbox" checked>@name</label></p>
+                                  if (collaborator.Id != mainResearcher.Id && collaborator.Name != "Admin")
+                                  {
+                                    string name;
+                                    name = collaborator.LastName + ", " + collaborator.Name;
+
+                                    // Muestra con check los que ya forman parte del proyecto
+
+                                    @if (researchers.Contains(collaborator))
+                                    {
+                                      <p><label><input value="@collaborator.Id" name="ids" type="checkbox" checked>@name</label></p>
+                                    }
+                                    else
+                                    {
+                                      <p><label><input value="@collaborator.Id" name="ids" type="checkbox">@name</label></p>
+                                    }
+
+                                  }
                                 }
-                                else
-                                {
-                                  <p><label><input value="@collaborator.Id" name="ids" type="checkbox">@name</label></p>
-                                }
-                              }
-                            }
-                            <div class="col">
+                              </div>
+                            </div>
+                            <div class="col m-1">
                               <button type="submit" class="btn btn-secondary">
                                 Guardar selección
                               </button>
