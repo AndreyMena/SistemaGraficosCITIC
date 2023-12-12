@@ -84,15 +84,17 @@
                     if (researchers != null)
                     {
                       <input class="btn bg-success text-light mb-2" type="button" value="Añadir collaborador(es)" onclick="openclose()">
-                      <div class="select" id="mySelect" hidden="hidden">
-                        @foreach (var collaborator in researchers)
-                        {
-                          if (collaborator.Id != researcher.Id && collaborator.Name != "Admin")
+                      <div class="select" id="mySelect" hidden="hidden" style="display: flex;">
+                        <div class="col container-sm overflow-auto" style="width: 250px; height: 150px; border: 1px solid #ccc; border-radius: 5px; padding: 10px; align-self: flex-start;">
+                          @foreach (var collaborator in researchers)
                           {
-                            name = collaborator.LastName + ", " + collaborator.Name;
-                            <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                            @if (collaborator.Id != researcher.Id && collaborator.Name != "Admin")
+                            {
+                              name = collaborator.LastName + ", " + collaborator.Name;
+                              <p><label asp-for="Collaborators"><input value="@collaborator.Id" name="Collaborators" type="checkbox">@name</label></p>
+                            }
                           }
-                        }
+                        </div>
                       </div>
                     }
                     else
