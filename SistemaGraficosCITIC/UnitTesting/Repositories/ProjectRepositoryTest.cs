@@ -21,13 +21,14 @@ namespace UnitTesting.Repositories
 
             var date = new DateTime();
             var researcher = new Researcher();
+            var listResearcher = new List<Researcher>();
             // Insert seed data into the database using one instance of the context
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                context.Project.Add(new Project("Project1", "Accion social", researcher, date, date, true));
-                context.Project.Add(new Project("Project2", "Accion social", researcher, date, date, true));
-                context.Project.Add(new Project("Project3", "Accion social", researcher, date, date, true));
-                context.Project.Add(new Project("Project4", "Accion social", researcher, date, date, true));
+                context.Project.Add(new Project("Project1", "Accion social", date, date, true, researcher.Id, "1", listResearcher));
+                context.Project.Add(new Project("Project2", "Accion social", date, date, true, researcher.Id, "2", listResearcher));
+                context.Project.Add(new Project("Project3", "Accion social", date, date, true, researcher.Id, "3", listResearcher));
+                context.Project.Add(new Project("Project4", "Accion social", date, date, true, researcher.Id, "4", listResearcher));
 
                 context.SaveChanges();
             }
@@ -35,7 +36,7 @@ namespace UnitTesting.Repositories
             // Use a clean instance of the context to run the test
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                ProjectRepository projectRepository = new ProjectRepository(context);
+                ProjectRepository projectRepository = new(context);
 
                 // act
                 var project = await projectRepository.GetAllAsync();
@@ -59,25 +60,24 @@ namespace UnitTesting.Repositories
 
             var date = new DateTime();
             var researcher = new Researcher();
+            var listResearcher = new List<Researcher>();
             // Insert seed data into the database using one instance of the context
 
             // Use a clean instance of the context to run the test
-            using (var context = new SistemaGraficosCITICContext(options))
-            {
-                ProjectRepository projectRepository = new ProjectRepository(context);
+            using var context = new SistemaGraficosCITICContext(options);
+            ProjectRepository projectRepository = new(context);
 
-                // act
-                await projectRepository.AddAsync(new Project("Project1", "Accion social", researcher, date, date, true));
-                await projectRepository.AddAsync(new Project("Project2", "Accion social", researcher, date, date, true));
-                await projectRepository.AddAsync(new Project("Project3", "Accion social", researcher, date, date, true));
-                await projectRepository.AddAsync(new Project("Project4", "Accion social", researcher, date, date, true));
-                var project = await projectRepository.GetAllAsync();
+            // act
+            await projectRepository.AddAsync(new Project("Project1", "Accion social", date, date, true, researcher.Id, "1", listResearcher));
+            await projectRepository.AddAsync(new Project("Project2", "Accion social", date, date, true, researcher.Id, "2", listResearcher));
+            await projectRepository.AddAsync(new Project("Project3", "Accion social", date, date, true, researcher.Id, "3", listResearcher));
+            await projectRepository.AddAsync(new Project("Project4", "Accion social", date, date, true, researcher.Id, "4", listResearcher));
+            var project = await projectRepository.GetAllAsync();
 
-                // assert
-                project.Should().HaveCount(projectCountTest);
+            // assert
+            project.Should().HaveCount(projectCountTest);
 
-                context.Database.EnsureDeleted();
-            }
+            context.Database.EnsureDeleted();
         }
 
         [Fact]
@@ -92,14 +92,15 @@ namespace UnitTesting.Repositories
 
             var date = new DateTime();
             var researcher = new Researcher();
+            var listResearcher = new List<Researcher>();
             // Insert seed data into the database using one instance of the context
-            var project1 = new Project("Project1", "Accion social", researcher, date, date, true);
+            var project1 = new Project("Project1", "Accion social", date, date, true, researcher.Id, "1", listResearcher);
             var id1 = project1.Id;
-            var project2 = new Project("Project2", "Accion social", researcher, date, date, true);
+            var project2 = new Project("Project2", "Accion social", date, date, true, researcher.Id, "2", listResearcher);
             var id2 = project2.Id;
-            var project3 = new Project("Project3", "Accion social", researcher, date, date, true);
+            var project3 = new Project("Project3", "Accion social", date, date, true, researcher.Id, "3", listResearcher);
             var id3 = project3.Id;
-            var project4 = new Project("Project4", "Accion social", researcher, date, date, true);
+            var project4 = new Project("Project4", "Accion social", date, date, true, researcher.Id, "4", listResearcher);
             var id4 = project4.Id;
             using (var context = new SistemaGraficosCITICContext(options))
             {
@@ -114,7 +115,7 @@ namespace UnitTesting.Repositories
             // Use a clean instance of the context to run the test
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                ProjectRepository projectRepository = new ProjectRepository(context);
+                ProjectRepository projectRepository = new(context);
 
                 // act
                 await projectRepository.DeleteAsync(id1);
@@ -132,7 +133,7 @@ namespace UnitTesting.Repositories
         public async void GetAsyncByIdProjectTest()
         {
             // arrange
-            var projectCountTest = 2;
+            // var projectCountTest = 2;
 
             var options = new DbContextOptionsBuilder<SistemaGraficosCITICContext>()
                 .UseInMemoryDatabase(databaseName: "InMemoryDatabaseProjectRepositoryTestGetAsyncByIdProjectTest")
@@ -140,12 +141,13 @@ namespace UnitTesting.Repositories
 
             var date = new DateTime();
             var researcher = new Researcher();
+            var listResearcher = new List<Researcher>();
             // Insert seed data into the database using one instance of the context
-            var project1 = new Project("Project1", "Accion social", researcher, date, date, true);
+            var project1 = new Project("Project1", "Accion social", date, date, true, researcher.Id, "1", listResearcher);
             var id1 = project1.Id;
-            var project2 = new Project("Project2", "Accion social", researcher, date, date, true);
-            var project3 = new Project("Project3", "Accion social", researcher, date, date, true);
-            var project4 = new Project("Project4", "Accion social", researcher, date, date, true);
+            var project2 = new Project("Project2", "Accion social", date, date, true, researcher.Id, "2", listResearcher);
+            var project3 = new Project("Project3", "Accion social", date, date, true, researcher.Id, "3", listResearcher);
+            var project4 = new Project("Project4", "Accion social", date, date, true, researcher.Id, "4", listResearcher);
             using (var context = new SistemaGraficosCITICContext(options))
             {
                 context.Project.Add(project1);
@@ -159,7 +161,7 @@ namespace UnitTesting.Repositories
             // Use a clean instance of the context to run the test
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                ProjectRepository projectRepository = new ProjectRepository(context);
+                ProjectRepository projectRepository = new(context);
 
                 // act
                 var project = await projectRepository.GetAsync(id1);
@@ -186,14 +188,15 @@ namespace UnitTesting.Repositories
             var researcher2 = new Researcher();
             var researcher3 = new Researcher();
             var researcher4 = new Researcher();
+            var listResearcher = new List<Researcher>();
             // Insert seed data into the database using one instance of the context
-            var project1 = new Project("Project1", "Accion social", researcher1, date, date, true);
+            var project1 = new Project("Project1", "Accion social", date, date, true, researcher1.Id, "1", listResearcher);
             var id1 = project1.Id;
-            var project2 = new Project("Project2", "Accion social", researcher2, date, date, true);
+            var project2 = new Project("Project2", "Accion social", date, date, true, researcher2.Id, "2", listResearcher);
             var id2 = project2.Id;
-            var project3 = new Project("Project3", "Accion social", researcher3, date, date, true);
+            var project3 = new Project("Project3", "Accion social", date, date, true, researcher3.Id, "3", listResearcher);
             var id3 = project3.Id;
-            var project4 = new Project("Project4", "Accion social", researcher4, date, date, true);
+            var project4 = new Project("Project4", "Accion social", date, date, true, researcher4.Id, "4", listResearcher);
             var id4 = project4.Id;
             using (var context = new SistemaGraficosCITICContext(options))
             {
@@ -208,7 +211,7 @@ namespace UnitTesting.Repositories
             // Use a clean instance of the context to run the test
             using (var context = new SistemaGraficosCITICContext(options))
             {
-                ProjectRepository projectRepository = new ProjectRepository(context);
+                ProjectRepository projectRepository = new(context);
 
                 // act
                 var project = await projectRepository.GetProjectsByResearcher(researcher1.Id);
