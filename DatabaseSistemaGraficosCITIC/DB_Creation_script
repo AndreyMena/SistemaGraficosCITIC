@@ -1,0 +1,705 @@
+USE [master]
+GO
+/****** Object:  Database [DatabaseSistemaGraficosCITIC]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE DATABASE [DatabaseSistemaGraficosCITIC]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'DatabaseSistemaGraficosCITIC', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\DatabaseSistemaGraficosCITIC.mdf' , SIZE = 73728KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'DatabaseSistemaGraficosCITIC_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\DatabaseSistemaGraficosCITIC_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [DatabaseSistemaGraficosCITIC].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET RECOVERY FULL 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET  MULTI_USER 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'DatabaseSistemaGraficosCITIC', N'ON'
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [DatabaseSistemaGraficosCITIC]
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Admin]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Admin](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[LastName] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Admin] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoleClaims]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoleClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[RoleId] [nvarchar](450) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetRoles]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetRoles](
+	[Id] [nvarchar](450) NOT NULL,
+	[Name] [nvarchar](256) NULL,
+	[NormalizedName] [nvarchar](256) NULL,
+	[ConcurrencyStamp] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserClaims](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserId] [nvarchar](450) NOT NULL,
+	[ClaimType] [nvarchar](max) NULL,
+	[ClaimValue] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserLogins](
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[ProviderKey] [nvarchar](128) NOT NULL,
+	[ProviderDisplayName] [nvarchar](max) NULL,
+	[UserId] [nvarchar](450) NOT NULL,
+ CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY CLUSTERED 
+(
+	[LoginProvider] ASC,
+	[ProviderKey] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](450) NOT NULL,
+	[RoleId] [nvarchar](450) NOT NULL,
+ CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](450) NOT NULL,
+	[UserName] [nvarchar](256) NULL,
+	[NormalizedUserName] [nvarchar](256) NULL,
+	[Email] [nvarchar](256) NULL,
+	[NormalizedEmail] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[ConcurrencyStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEnd] [datetimeoffset](7) NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+ CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AspNetUserTokens]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserTokens](
+	[UserId] [nvarchar](450) NOT NULL,
+	[LoginProvider] [nvarchar](128) NOT NULL,
+	[Name] [nvarchar](128) NOT NULL,
+	[Value] [nvarchar](max) NULL,
+ CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[LoginProvider] ASC,
+	[Name] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Author]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Author](
+	[AuthorId] [uniqueidentifier] NOT NULL,
+	[AuthorName] [varchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[AuthorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AuthorPublication]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AuthorPublication](
+	[PublicationId] [uniqueidentifier] NOT NULL,
+	[AuthorId] [uniqueidentifier] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PublicationId] ASC,
+	[AuthorId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Exposition]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Exposition](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Date] [datetime2](7) NOT NULL,
+	[Location] [nvarchar](max) NOT NULL,
+	[Context] [nvarchar](max) NOT NULL,
+	[ProjectId] [uniqueidentifier] NULL,
+	[Title] [varchar](max) NULL,
+	[Participants] [varchar](max) NULL,
+	[Speaker] [varchar](max) NULL,
+ CONSTRAINT [PK_Exposition] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Messages]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Messages](
+	[MessageId] [int] IDENTITY(1,1) NOT NULL,
+	[MessageText] [nvarchar](255) NOT NULL,
+	[CreationDate] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MessageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Description] [nvarchar](max) NOT NULL,
+	[State] [nvarchar](max) NOT NULL,
+	[Marketable] [nvarchar](max) NOT NULL,
+	[License] [nvarchar](max) NOT NULL,
+	[ProjectId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Project]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Project](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NOT NULL,
+	[Type] [nvarchar](max) NOT NULL,
+	[StartDate] [datetime2](7) NOT NULL,
+	[EndDate] [datetime2](7) NULL,
+	[IsActive] [bit] NOT NULL,
+	[ResearcherId] [uniqueidentifier] NULL,
+	[Collaborators] [varchar](max) NULL,
+	[Code] [varchar](max) NULL,
+	[UserId] [nchar](450) NULL,
+ CONSTRAINT [PK_Project] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProjectResearcher]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectResearcher](
+	[ProjectId] [uniqueidentifier] NOT NULL,
+	[ResearcherId] [uniqueidentifier] NOT NULL,
+	[StartDate] [date] NULL,
+	[EndDate] [date] NULL,
+	[IsMainResearcher] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProjectId] ASC,
+	[ResearcherId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ProjectType]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ProjectType](
+	[ProjectTypeId] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectTypeName] [varchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProjectTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Publication]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Publication](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Reference] [nvarchar](max) NOT NULL,
+	[Type] [nvarchar](max) NOT NULL,
+	[ProjectId] [uniqueidentifier] NULL,
+	[Title] [nvarchar](max) NOT NULL,
+	[Year] [int] NULL,
+ CONSTRAINT [PK_Publication] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PublicationType]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PublicationType](
+	[PublicationTypeId] [int] IDENTITY(1,1) NOT NULL,
+	[PublicationTypeName] [varchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PublicationTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[PublicationTypeName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Researcher]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Researcher](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](max) NULL,
+	[LastName] [nvarchar](max) NULL,
+	[Type] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Researcher] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ResearcherTypes]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ResearcherTypes](
+	[ResearcherTypeId] [int] IDENTITY(1,1) NOT NULL,
+	[ResearcherTypeName] [varchar](255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ResearcherTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ResearcherTypesResearcher]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ResearcherTypesResearcher](
+	[ResearcherId] [uniqueidentifier] NOT NULL,
+	[ResearcherTypeId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ResearcherId] ASC,
+	[ResearcherTypeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_AspNetRoleClaims_RoleId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_AspNetRoleClaims_RoleId] ON [dbo].[AspNetRoleClaims]
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [RoleNameIndex]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [RoleNameIndex] ON [dbo].[AspNetRoles]
+(
+	[NormalizedName] ASC
+)
+WHERE ([NormalizedName] IS NOT NULL)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_AspNetUserClaims_UserId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_AspNetUserClaims_UserId] ON [dbo].[AspNetUserClaims]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_AspNetUserLogins_UserId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_AspNetUserLogins_UserId] ON [dbo].[AspNetUserLogins]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IX_AspNetUserRoles_RoleId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_AspNetUserRoles_RoleId] ON [dbo].[AspNetUserRoles]
+(
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [EmailIndex]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [EmailIndex] ON [dbo].[AspNetUsers]
+(
+	[NormalizedEmail] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UserNameIndex]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [dbo].[AspNetUsers]
+(
+	[NormalizedUserName] ASC
+)
+WHERE ([NormalizedUserName] IS NOT NULL)
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Authors__4A1A120B1E10AC8B]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [UQ__Authors__4A1A120B1E10AC8B] ON [dbo].[Author]
+(
+	[AuthorName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_Exposition_ProjectId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_Exposition_ProjectId] ON [dbo].[Exposition]
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_Product_ProjectId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_Product_ProjectId] ON [dbo].[Product]
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_Project_ResearcherId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_Project_ResearcherId] ON [dbo].[Project]
+(
+	[ResearcherId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__ProjectT__659139EA8754EE9A]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [UQ__ProjectT__659139EA8754EE9A] ON [dbo].[ProjectType]
+(
+	[ProjectTypeName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+/****** Object:  Index [IX_Publication_ProjectId]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [IX_Publication_ProjectId] ON [dbo].[Publication]
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [UQ__Research__2CE73078C53189E7]    Script Date: 14/12/2023 10:33:00 ******/
+CREATE NONCLUSTERED INDEX [UQ__Research__2CE73078C53189E7] ON [dbo].[ResearcherTypes]
+(
+	[ResearcherTypeName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[ProjectResearcher] ADD  DEFAULT ((0)) FOR [IsMainResearcher]
+GO
+ALTER TABLE [dbo].[Publication] ADD  DEFAULT (N'') FOR [Title]
+GO
+ALTER TABLE [dbo].[AspNetRoleClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetRoleClaims] CHECK CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserTokens]  WITH CHECK ADD  CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserTokens] CHECK CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AuthorPublication]  WITH CHECK ADD  CONSTRAINT [FK__Publicati__Autho__22751F6C] FOREIGN KEY([AuthorId])
+REFERENCES [dbo].[Author] ([AuthorId])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[AuthorPublication] CHECK CONSTRAINT [FK__Publicati__Autho__22751F6C]
+GO
+ALTER TABLE [dbo].[AuthorPublication]  WITH CHECK ADD  CONSTRAINT [FK__Publicati__Publi__2180FB33] FOREIGN KEY([PublicationId])
+REFERENCES [dbo].[Publication] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[AuthorPublication] CHECK CONSTRAINT [FK__Publicati__Publi__2180FB33]
+GO
+ALTER TABLE [dbo].[Exposition]  WITH CHECK ADD  CONSTRAINT [FK_Exposition_Project] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Exposition] CHECK CONSTRAINT [FK_Exposition_Project]
+GO
+ALTER TABLE [dbo].[Exposition]  WITH CHECK ADD  CONSTRAINT [FK_Exposition_Project_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[Exposition] CHECK CONSTRAINT [FK_Exposition_Project_ProjectId]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Project] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Project]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Project_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Project_ProjectId]
+GO
+ALTER TABLE [dbo].[Project]  WITH CHECK ADD  CONSTRAINT [FK_Project_Researcher_ResearcherId] FOREIGN KEY([ResearcherId])
+REFERENCES [dbo].[Researcher] ([Id])
+GO
+ALTER TABLE [dbo].[Project] CHECK CONSTRAINT [FK_Project_Researcher_ResearcherId]
+GO
+ALTER TABLE [dbo].[ProjectResearcher]  WITH CHECK ADD  CONSTRAINT [FK__ProjectRe__Proje__17036CC0] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ProjectResearcher] CHECK CONSTRAINT [FK__ProjectRe__Proje__17036CC0]
+GO
+ALTER TABLE [dbo].[ProjectResearcher]  WITH CHECK ADD  CONSTRAINT [FK__ProjectRe__Resea__17F790F9] FOREIGN KEY([ResearcherId])
+REFERENCES [dbo].[Researcher] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[ProjectResearcher] CHECK CONSTRAINT [FK__ProjectRe__Resea__17F790F9]
+GO
+ALTER TABLE [dbo].[Publication]  WITH CHECK ADD  CONSTRAINT [FK_Publication_Project] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Publication] CHECK CONSTRAINT [FK_Publication_Project]
+GO
+ALTER TABLE [dbo].[Publication]  WITH CHECK ADD  CONSTRAINT [FK_Publication_Project_ProjectId] FOREIGN KEY([ProjectId])
+REFERENCES [dbo].[Project] ([Id])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [dbo].[Publication] CHECK CONSTRAINT [FK_Publication_Project_ProjectId]
+GO
+ALTER TABLE [dbo].[ResearcherTypesResearcher]  WITH CHECK ADD FOREIGN KEY([ResearcherId])
+REFERENCES [dbo].[Researcher] ([Id])
+GO
+ALTER TABLE [dbo].[ResearcherTypesResearcher]  WITH CHECK ADD FOREIGN KEY([ResearcherTypeId])
+REFERENCES [dbo].[ResearcherTypes] ([ResearcherTypeId])
+GO
+/****** Object:  StoredProcedure [dbo].[InsertNewAuthor]    Script Date: 14/12/2023 10:33:00 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[InsertNewAuthor]
+	@NewAuthor nvarchar(50)
+
+	AS 
+	BEGIN
+
+	DECLARE @author_exists nVARCHAR(255)
+
+	SELECT AuthorName
+	INTO author_exists
+	FROM dbo.Authors
+	WHERE AuthorName = @NewAuthor;
+
+	IF @author_exists IS NULL
+		INSERT INTO dbo.Authors (AuthorName)
+		VALUES (@NewAuthor);
+	END
+GO
+USE [master]
+GO
+ALTER DATABASE [DatabaseSistemaGraficosCITIC] SET  READ_WRITE 
+GO

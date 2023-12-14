@@ -7,139 +7,143 @@
 
 
 @{
-    ViewData["Title"] = "Editar proyecto";
-    var user = await UserManager.GetUserAsync(User);
-    ViewData["Title"] = "Agregar proyecto";
-    var publicationsCount = 0;
-    string idString = user.Id;
-    Guid id = Guid.Parse(idString);
-    Researcher researcher = await ResearcherRepository.GetAsync(id);
-    IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
+  ViewData["Title"] = "Editar proyecto";
+  var user = await UserManager.GetUserAsync(User);
+  ViewData["Title"] = "Agregar proyecto";
+  var publicationsCount = 0;
+  string idString = user.Id;
+  Guid id = Guid.Parse(idString);
+  Researcher researcher = await ResearcherRepository.GetAsync(id);
+  IEnumerable<Researcher> researchers = await ResearcherRepository.GetAllAsync();
 
 }
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1>Editar</h1>
+  <h1>Editar</h1>
 
-    <h4>Proyecto</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-floating mt-3">
-                    <input asp-for="Name" class="form-control" />
-                    <label asp-for="Name" class="control-label">Nombre</label>
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-floating mt-3">
-                    <select asp-for="Type" class="form-select" aria-label="Default select example">
-                        <option value="Acción Social">Acción Social</option>
-                        <option value="Actividad">Actividad</option>
-                        <option value="Proyecto">Proyecto</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                    <label class="form-label">Tipo</label>
-                </div>
-                <div class="form-floating mt-3">
-                    <input asp-for="Code" class="form-control" />
-                    <label asp-for="Code" class="control-label">Código</label>
-                    <span asp-validation-for="Code" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="form-group">
-                    <label asp-for="IsActive" class="control-label">¿Está activo?</label>
-                    <input id="CheckBoxActive" type="checkbox" asp-for="IsActive" />
-                    <span asp-validation-for="IsActive" class="text-danger"></span>
-                </div>
-                <div id="EndDateDiv" class="form-floating mt-3">
-                    <input type="date" asp-for="EndDate" class="form-control" />
-                    <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
-                </div>
-                <div class="form-floating mt-3">
-                    <div class="table-responsive">
-                        <table class="table table-borderless text-center" id="table_field">
-                            <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
-                            <tr>
-                                @{
-                                    string name;
-                                    if (researchers != null && researchers.Any())
-                                    {
-                                        <select class="form-select" , name="collaborators" , id="collaborators">
-                                            <option value=0></option>
-                                            @foreach (var collaborator in researchers)
-                                            {
-                                                name = collaborator.LastName + ", " + collaborator.Name;
-                                                <option value="@collaborator.Id">@name</option>
-                                            }
-                                        </select>
-                                        <button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button>
-                                        <div class="text-right">
-                                            <input type="button" name="add" id="add" value="Añadir colaborador" class="btn btn-success">
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <button class="button" type="button">
-                                            No hay colaboradores disponibles.
-                                        </button>
-                                    }
-                                }
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="form-group mt-3">
-                    <input type="submit" value="Guardar" class="btn btn-primary" />
-                </div>
-            </form>
+  <h4>Proyecto</h4>
+  <hr />
+  <div class="row">
+    <div class="col-md-4">
+      <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-floating mt-3">
+          <input asp-for="Name" class="form-control" />
+          <label asp-for="Name" class="control-label">Nombre</label>
+          <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-    </div>
-
-    <div class="mt-3">
-        <a asp-action="Index" asp-controller="Projects">Volver a la lista</a>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
-
-    <script>
-        $(document).ready(function () {
-            // Función para verificar si el formulario está completo
-            $('#btnGuardar').prop('disabled', true); // Disable button by default
-
-            function checkFormCompletion() {
-                var isComplete = true;
-                $('input, select, textarea').each(function () {
-                    if ($(this).is(':visible')) {
-                        if ($(this).val() === '') {
-                            isComplete = false;
-                            return false; // Sale del bucle si encuentra un campo vacío
-                        }
-                    }
-                });
-
-                // Actualiza el estado del botón
-                if (isComplete) {
-                    $('#btnGuardar').prop('disabled', false);
-                } else {
-                    $('#btnGuardar').prop('disabled', true);
+        <div class="form-floating mt-3">
+          <select asp-for="Type" class="form-select" aria-label="Default select example">
+            <option value="Acción Social">Acción Social</option>
+            <option value="Actividad">Actividad</option>
+            <option value="Proyecto">Proyecto</option>
+            <option value="Otro">Otro</option>
+          </select>
+          <label class="form-label">Tipo</label>
+        </div>
+        <div class="form-floating mt-3">
+          <input asp-for="Code" class="form-control" />
+          <label asp-for="Code" class="control-label">Código</label>
+          <span asp-validation-for="Code" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="form-group">
+          <label asp-for="IsActive" class="control-label">¿Está activo?</label>
+          <input id="CheckBoxActive" type="checkbox" asp-for="IsActive" />
+          <span asp-validation-for="IsActive" class="text-danger"></span>
+        </div>
+        <div id="EndDateDiv" class="form-floating mt-3">
+          <input type="date" asp-for="EndDate" class="form-control" />
+          <label asp-for="EndDate" class="control-label">Fecha de cierre</label>
+          <span asp-validation-for="EndDate" class="text-danger"></span>
+        </div>
+        <div class="form-floating mt-3">
+          <div class="table-responsive">
+            <table class="table table-borderless text-center" id="table_field">
+              <label asp-for="Collaborators" class="control-label m-1">Colaborador(es)</label>
+              <tr>
+                @{
+                  string name;
+                  if (researchers != null && researchers.Any())
+                  {
+                    <select class="form-select" name="collaborators" id="collaborators">
+                      <option value=0></option>
+                      @foreach (var collaborator in researchers)
+                      {
+                        name = collaborator.LastName + ", " + collaborator.Name;
+                        <option value="@collaborator.Id">@name</option>
+                      }
+                    </select>
+                    <button class="btn btn-danger btn-close invisible" name="remove" id="remove"></button>
+                    <div class="text-right">
+                      <input type="button" name="add" id="add" value="Añadir colaborador" class="btn btn-success">
+                    </div>
+                  }
+                  else
+                  {
+                    <button class="button" type="button">
+                      No hay colaboradores disponibles.
+                    </button>
+                  }
                 }
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="form-group mt-3">
+          <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <a asp-action="Index" asp-controller="Projects">Volver a la lista</a>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de incluir jQuery -->
+
+  <script>
+    $(document).ready(function () {
+      // Función para verificar si el formulario está completo
+      $('#btnGuardar').prop('disabled', true); // Disable button by default
+
+      function checkFormCompletion() {
+        var isComplete = true;
+        $('input, select, textarea').each(function () {
+          if ($(this).is(':visible')) {
+            if ($(this).val() === '') {
+              isComplete = false;
+              return false; // Sale del bucle si encuentra un campo vacío
             }
-
-            // Verificar el estado del formulario en cada cambio de campo
-            $('input, select, textarea').on('input change', function () {
-                checkFormCompletion();
-            });
+          }
         });
-    </script>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        // Actualiza el estado del botón
+        if (isComplete) {
+          $('#btnGuardar').prop('disabled', false);
+        } else {
+          $('#btnGuardar').prop('disabled', true);
+        }
+      }
+
+      // Verificar el estado del formulario en cada cambio de campo
+      $('input, select, textarea').on('input change', function () {
+        checkFormCompletion();
+      });
+    });
+  </script>
+
+  @section Scripts {
+  @{
+      await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-        }else{
-    <h1>Inicie sesión para editar sus proyectos</h1>
+    }
+}
+else
+{
+  <h1>Inicie sesión para editar sus proyectos</h1>
 }
 
